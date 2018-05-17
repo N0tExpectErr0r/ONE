@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_article"
+            android:icon="@drawable/ic_article_dark"
+            android:title="文章" />
+        <item
+            android:id="@+id/nav_music"
+            android:icon="@drawable/ic_music_dark"
+            android:title="音乐" />
+        <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_video_dark"
+            android:title="影视" />
+    </group>
+</menu>

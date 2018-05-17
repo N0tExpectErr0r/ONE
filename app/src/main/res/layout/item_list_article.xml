@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/item_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/article_iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mock" />
+
+            <TextView
+                android:id="@+id/article_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/article_iv_image"
+                android:layout_marginTop="10dp"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:text="正在加载标题"
+                android:textColor="#212121"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/article_tv_forward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/article_tv_title"
+                android:layout_marginTop="5dp"
+                android:maxLines="2"
+                android:minLines="1"
+                android:text="正在加载文章简介"
+                android:textColor="#888888"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/article_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/article_tv_forward"
+                android:layout_marginTop="5dp"
+                android:text="1997-01-01 00:00"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/article_tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/article_tv_forward"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:text="0" />
+
+            <ImageView
+                android:id="@+id/article_img_like"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_below="@+id/article_tv_forward"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toStartOf="@+id/article_tv_like"
+                android:src="@drawable/ic_like" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/article_img_like"
+                android:layout_marginTop="10dp"
+                android:background="#EEEEEE" />
+
+            <TextView
+                android:id="@+id/article_tv_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/line"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:text="加载作者..."
+                android:textColor="#888888" />
+
+            <TextView
+                android:id="@+id/article_tv_author_summary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/article_tv_author_name"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:text="正在加载作者详细信息..."
+                android:textColor="#AAAAAA" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

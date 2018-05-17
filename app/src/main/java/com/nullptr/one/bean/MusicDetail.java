@@ -1,0 +1,111 @@
+package com.nullptr.one.bean;
+
+import android.graphics.Bitmap;
+
+/**
+ * @AUTHOR nullptr
+ * @DATE 创建时间: 2018/5/13
+ * @DESCRIPTION 音乐对应Bean
+ */
+public class MusicDetail {
+
+    private String id;
+    private String title;
+    private String storySummary;
+    private Bitmap cover;
+    private String storyTitle;
+    private String story;
+    private String lyric;
+    private String info;
+    private String date;
+    private Author author;
+    private int commentNum;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getStorySummary() {
+        return storySummary;
+    }
+
+    public void setStorySummary(String storySummary) {
+        this.storySummary = storySummary;
+    }
+
+    public Bitmap getCover() {
+        return cover;
+    }
+
+    public void setCover(Bitmap cover) {
+        this.cover = cover;
+    }
+
+    public String getStoryTitle() {
+        return storyTitle;
+    }
+
+    public void setStoryTitle(String storyTitle) {
+        this.storyTitle = storyTitle;
+    }
+
+    public String getStory() {
+        return story;
+    }
+
+    public void setStory(String story) {
+        this.story = story;
+    }
+
+    public String getLyric() {
+        return lyric;
+    }
+
+    public void setLyric(String lyric) {
+        this.lyric = lyric;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
+    public int getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(int commentNum) {
+        this.commentNum = commentNum;
+    }
+}
