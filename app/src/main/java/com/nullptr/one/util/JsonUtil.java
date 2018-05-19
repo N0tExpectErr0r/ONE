@@ -4,6 +4,8 @@ import com.nullptr.one.bean.Article;
 import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.bean.Author;
 import com.nullptr.one.bean.Movie;
+import com.nullptr.one.bean.MovieDetail;
+import com.nullptr.one.bean.MovieInfo;
 import com.nullptr.one.bean.Music;
 import com.nullptr.one.bean.MusicDetail;
 import com.nullptr.one.bean.Singer;
@@ -194,4 +196,53 @@ public class JsonUtil {
         return movieList;
     }
 
+    //Json解析为影视详情
+    public static MovieDetail parseJsonToMovieDetail(String json) {
+        MovieDetail movieDetail = null;
+
+        try {
+            //第一层
+            JSONObject jsonObject = new JSONObject(json);
+            //第二层
+            JSONObject newJsonObject = jsonObject.getJSONObject("data");
+            //第三层
+            movieDetail = new MovieDetail();
+            JSONObject movieObject = newJsonObject.getJSONArray("data").getJSONObject(0);
+            movieDetail.setMovieId(movieObject.getString("movie_id"));
+            movieDetail.setTitle(movieObject.getString("title"));
+            movieDetail.setContent(movieObject.getString("content"));
+            //第四层
+            JSONObject authorObject = movieObject.getJSONObject("user");
+            Author author = new Author();
+            author.setName(authorObject.getString("user_name"));
+            author.setSummary(authorObject.getString("summary"));
+            movieDetail.setAuthor(author);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return movieDetail;
+    }
+
+    //Json解析为影视信息
+    public static MovieInfo parseJsonToMovieInfo(String json) {
+        MovieInfo movieInfo = null;
+
+        try {
+            //第一层
+            JSONObject jsonObject = new JSONObject(json);
+            //第二层
+            movieInfo = new MovieInfo();
+            JSONObject movieObject = jsonObject.getJSONObject("data");
+            movieInfo.setMovieTitle(movieObject.getString("title"));
+            movieInfo.setInfo(movieObject.getString("info"));
+            movieInfo.setMovieId(movieObject.getString("id"));
+            movieInfo.setStory(movieObject.getString("officialstory"));
+            String imgUrl = movieObject.getString("detailcover");
+            movieInfo.setCover(ImageUtil.getImageBitmap(imgUrl));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return movieInfo;
+    }
 }

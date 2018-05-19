@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.musicdetail;
+package com.nullptr.one.presenter.musicdetail;
 
 import com.nullptr.one.activity.MusicDetailView;
 import com.nullptr.one.bean.MusicDetail;

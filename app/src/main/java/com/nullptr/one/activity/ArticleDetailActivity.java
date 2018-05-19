@@ -10,8 +10,8 @@ import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.nullptr.one.Presenter.articledetail.ArticleDetailPresenter;
-import com.nullptr.one.Presenter.articledetail.ArticleDetailPresenterImpl;
+import com.nullptr.one.presenter.articledetail.ArticleDetailPresenter;
+import com.nullptr.one.presenter.articledetail.ArticleDetailPresenterImpl;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.ArticleDetail;
 

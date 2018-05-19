@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.musiclist;
+package com.nullptr.one.presenter.musiclist;
 
 /**
  * Presenter层

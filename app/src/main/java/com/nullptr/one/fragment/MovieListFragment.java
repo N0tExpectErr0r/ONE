@@ -1,6 +1,7 @@
 package com.nullptr.one.fragment;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.nullptr.one.Presenter.movielist.MovieListPresenter;
-import com.nullptr.one.Presenter.movielist.MovieListPresenterImpl;
+import com.nullptr.one.activity.MovieDetailActivity;
+import com.nullptr.one.activity.MusicDetailActivity;
+import com.nullptr.one.presenter.movielist.MovieListPresenter;
+import com.nullptr.one.presenter.movielist.MovieListPresenterImpl;
 import com.nullptr.one.R;
 import com.nullptr.one.adapter.MovieAdapter;
 import com.nullptr.one.bean.Movie;
@@ -78,8 +81,11 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
     }
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        String itemId = mMovieList.get(position).getItemId();
+        Intent intent = new Intent(getActivity(), MovieDetailActivity.class);
+        intent.putExtra("item_id", itemId);
+        startActivity(intent);
     }
 
     @Override

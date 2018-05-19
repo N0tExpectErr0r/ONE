@@ -2,38 +2,35 @@ package com.nullptr.one.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.Bundle;
+import android.content.PeriodicSync;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.nullptr.one.presenter.musicdetail.MusicDetailPresenter;
-import com.nullptr.one.presenter.musicdetail.MusicDetailPresenterImpl;
 import com.nullptr.one.R;
-import com.nullptr.one.bean.MusicDetail;
+import com.nullptr.one.bean.MovieDetail;
+import com.nullptr.one.bean.MovieInfo;
+import com.nullptr.one.presenter.moviedetail.MovieDetailPresenter;
+import com.nullptr.one.presenter.moviedetail.MovieDetailPresenterImpl;
+import com.nullptr.one.presenter.movieinfo.MovieInfoPresenter;
+import com.nullptr.one.presenter.movieinfo.MovieInfoPresenterImpl;
 
-/**
- * @AUTHOR nullptr
- * @DATE 创建时间: 2018/5/13
- * @DESCRIPTION 音乐详细内容Activity
- */
-public class MusicDetailActivity extends BaseActivity implements MusicDetailView {
-
+public class MovieDetailActivity extends BaseActivity implements MovieDetailView{
     private String mItemId;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
-    private ImageView mIvImage;
-    private TextView mTvTitle;
-    private TextView mTvSummary;
-    private TextView mTvContent;
+    private MovieDetailPresenter mMovieDetailPresenter;
+    private MovieInfoPresenter mMovieInfoPresenter;
+    private ImageView mIvCover;
+    private TextView mTvMovieTitle;
+    private TextView mTvInfo;
+    private TextView mTvStory;
     private TextView mTvAuthorName;
-    private TextView mTvDate;
-    private TextView mTvMusicName;
-    private TextView mTvMusicInfo;
-    private TextView mTvMusicLyric;
-    private MusicDetailPresenter mMusicDetailPresenter;
+    private TextView mTvContent;
 
     @Override
     protected void initVariables() {
@@ -41,35 +38,34 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         mItemId = intent.getStringExtra("item_id");
     }
 
-
     @Override
     protected void initViews(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_music);
-        initToolbar("一个音乐");
+        setContentView(R.layout.activity_movie);
+        initToolbar("一个影视");
 
-        mIvImage = findViewById(R.id.music_detail_iv_music_image);
-        mTvTitle = findViewById(R.id.music_detail_tv_music_title);
-        mTvSummary = findViewById(R.id.music_detail_tv_music_summary);
-        mTvContent = findViewById(R.id.music_detail_tv_music_story);
-        mTvAuthorName = findViewById(R.id.music_detail_tv_music_author);
-        mTvDate = findViewById(R.id.music_detail_tv_music_date);
-        mTvMusicName = findViewById(R.id.music_detail_tv_music_name);
-        mTvMusicInfo = findViewById(R.id.music_detail_tv_music_info);
-        mTvMusicLyric = findViewById(R.id.music_detail_tv_music_lyric);
+        mIvCover = findViewById(R.id.movie_detail_iv_cover);
+        mTvMovieTitle = findViewById(R.id.movie_detail_tv_movie_title);
+        mTvInfo = findViewById(R.id.movie_detail_tv_info);
+        mTvStory = findViewById(R.id.movie_detail_tv_story);
+        mTvAuthorName = findViewById(R.id.movie_detail_tv_author_name);
+        mTvContent = findViewById(R.id.movie_detail_tv_content);
 
-        mSrlSwipeRefreshLayout = findViewById(R.id.music_detail_srl_swipe_refresh);
+        mSrlSwipeRefreshLayout = findViewById(R.id.movie_detail_srl_swipe_refresh);
         mSrlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mMusicDetailPresenter.getMusicDetail(mItemId);
+                mMovieDetailPresenter.getMovieDetail(mItemId);
+                mMovieInfoPresenter.getMovieInfo(mItemId);
             }
         });
     }
 
     @Override
     protected void loadData() {
-        mMusicDetailPresenter = new MusicDetailPresenterImpl(this);
-        mMusicDetailPresenter.getMusicDetail(mItemId);
+        mMovieDetailPresenter = new MovieDetailPresenterImpl(this);
+        mMovieInfoPresenter = new MovieInfoPresenterImpl(this);
+        mMovieDetailPresenter.getMovieDetail(mItemId);
+        mMovieInfoPresenter.getMovieInfo(mItemId);
     }
 
     @Override
@@ -84,7 +80,6 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         return true;
     }
 
-
     public Toolbar initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
@@ -97,20 +92,27 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         return toolbar;
     }
 
+
     @Override
-    public void setMusic(final MusicDetail music) {
+    public void setMovieDetail(final MovieDetail musicDetail) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mIvImage.setImageBitmap(music.getCover());
-                mTvTitle.setText(music.getStoryTitle());
-                mTvSummary.setText(music.getStorySummary());
-                mTvContent.setText(Html.fromHtml(music.getStory()));  //通过Android自带的Html解析工具解析成文本
-                mTvAuthorName.setText(music.getAuthor().getName());
-                mTvDate.setText(music.getDate());
-                mTvMusicName.setText(music.getTitle());
-                mTvMusicInfo.setText(music.getInfo());
-                mTvMusicLyric.setText(music.getLyric());
+                mTvAuthorName.setText("文/"+musicDetail.getAuthor().getName());
+                mTvContent.setText(Html.fromHtml(musicDetail.getContent()));
+            }
+        });
+    }
+
+    @Override
+    public void setMovieInfo(final MovieInfo musicInfo) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mIvCover.setImageBitmap(musicInfo.getCover());
+                mTvMovieTitle.setText(musicInfo.getMovieTitle());
+                mTvStory.setText(musicInfo.getStory());
+                mTvInfo.setText(musicInfo.getInfo());
             }
         });
     }
@@ -120,7 +122,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                AlertDialog.Builder errorDialog = new AlertDialog.Builder(MusicDetailActivity.this);
+                AlertDialog.Builder errorDialog = new AlertDialog.Builder(MovieDetailActivity.this);
                 errorDialog
                         .setTitle("错误")
                         .setMessage(errorMsg)

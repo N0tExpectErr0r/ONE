@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.musicdetail;
+package com.nullptr.one.presenter.musicdetail;
 
 /**
  * Presenter层

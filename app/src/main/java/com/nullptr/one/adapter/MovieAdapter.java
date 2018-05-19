@@ -23,6 +23,6 @@ public class MovieAdapter extends CommonAdapter<Movie> {
                 .setText(R.id.movie_tv_subtitle, movie.getSubTitle())
                 .setText(R.id.movie_tv_forward, movie.getForward())
                 .setText(R.id.movie_tv_date, movie.getDate())
-                .setText(R.id.movie_tv_author_name, "作者"+movie.getAuthor().getName());
+                .setText(R.id.movie_tv_author_name, "作者："+movie.getAuthor().getName());
     }
 }

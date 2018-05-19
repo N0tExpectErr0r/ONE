@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.articledetail;
+package com.nullptr.one.presenter.articledetail;
 
 /**
  * Presenter层

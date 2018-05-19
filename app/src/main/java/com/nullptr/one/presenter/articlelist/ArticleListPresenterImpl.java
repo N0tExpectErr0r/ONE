@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.articlelist;
+package com.nullptr.one.presenter.articlelist;
 
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.fragment.ArticleListView;

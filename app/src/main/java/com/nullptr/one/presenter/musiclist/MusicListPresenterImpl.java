@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.musiclist;
+package com.nullptr.one.presenter.musiclist;
 
 import com.nullptr.one.bean.Music;
 import com.nullptr.one.fragment.MusicListView;

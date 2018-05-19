@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.articledetail;
+package com.nullptr.one.presenter.articledetail;
 
 import com.nullptr.one.activity.ArticleDetailView;
 import com.nullptr.one.bean.ArticleDetail;

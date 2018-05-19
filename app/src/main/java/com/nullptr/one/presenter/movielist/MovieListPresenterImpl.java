@@ -1,4 +1,4 @@
-package com.nullptr.one.Presenter.movielist;
+package com.nullptr.one.presenter.movielist;
 
 
 import com.nullptr.one.bean.Movie;
