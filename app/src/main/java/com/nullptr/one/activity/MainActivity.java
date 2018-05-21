@@ -1,5 +1,6 @@
 package com.nullptr.one.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import com.nullptr.one.R;
 import com.nullptr.one.adapter.ViewPagerAdapter;
@@ -31,6 +33,8 @@ public class MainActivity extends BaseActivity {
     private NavigationView mNvNavigationView;
     private TabLayout mTlTabLayout;
     private ViewPager mVpViewPager;
+    private boolean hasFragment = false;
+
 
     @Override
     protected void initVariables() {
@@ -52,6 +56,7 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new ArticleListFragment());
         mFragments.add(new MusicListFragment());
         mFragments.add(new MovieListFragment());
+        hasFragment = true;
 
         FragmentManager fm = getSupportFragmentManager();
         ViewPagerAdapter adapter = new ViewPagerAdapter(fm);
@@ -63,6 +68,7 @@ public class MainActivity extends BaseActivity {
                 mVpViewPager));  //TabLayout随ViewPager变动
         mVpViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(
                 mTlTabLayout));    //ViewPager随TabLayout变动
+        //NavigationView随TabLayout变动
         mTlTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -90,7 +96,7 @@ public class MainActivity extends BaseActivity {
             public void onTabReselected(TabLayout.Tab tab) {
 
             }
-        });               //NavigationView随TabLayout变动
+        });
         //初始化侧边栏
         mDlDrawerLayout = findViewById(R.id.main_dl_drawer);
         mNvNavigationView = findViewById(R.id.main_nav_view);
@@ -114,6 +120,13 @@ public class MainActivity extends BaseActivity {
                                 //选中影视Tab
                                 mTlTabLayout.getTabAt(2).select();
                                 //跳转到视频Fragment
+                                break;
+                            case R.id.nav_image:
+                                //选中图文Tab
+                                //跳转到图文Activity
+                                mNvNavigationView.setCheckedItem(R.id.nav_article);
+                                Intent intent = new Intent(MainActivity.this,ImageDetailActivity.class);
+                                startActivity(intent);
                                 break;
                             default:
                         }
@@ -142,7 +155,7 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    public Toolbar initToolbar(CharSequence title) {
+    private Toolbar initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

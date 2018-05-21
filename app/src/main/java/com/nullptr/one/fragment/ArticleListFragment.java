@@ -10,12 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.nullptr.one.presenter.articlelist.ArticleListPresenter;
-import com.nullptr.one.presenter.articlelist.ArticleListPresenterImpl;
 import com.nullptr.one.R;
 import com.nullptr.one.activity.ArticleDetailActivity;
 import com.nullptr.one.adapter.ArticleAdapter;
 import com.nullptr.one.bean.Article;
+import com.nullptr.one.presenter.articlelist.ArticleListPresenter;
+import com.nullptr.one.presenter.articlelist.ArticleListPresenterImpl;
 import com.nullptr.one.ui.LoadMoreListView;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +28,12 @@ import java.util.List;
 public class ArticleListFragment extends Fragment implements ArticleListView,
         ListView.OnItemClickListener, LoadMoreListView.OnLoadMoreListener {
 
-    private List<Article> mArticles;
+    private List<Article> mArticleList;
     private LoadMoreListView mLvListView;
     private ArticleAdapter mAdapter;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
     private ArticleListPresenter mArticleListPresenter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,16 +64,18 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
                 mArticleListPresenter.loadArticleList();
             }
         });
-
-        //初始化ListView
-        mAdapter = new ArticleAdapter(getActivity(), new ArrayList<Article>(),
-                R.layout.item_list_article);
-        mLvListView.setAdapter(mAdapter);
-        mLvListView.setFooterText("正在加载更多文章...");     //设置加载更多文字
-        mLvListView.setLoadMoreListener(this);              //设置加载更多监听
-        mLvListView.setOnItemClickListener(this);           //设置单击Item事件
-        //加载初始数据
-        mArticleListPresenter.loadArticleList();
+        if (mArticleList == null || mArticleList.size() == 0) {
+            //不是每次都要刷新的，之前有数据的时候不需要刷新
+            //初始化ListView
+            mAdapter = new ArticleAdapter(getActivity(), new ArrayList<Article>(),
+                    R.layout.item_list_article);
+            mLvListView.setAdapter(mAdapter);
+            mLvListView.setFooterText("正在加载更多文章...");     //设置加载更多文字
+            mLvListView.setLoadMoreListener(this);              //设置加载更多监听
+            mLvListView.setOnItemClickListener(this);           //设置单击Item事件
+            //加载初始数据
+            mArticleListPresenter.loadArticleList();
+        }
     }
 
     @Override
@@ -82,7 +85,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
             public void run() {
                 //在UI线程更新Adapter的DataList
                 mAdapter.setDataList(articleList);
-                mArticles = articleList;
+                mArticleList = articleList;
             }
         });
 
@@ -132,8 +135,8 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mArticles.addAll(articleList);
-                mAdapter.setDataList(mArticles);
+                mArticleList.addAll(articleList);
+                mAdapter.setDataList(mArticleList);
                 mLvListView.setLoadCompleted();
             }
         });
@@ -141,7 +144,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String itemId = mArticles.get(position).getItemId();
+        String itemId = mArticleList.get(position).getItemId();
         Intent intent = new Intent(getActivity(), ArticleDetailActivity.class);
         intent.putExtra("item_id", itemId);
         startActivity(intent);
@@ -151,7 +154,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     public void onLoadMore() {
         //ListView加载更多的回调
         //获取更多数据
-        String lastId = mArticles.get(mArticles.size() - 1).getId();
+        String lastId = mArticleList.get(mArticleList.size() - 1).getId();
         mArticleListPresenter.loadMore(lastId);
     }
 }

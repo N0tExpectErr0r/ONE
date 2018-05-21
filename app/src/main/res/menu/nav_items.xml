@@ -4,14 +4,18 @@
         <item
             android:id="@+id/nav_article"
             android:icon="@drawable/ic_article_dark"
-            android:title="文章" />
+            android:title="一个文章" />
         <item
             android:id="@+id/nav_music"
             android:icon="@drawable/ic_music_dark"
-            android:title="音乐" />
+            android:title="一个音乐" />
         <item
             android:id="@+id/nav_video"
             android:icon="@drawable/ic_video_dark"
-            android:title="影视" />
+            android:title="一个影视" />
+        <item
+            android:id="@+id/nav_image"
+            android:icon="@drawable/ic_image_dark"
+            android:title="一个图文" />
     </group>
 </menu>

@@ -23,6 +23,8 @@
         <activity android:name=".activity.MusicDetailActivity"/>
         <activity android:name=".activity.MovieDetailActivity">
         </activity>
+        <activity android:name=".activity.ImageDetailActivity">
+        </activity>
     </application>
 
 </manifest>

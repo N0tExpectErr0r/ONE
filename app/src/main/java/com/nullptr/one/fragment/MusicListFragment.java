@@ -59,14 +59,17 @@ public class MusicListFragment extends Fragment implements MusicListView,
             }
         });
 
-        mAdapter = new MusicAdapter(getActivity(), new ArrayList<Music>(),
-                R.layout.item_list_music);
-        mLvListView.setAdapter(mAdapter);
-        mLvListView.setFooterText("正在加载更多音乐...");     //设置加载更多文字
-        mLvListView.setLoadMoreListener(this);              //设置加载更多监听
-        mLvListView.setOnItemClickListener(this);           //设置单击Item事件
-        //加载初始数据
-        mMusicListPresenter.loadMusicList();
+        if (mMusicList == null || mMusicList.size() == 0) {
+            //不是每次都要刷新的，之前有数据的时候不需要刷新
+            mAdapter = new MusicAdapter(getActivity(), new ArrayList<Music>(),
+                    R.layout.item_list_music);
+            mLvListView.setAdapter(mAdapter);
+            mLvListView.setFooterText("正在加载更多音乐...");     //设置加载更多文字
+            mLvListView.setLoadMoreListener(this);              //设置加载更多监听
+            mLvListView.setOnItemClickListener(this);           //设置单击Item事件
+            //加载初始数据
+            mMusicListPresenter.loadMusicList();
+        }
     }
 
     @Override

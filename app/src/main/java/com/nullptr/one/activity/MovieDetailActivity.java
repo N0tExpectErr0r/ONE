@@ -80,7 +80,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         return true;
     }
 
-    public Toolbar initToolbar(CharSequence title) {
+    private Toolbar initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

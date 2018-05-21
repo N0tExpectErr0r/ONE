@@ -1,8 +1,11 @@
 package com.nullptr.one.util;
 
+import android.provider.ContactsContract.CommonDataKinds.Nickname;
+import android.util.Log;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.bean.Author;
+import com.nullptr.one.bean.ImageDetail;
 import com.nullptr.one.bean.Movie;
 import com.nullptr.one.bean.MovieDetail;
 import com.nullptr.one.bean.MovieInfo;
@@ -244,5 +247,43 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return movieInfo;
+    }
+
+    //Json解析为ImageIdList
+    public static List<String> parseJsonToImageList(String json){
+        List<String> imageList = null;
+
+        try {
+            //第一层
+            JSONObject jsonObject = new JSONObject(json);
+            //第二层
+            imageList = new ArrayList<>();
+            JSONArray imageArray = jsonObject.getJSONArray("data");
+            for (int i=0;i<imageArray.length();i++){
+                imageList.add((String)imageArray.get(i));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return imageList;
+    }
+
+    //Json解析为ImageDetail
+    public static ImageDetail parseJsonToImageDetail(String json){
+        ImageDetail imageDetail = null;
+
+        try {
+            //第一层
+            JSONObject jsonObject = new JSONObject(json);
+            //第二层
+            imageDetail = new ImageDetail();
+            JSONObject imageObject = jsonObject.getJSONObject("data");
+            imageDetail.setImageURL(imageObject.getString("hp_img_url"));
+            imageDetail.setTitle(imageObject.getString("hp_title"));
+            imageDetail.setContent(imageObject.getString("hp_content"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return imageDetail;
     }
 }

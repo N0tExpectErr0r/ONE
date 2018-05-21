@@ -31,26 +31,23 @@
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="瑞克和莫蒂 第三季"
-                    android:textSize="18sp"/>
+                    android:text="正在读取影视名"
+                    android:textSize="24sp"/>
                 <TextView
                     android:id="@+id/movie_detail_tv_info"
                     android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="导演: 贾斯汀·罗兰 / Juan Jose Meza-Leon
-编剧: 丹·哈萌 / 贾斯汀·罗兰
-主演: 贾斯汀·罗兰 / 克里斯·帕内尔 / 斯宾瑟·格拉默 / 萨拉·乔克 / 内森·菲利安 / 更多...
-类型: 科幻 / 动画 / 冒险
-官方网站: www.rickandmorty.com
-制片国家/地区: 美国"/>
+                    android:textSize="16sp"
+                    android:text="正在读取影视信息"/>
                 <TextView
                     android:id="@+id/movie_detail_tv_story"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Adult Swim频道续订旗下超高收视动画片《瑞克和莫蒂》（Rick and Morty）第三季。"/>
+                    android:textSize="16sp"
+                    android:text="正在读取影视简介"/>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -63,14 +60,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:text="文/鱼叔"
+                    android:text="文/正在读取作者信息"
                     android:textSize="18sp"/>
                 <TextView
                     android:id="@+id/movie_detail_tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
-                    android:text="这里是正文"/>
+                    android:text="正在读取正文信息"/>
             </LinearLayout>
         </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

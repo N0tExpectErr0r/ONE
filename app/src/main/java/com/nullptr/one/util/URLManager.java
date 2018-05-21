@@ -11,7 +11,7 @@ import org.xmlpull.v1.XmlPullParserException;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/10
- * @DESCRIPTION 用于获取Url
+ * @DESCRIPTION 用于从url.xml中获取Url
  */
 public class URLManager {
 
