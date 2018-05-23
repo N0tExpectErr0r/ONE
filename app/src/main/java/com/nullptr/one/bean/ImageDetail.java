@@ -3,7 +3,7 @@ package com.nullptr.one.bean;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/20
- * @DESCRIPTION
+ * @DESCRIPTION 图片详细信息bean
  */
 public class ImageDetail {
     private String imageURL;

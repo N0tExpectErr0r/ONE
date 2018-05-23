@@ -9,7 +9,7 @@ import com.nullptr.one.db.ArticleDbSchema.ArticleTable.Cols;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/21
- * @DESCRIPTION
+ * @DESCRIPTION 文章数据库
  */
 public class ArticleBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

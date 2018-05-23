@@ -48,7 +48,7 @@ public class MovieInfoModelImpl implements MovieInfoModel {
             }).start();
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest("getMovieInfo", itemId, new OnRequestListener() {
+            HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/movie/detail/{id}", itemId, new OnRequestListener() {
                 @Override
                 public void onResponse(String response) {
                     //将该影视信息存入数据库

@@ -9,7 +9,7 @@ import com.nullptr.one.db.MovieDetailDbSchema.MovieDetailTable.Cols;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/21
- * @DESCRIPTION
+ * @DESCRIPTION 电影详细数据库
  */
 public class MovieDetailBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

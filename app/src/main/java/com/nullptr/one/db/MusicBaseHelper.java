@@ -9,7 +9,7 @@ import com.nullptr.one.db.MusicDbSchema.MusicTable.Cols;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/21
- * @DESCRIPTION
+ * @DESCRIPTION 音乐信息数据库
  */
 public class MusicBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

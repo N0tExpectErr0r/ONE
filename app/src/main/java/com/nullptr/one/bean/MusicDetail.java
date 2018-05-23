@@ -12,7 +12,7 @@ public class MusicDetail {
     private String id;
     private String title;
     private String storySummary;
-    private Bitmap cover;
+    private String coverURL;
     private String storyTitle;
     private String story;
     private String lyric;
@@ -45,12 +45,12 @@ public class MusicDetail {
         this.storySummary = storySummary;
     }
 
-    public Bitmap getCover() {
-        return cover;
+    public String getCoverURL() {
+        return coverURL;
     }
 
-    public void setCover(Bitmap cover) {
-        this.cover = cover;
+    public void setCoverURL(String coverURL) {
+        this.coverURL = coverURL;
     }
 
     public String getStoryTitle() {

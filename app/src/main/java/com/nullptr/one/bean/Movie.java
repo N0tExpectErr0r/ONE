@@ -13,7 +13,7 @@ public class Movie {
     private String itemId;
     private String title;
     private String forward;
-    private Bitmap image;
+    private String imageURL;
     private String date;
     private Author author;
     private String subTitle;
@@ -50,12 +50,12 @@ public class Movie {
         this.forward = forward;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getDate() {

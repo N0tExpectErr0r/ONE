@@ -17,7 +17,7 @@ import java.net.URL;
  */
 public class HttpUtil {
 
-    public static void sendHttpRequest(final String urlKey, final String param,
+    public static void sendHttpRequest(final String url, final String param,
             final OnRequestListener listener) {
         new Thread(new Runnable() {
             @Override
@@ -26,22 +26,14 @@ public class HttpUtil {
 
                 try {
                     listener.onStart();
-                    URLData data = URLManager.getURL(urlKey);
-                    if (data == null) {
-                        throw new Exception("urlKey不正确，找不到url");
-                    }
-                    String address = data.getUrl();
+                    String address = url;
                     if (param != null) {
                         address = address.replace("{id}", param);   //替换网址
                     }
 
                     URL url = new URL(address);
                     connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod(data.getNetType());
-
-                    //设置连接超时的时间
-                    connection.setConnectTimeout(data.getExpires());
-                    connection.setReadTimeout(data.getExpires());
+                    connection.setRequestMethod("GET");
 
                     InputStream in = connection.getInputStream();
                     //下面对获取到的输入流进行读取

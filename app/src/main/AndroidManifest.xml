@@ -3,6 +3,7 @@
     package="com.nullptr.one">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -12,18 +13,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ArticleDetailActivity"/>
-        <activity android:name=".activity.MusicDetailActivity"/>
-        <activity android:name=".activity.MovieDetailActivity">
+        <activity android:name=".view.activity.ArticleDetailActivity">
+            <intent-filter>
+                <action android:name="ARTICLE_DETAIL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
-        <activity android:name=".activity.ImageDetailActivity">
+        <activity android:name=".view.activity.MusicDetailActivity">
+            <intent-filter>
+                <action android:name="MUSIC_DETAIL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.MovieDetailActivity">
+            <intent-filter>
+                <action android:name="MOVIE_DETAIL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.ImageDetailActivity">
         </activity>
     </application>
 

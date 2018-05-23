@@ -13,7 +13,7 @@ public class Article {
     private String itemId;  //itemId
     private String title;   //标题
     private String forward; //文章描述
-    private Bitmap image;   //图片
+    private String imageURL;   //图片
     private int likeCount;  //点赞数量
     private String date;    //发布日期
     private Author author;  //作者
@@ -50,12 +50,12 @@ public class Article {
         this.forward = forward;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageURL;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public int getLikeCount() {

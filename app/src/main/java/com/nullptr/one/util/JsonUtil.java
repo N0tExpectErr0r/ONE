@@ -1,7 +1,5 @@
 package com.nullptr.one.util;
 
-import android.provider.ContactsContract.CommonDataKinds.Nickname;
-import android.util.Log;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.bean.Author;
@@ -42,8 +40,7 @@ public class JsonUtil {
                 article.setItemId(articleObject.getString("item_id"));
                 article.setTitle(articleObject.getString("title"));
                 article.setForward(articleObject.getString("forward"));
-                String imgUrl = articleObject.getString("img_url");
-                article.setImage(ImageUtil.getImageBitmap(imgUrl));
+                article.setImageURL(articleObject.getString("img_url"));
                 article.setDate(articleObject.getString("last_update_date"));
                 article.setLikeCount(articleObject.getInt("like_count"));
 
@@ -107,8 +104,7 @@ public class JsonUtil {
                 music.setItemId(musicObject.getString("item_id"));
                 music.setTitle(musicObject.getString("title"));
                 music.setForward(musicObject.getString("forward"));
-                String imgUrl = musicObject.getString("img_url");
-                music.setImage(ImageUtil.getImageBitmap(imgUrl));
+                music.setImageURL(musicObject.getString("img_url"));
 
                 //第三层 歌手解析
                 JSONObject singerObject = musicObject.getJSONObject("author");
@@ -139,8 +135,7 @@ public class JsonUtil {
 
             music.setId(musicObject.getString("id"));
             music.setTitle(musicObject.getString("title"));
-            String coverUrl = musicObject.getString("cover");
-            music.setCover(ImageUtil.getImageBitmap(coverUrl));
+            music.setCoverURL(musicObject.getString("cover"));
             music.setStorySummary(musicObject.getString("story_summary"));
             music.setStory(musicObject.getString("story"));
             music.setStoryTitle(musicObject.getString("story_title"));
@@ -178,8 +173,7 @@ public class JsonUtil {
                 movie.setItemId(movieObject.getString("item_id"));
                 movie.setTitle(movieObject.getString("title"));
                 movie.setForward(movieObject.getString("forward"));
-                String imgUrl = movieObject.getString("img_url");
-                movie.setImage(ImageUtil.getImageBitmap(imgUrl));
+                movie.setImageURL(movieObject.getString("img_url"));
                 movie.setSubTitle(movieObject.getString("subtitle"));
                 movie.setDate(movieObject.getString("last_update_date"));
 
@@ -240,8 +234,7 @@ public class JsonUtil {
             movieInfo.setInfo(movieObject.getString("info"));
             movieInfo.setMovieId(movieObject.getString("id"));
             movieInfo.setStory(movieObject.getString("officialstory"));
-            String imgUrl = movieObject.getString("detailcover");
-            movieInfo.setCover(ImageUtil.getImageBitmap(imgUrl));
+            movieInfo.setCoverURL(movieObject.getString("detailcover"));
 
         } catch (JSONException e) {
             e.printStackTrace();

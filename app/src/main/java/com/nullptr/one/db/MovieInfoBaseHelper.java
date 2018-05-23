@@ -9,7 +9,7 @@ import com.nullptr.one.db.MovieInfoDbSchema.MovieInfoTable;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/21
- * @DESCRIPTION
+ * @DESCRIPTION 电影信息数据库
  */
 public class MovieInfoBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;

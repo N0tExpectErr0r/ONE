@@ -17,7 +17,7 @@ public class MovieListModelImpl implements MovieListModel {
 
     @Override
     public void getList(final OnMovieListListener onMovieListListener) {
-        HttpUtil.sendHttpRequest("getMovieList", "0", new OnRequestListener() {
+        HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/channel/movie/more/{id}", "0", new OnRequestListener() {
             @Override
             public void onResponse(String response) {
                 List<Movie> movieList = JsonUtil.parseJsonToMovieList(response);
@@ -43,7 +43,7 @@ public class MovieListModelImpl implements MovieListModel {
 
     @Override
     public void getMore(final OnMoreMovieListener onMoreMovieListener, String lastId) {
-        HttpUtil.sendHttpRequest("getMovieList", lastId, new OnRequestListener() {
+        HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/channel/movie/more/{id}", lastId, new OnRequestListener() {
             @Override
             public void onResponse(String response) {
                 List<Movie> movieList = JsonUtil.parseJsonToMovieList(response);

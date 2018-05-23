@@ -13,7 +13,7 @@ public class Music {
     private String itemId;
     private String title;
     private String forward;
-    private Bitmap image;
+    private String imageURL;
     private Singer singer;
 
     public String getId() {
@@ -48,12 +48,12 @@ public class Music {
         this.forward = forward;
     }
 
-    public Bitmap getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(Bitmap image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public Singer getSinger() {

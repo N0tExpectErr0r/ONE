@@ -46,7 +46,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
             }).start();
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest("getArticleDetail", itemId, new OnRequestListener() {
+            HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/essay/{id}", itemId, new OnRequestListener() {
                 @Override
                 public void onResponse(String response) {
                     //将该文章详情存入数据库
@@ -80,4 +80,5 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
 
         return values;
     }
+
 }

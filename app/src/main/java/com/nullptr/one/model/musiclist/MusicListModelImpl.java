@@ -17,7 +17,7 @@ public class MusicListModelImpl implements MusicListModel {
 
     @Override
     public void getList(final OnMusicListListener onMusicListListener) {
-        HttpUtil.sendHttpRequest("getMusicList", "0", new OnRequestListener() {
+        HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/channel/music/more/{id}", "0", new OnRequestListener() {
             @Override
             public void onResponse(String response) {
                 List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
@@ -43,7 +43,7 @@ public class MusicListModelImpl implements MusicListModel {
 
     @Override
     public void getMore(final OnMoreMusicListener onMoreMusicListener, String lastId) {
-        HttpUtil.sendHttpRequest("getMusicList", lastId, new OnRequestListener() {
+        HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/channel/music/more/{id}", lastId, new OnRequestListener() {
             @Override
             public void onResponse(String response) {
                 List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
