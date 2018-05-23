@@ -11,7 +11,10 @@ public class MovieDetailDbSchema {
 
         public static final class Cols{
             public static final String ITEM_ID = "item_id";
-            public static final String JSON = "json";
+            public static final String TITLE = "title";
+            public static final String CONTENT = "content";
+            public static final String AUTHOR_NAME = "author_name";
+            public static final String AUTHOR_DESC = "author_desc";
         }
     }
 }

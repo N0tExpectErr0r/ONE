@@ -49,7 +49,7 @@ public class JsonUtil {
 
                 Author author = new Author();
                 author.setName(authorObject.getString("user_name"));
-                author.setSummary(authorObject.getString("summary"));
+                author.setDesc(authorObject.getString("summary"));
 
                 article.setAuthor(author);
                 articleList.add(article);
@@ -78,9 +78,6 @@ public class JsonUtil {
             article.setContent(articleObject.getString("hp_content"));
             article.setDate(articleObject.getString("last_update_date"));
             article.setCopyright(articleObject.getString("copyright"));
-            article.setCommentCount(articleObject.getInt("commentnum"));
-            article.setPreviousId(articleObject.getString("previous_id"));
-            article.setNextId(articleObject.getString("next_id"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -142,12 +139,11 @@ public class JsonUtil {
             music.setLyric(musicObject.getString("lyric"));
             music.setDate(musicObject.getString("last_update_date"));
             music.setInfo(musicObject.getString("info"));
-            music.setCommentNum(musicObject.getInt("commentnum"));
             //第三层
             JSONObject authorObject = musicObject.getJSONObject("story_author");
             Author author = new Author();
             author.setName(authorObject.getString("user_name"));
-            author.setSummary(authorObject.getString("summary"));
+            author.setDesc(authorObject.getString("summary"));
 
             music.setAuthor(author);
         } catch (JSONException e) {
@@ -182,7 +178,7 @@ public class JsonUtil {
 
                 Author author = new Author();
                 author.setName(authorObject.getString("user_name"));
-                author.setSummary(authorObject.getString("summary"));
+                author.setDesc(authorObject.getString("summary"));
 
                 movie.setAuthor(author);
                 movieList.add(movie);
@@ -212,7 +208,7 @@ public class JsonUtil {
             JSONObject authorObject = movieObject.getJSONObject("user");
             Author author = new Author();
             author.setName(authorObject.getString("user_name"));
-            author.setSummary(authorObject.getString("summary"));
+            author.setDesc(authorObject.getString("summary"));
             movieDetail.setAuthor(author);
         } catch (JSONException e) {
             e.printStackTrace();

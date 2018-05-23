@@ -14,6 +14,7 @@ import com.nullptr.one.R;
 import com.nullptr.one.bean.MusicDetail;
 import com.nullptr.one.presenter.MusicDetailPresenterImpl;
 import com.nullptr.one.presenter.interfaces.DetailPresenter.MusicDetailPresenter;
+import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.util.ImageLoader;
 import com.nullptr.one.view.interfaces.IDetailView.MusicDetailView;
 
@@ -108,7 +109,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
                 ImageLoader.getInstance().loadImg(mIvImage,music.getCoverURL());
                 mTvTitle.setText(music.getStoryTitle());
                 mTvSummary.setText(music.getStorySummary());
-                mTvContent.setText(Html.fromHtml(music.getStory()));  //通过Android自带的Html解析工具解析成文本
+                mTvContent.setText(HtmlPraser.getInstance().prase(music.getStory()));  //通过Android自带的Html解析工具解析成文本
                 mTvAuthorName.setText(music.getAuthor().getName());
                 mTvDate.setText(music.getDate());
                 mTvMusicName.setText(music.getTitle());

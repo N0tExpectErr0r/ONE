@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.nullptr.one.MyApplication;
+import com.nullptr.one.bean.Author;
 import com.nullptr.one.bean.MovieDetail;
 import com.nullptr.one.db.MovieDetailBaseHelper;
 import com.nullptr.one.db.MovieDetailDbSchema.MovieDetailTable;
@@ -31,7 +32,7 @@ public class MovieDetailModelImpl implements MovieDetailModel {
     @Override
     public void getMovieDetail(final OnMovieDetailListener onMovieDetailListener,
             final String itemId) {
-        final Cursor cursor = mDatabase.query(MovieDetailTable.NAME, new String[]{Cols.JSON}, "item_id = ?",
+        final Cursor cursor = mDatabase.query(MovieDetailTable.NAME, null, "item_id = ?",
                 new String[]{itemId}, null, null, null);
         if (cursor.getCount()>0){
             //如果已经有数据了，直接读取
@@ -40,9 +41,18 @@ public class MovieDetailModelImpl implements MovieDetailModel {
                 public void run() {
                     //耗时操作，在新线程
                     cursor.moveToFirst();
-                    String json = cursor.getString(cursor.getColumnIndex(Cols.JSON));
-                    MovieDetail movieDetail = JsonUtil.parseJsonToMovieDetail(json);
-                    onMovieDetailListener.onSuccess(movieDetail);
+
+                    MovieDetail movie = new MovieDetail();
+                    movie.setMovieId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+                    movie.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+                    movie.setContent(cursor.getString(cursor.getColumnIndex(Cols.CONTENT)));
+                    Author author = new Author();
+                    author.setName(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_NAME)));
+                    author.setDesc(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_DESC)));
+                    movie.setAuthor(author);
+
+                    onMovieDetailListener.onSuccess(movie);
+                    onMovieDetailListener.onFinish();
                 }
             }).start();
 
@@ -52,8 +62,8 @@ public class MovieDetailModelImpl implements MovieDetailModel {
                 @Override
                 public void onResponse(String response) {
                     //将该影视详情存入数据库
-                    mDatabase.insert(MovieDetailTable.NAME, null, getContentValues(itemId, response));
                     MovieDetail movieDetail = JsonUtil.parseJsonToMovieDetail(response);
+                    mDatabase.insert(MovieDetailTable.NAME, null, getContentValues(movieDetail));
                     onMovieDetailListener.onSuccess(movieDetail);
                 }
 
@@ -75,10 +85,13 @@ public class MovieDetailModelImpl implements MovieDetailModel {
         }
     }
 
-    private static ContentValues getContentValues(String itemId, String json) {
+    private static ContentValues getContentValues(MovieDetail movie) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ITEM_ID, itemId);
-        values.put(Cols.JSON, json);
+        values.put(Cols.ITEM_ID, movie.getMovieId());
+        values.put(Cols.TITLE, movie.getTitle());
+        values.put(Cols.CONTENT, movie.getContent());
+        values.put(Cols.AUTHOR_NAME, movie.getAuthor().getName());
+        values.put(Cols.AUTHOR_DESC, movie.getAuthor().getDesc());
 
         return values;
     }

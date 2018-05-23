@@ -17,6 +17,7 @@ import com.nullptr.one.presenter.MovieDetailPresenterImpl;
 import com.nullptr.one.presenter.MovieInfoPresenterImpl;
 import com.nullptr.one.presenter.interfaces.DetailPresenter.MovieDetailPresenter;
 import com.nullptr.one.presenter.interfaces.DetailPresenter.MovieInfoPresenter;
+import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.util.ImageLoader;
 import com.nullptr.one.view.interfaces.IDetailView.MovieDetailView;
 
@@ -101,7 +102,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
             @Override
             public void run() {
                 mTvAuthorName.setText("文/" + musicDetail.getAuthor().getName());
-                mTvContent.setText(Html.fromHtml(musicDetail.getContent()));
+                mTvContent.setText(HtmlPraser.getInstance().prase(musicDetail.getContent()));
             }
         });
     }

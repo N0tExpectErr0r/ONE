@@ -23,7 +23,10 @@ public class MovieInfoBaseHelper extends SQLiteOpenHelper {
         //创建Movie表
         db.execSQL("create table if not exists "+MovieInfoTable.NAME+"( "
                 +Cols.ITEM_ID+" text, "
-                +Cols.JSON+" text)");
+                +Cols.COVER_URL+" text, "
+                +Cols.MOVIE_TITLE+" text, "
+                +Cols.INFO+" text, "
+                +Cols.STORY+" text)");
     }
 
     @Override

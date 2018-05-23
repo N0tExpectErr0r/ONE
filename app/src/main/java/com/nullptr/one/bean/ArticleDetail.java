@@ -14,9 +14,6 @@ public class ArticleDetail {
     private String content;
     private String date;
     private String copyright;
-    private String nextId;
-    private String previousId;
-    private int commentCount;
 
     public String getContentId() {
         return contentId;
@@ -72,29 +69,5 @@ public class ArticleDetail {
 
     public void setCopyright(String copyright) {
         this.copyright = copyright;
-    }
-
-    public String getNextId() {
-        return nextId;
-    }
-
-    public void setNextId(String nextId) {
-        this.nextId = nextId;
-    }
-
-    public String getPreviousId() {
-        return previousId;
-    }
-
-    public void setPreviousId(String previousId) {
-        this.previousId = previousId;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
     }
 }

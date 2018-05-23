@@ -14,6 +14,7 @@ import com.nullptr.one.presenter.ArticleDetailPresenterImpl;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.presenter.interfaces.DetailPresenter.ArticleDetailPresenter;
+import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.view.interfaces.IDetailView.ArticleDetailView;
 
 /**
@@ -105,7 +106,7 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
 
                 mTvTitle.setText(article.getTitle());
                 mTvContent
-                        .setText(Html.fromHtml(article.getContent()));  //通过Android自带的Html解析工具解析成文本
+                        .setText(HtmlPraser.getInstance().prase(article.getContent()));  //通过Android自带的Html解析工具解析成文本
                 mTvDate.setText(article.getDate());
             }
         });

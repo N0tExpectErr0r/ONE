@@ -123,7 +123,6 @@ public class ImageLoader {
             addBitmapToLocal(url, bitmap);   //添加到本地缓存
             is.close();
         } catch (MalformedURLException e) {
-
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,8 +137,8 @@ public class ImageLoader {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //内存缓存
                 boolean isLoaded = false;
+                //内存缓存
                 final Bitmap memoryBitmap = getBitmapFromMemoryCache(url);
                 if (memoryBitmap != null && !isLoaded) {
                     isLoaded = true;

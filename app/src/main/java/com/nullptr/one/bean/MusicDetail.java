@@ -19,7 +19,6 @@ public class MusicDetail {
     private String info;
     private String date;
     private Author author;
-    private int commentNum;
 
     public String getId() {
         return id;
@@ -99,13 +98,5 @@ public class MusicDetail {
 
     public void setAuthor(Author author) {
         this.author = author;
-    }
-
-    public int getCommentNum() {
-        return commentNum;
-    }
-
-    public void setCommentNum(int commentNum) {
-        this.commentNum = commentNum;
     }
 }

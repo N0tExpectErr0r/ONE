@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.nullptr.one.MyApplication;
+import com.nullptr.one.bean.Movie;
 import com.nullptr.one.bean.MovieInfo;
 import com.nullptr.one.db.MovieInfoBaseHelper;
 import com.nullptr.one.db.MovieInfoDbSchema.MovieInfoTable;
@@ -32,7 +33,7 @@ public class MovieInfoModelImpl implements MovieInfoModel {
     @Override
     public void getMovieInfo(final OnMovieInfoListener onMovieInfoListener,
             final String itemId) {
-        final Cursor cursor = mDatabase.query(MovieInfoTable.NAME, new String[]{Cols.JSON}, "item_id = ?",
+        final Cursor cursor = mDatabase.query(MovieInfoTable.NAME, null, "item_id = ?",
                 new String[]{itemId}, null, null, null);
         if (cursor.getCount() > 1) {
             //如果已经有数据了，直接读取
@@ -41,8 +42,14 @@ public class MovieInfoModelImpl implements MovieInfoModel {
                 public void run() {
                     //耗时操作，在新线程
                     cursor.moveToFirst();
-                    String json = cursor.getString(cursor.getColumnIndex(Cols.JSON));
-                    MovieInfo movieInfo = JsonUtil.parseJsonToMovieInfo(json);
+
+                    MovieInfo movieInfo = new MovieInfo();
+                    movieInfo.setMovieId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+                    movieInfo.setCoverURL(cursor.getString(cursor.getColumnIndex(Cols.COVER_URL)));
+                    movieInfo.setMovieTitle(cursor.getString(cursor.getColumnIndex(Cols.MOVIE_TITLE)));
+                    movieInfo.setInfo(cursor.getString(cursor.getColumnIndex(Cols.INFO)));
+                    movieInfo.setStory(cursor.getString(cursor.getColumnIndex(Cols.STORY)));
+
                     onMovieInfoListener.onSuccess(movieInfo);
                 }
             }).start();
@@ -52,8 +59,8 @@ public class MovieInfoModelImpl implements MovieInfoModel {
                 @Override
                 public void onResponse(String response) {
                     //将该影视信息存入数据库
-                    mDatabase.insert(MovieInfoTable.NAME, null, getContentValues(itemId, response));
                     MovieInfo movieInfo = JsonUtil.parseJsonToMovieInfo(response);
+                    mDatabase.insert(MovieInfoTable.NAME, null, getContentValues(movieInfo));
                     onMovieInfoListener.onSuccess(movieInfo);
                 }
 
@@ -75,10 +82,13 @@ public class MovieInfoModelImpl implements MovieInfoModel {
         }
     }
 
-    private static ContentValues getContentValues(String itemId, String json) {
+    private static ContentValues getContentValues(MovieInfo movieInfo) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ITEM_ID, itemId);
-        values.put(Cols.JSON, json);
+        values.put(Cols.ITEM_ID, movieInfo.getMovieId());
+        values.put(Cols.COVER_URL, movieInfo.getCoverURL());
+        values.put(Cols.MOVIE_TITLE, movieInfo.getMovieTitle());
+        values.put(Cols.INFO, movieInfo.getInfo());
+        values.put(Cols.STORY, movieInfo.getStory());
 
         return values;
     }

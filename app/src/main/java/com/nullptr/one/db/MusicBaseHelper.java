@@ -23,7 +23,15 @@ public class MusicBaseHelper extends SQLiteOpenHelper {
         //创建Music表
         db.execSQL("create table if not exists "+MusicTable.NAME+"( "
                 +Cols.ITEM_ID+" text, "
-                +Cols.JSON+" text)");
+                +Cols.TITLE+" text, "
+                +Cols.STORY_SUMMARY+" text, "
+                +Cols.COVER_URL+" text, "
+                +Cols.STORY_TITLE+" text, "
+                +Cols.STORY+" text, "
+                +Cols.LYRIC+" text, "
+                +Cols.INFO+" text, "
+                +Cols.DATE+" text, "
+                +Cols.AUTHOR_NAME+" text)");
     }
 
     @Override

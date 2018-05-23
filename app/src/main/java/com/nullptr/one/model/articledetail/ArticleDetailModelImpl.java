@@ -30,8 +30,9 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     @Override
     public void getArticleDetail(final OnArticleDetailListener onArticleDetailListener,
             final String itemId) {
-        final Cursor cursor = mDatabase.query(ArticleTable.NAME, new String[]{Cols.JSON}, "item_id = ?",
-                new String[]{itemId}, null, null, null);
+        final Cursor cursor = mDatabase
+                .query(ArticleTable.NAME, null, "item_id = ?",
+                        new String[]{itemId}, null, null, null);
         if (cursor.getCount() > 0) {
             //如果已经有数据了，直接读取
             new Thread(new Runnable() {
@@ -39,44 +40,62 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
                 public void run() {
                     //耗时操作，在新线程
                     cursor.moveToFirst();
-                    String json = cursor.getString(cursor.getColumnIndex(Cols.JSON));
-                    ArticleDetail articleDetail = JsonUtil.parseJsonToArticleDetail(json);
-                    onArticleDetailListener.onSuccess(articleDetail);
+
+                    //创建对象
+                    ArticleDetail article = new ArticleDetail();
+                    article.setContentId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+                    article.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+                    article.setAuthorName(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_NAME)));
+                    article.setAuthorDesc(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_DESC)));
+                    article.setContent(cursor.getString(cursor.getColumnIndex(Cols.CONTENT)));
+                    article.setDate(cursor.getString(cursor.getColumnIndex(Cols.DATE)));
+                    article.setCopyright(cursor.getString(cursor.getColumnIndex(Cols.COPYRIGHT)));
+
+                    onArticleDetailListener.onSuccess(article);
+                    onArticleDetailListener.onFinish();
                 }
             }).start();
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/essay/{id}", itemId, new OnRequestListener() {
-                @Override
-                public void onResponse(String response) {
-                    //将该文章详情存入数据库
-                    mDatabase.insert(ArticleTable.NAME, null, getContentValues(itemId, response));
-                    ArticleDetail articleDetail = JsonUtil.parseJsonToArticleDetail(response);
-                    onArticleDetailListener.onSuccess(articleDetail);
-                }
+            HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/essay/{id}", itemId,
+                    new OnRequestListener() {
+                        @Override
+                        public void onResponse(String response) {
+                            //将该文章详情存入数据库
+                            ArticleDetail articleDetail = JsonUtil
+                                    .parseJsonToArticleDetail(response);
+                            mDatabase.insert(ArticleTable.NAME, null,
+                                    getContentValues(articleDetail));
+                            onArticleDetailListener.onSuccess(articleDetail);
+                        }
 
-                @Override
-                public void onError(String errorMsg) {
-                    onArticleDetailListener.onFail(errorMsg);
-                }
+                        @Override
+                        public void onError(String errorMsg) {
+                            onArticleDetailListener.onFail(errorMsg);
+                        }
 
-                @Override
-                public void onStart() {
-                    onArticleDetailListener.onStart();
-                }
+                        @Override
+                        public void onStart() {
+                            onArticleDetailListener.onStart();
+                        }
 
-                @Override
-                public void onFinish() {
-                    onArticleDetailListener.onFinish();
-                }
-            });
+                        @Override
+                        public void onFinish() {
+                            onArticleDetailListener.onFinish();
+                        }
+                    });
         }
     }
 
-    private static ContentValues getContentValues(String itemId, String json) {
+    private static ContentValues getContentValues(ArticleDetail article) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ITEM_ID, itemId);
-        values.put(Cols.JSON, json);
+        values.put(Cols.ITEM_ID, article.getContentId());
+        values.put(Cols.TITLE,article.getTitle());
+        values.put(Cols.AUTHOR_NAME, article.getAuthorName());
+        values.put(Cols.AUTHOR_DESC, article.getAuthorDesc());
+        values.put(Cols.CONTENT,article.getContent());
+        values.put(Cols.DATE,article.getDate());
+        values.put(Cols.COPYRIGHT,article.getCopyright());
 
         return values;
     }

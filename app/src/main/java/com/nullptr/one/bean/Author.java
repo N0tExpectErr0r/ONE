@@ -8,7 +8,7 @@ package com.nullptr.one.bean;
 public class Author {
 
     private String name;            //作者名
-    private String summary;         //作者详细介绍
+    private String desc;         //作者详细介绍
 
     public String getName() {
         return name;
@@ -18,12 +18,12 @@ public class Author {
         this.name = name;
     }
 
-    public String getSummary() {
-        return summary;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setSummary(String summary) {
-        this.summary = summary;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
 

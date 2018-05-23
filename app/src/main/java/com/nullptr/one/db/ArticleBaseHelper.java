@@ -23,7 +23,12 @@ public class ArticleBaseHelper extends SQLiteOpenHelper {
         //创建Article表
         db.execSQL("create table if not exists "+ArticleTable.NAME+"( "
                 +Cols.ITEM_ID+" text, "
-                +Cols.JSON+" text)");
+                +Cols.TITLE+" text,"
+                +Cols.AUTHOR_NAME+" text,"
+                +Cols.AUTHOR_DESC+" text,"
+                +Cols.CONTENT+" text,"
+                +Cols.DATE+" text,"
+                +Cols.COPYRIGHT+" text)");
     }
 
     @Override

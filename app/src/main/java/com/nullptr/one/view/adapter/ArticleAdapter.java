@@ -25,7 +25,7 @@ public class ArticleAdapter extends CommonAdapter<Article> {
                 .setText(R.id.article_tv_date, article.getDate())
                 .setText(R.id.article_tv_like, article.getLikeCount() + "")
                 .setText(R.id.article_tv_author_name, "文/" + article.getAuthor().getName())
-                .setText(R.id.article_tv_author_summary, article.getAuthor().getSummary());
+                .setText(R.id.article_tv_author_summary, article.getAuthor().getDesc());
     }
 
 }
