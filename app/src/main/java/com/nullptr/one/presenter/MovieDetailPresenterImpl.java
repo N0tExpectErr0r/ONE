@@ -1,10 +1,10 @@
 package com.nullptr.one.presenter;
 
 import com.nullptr.one.bean.MovieDetail;
-import com.nullptr.one.model.moviedetail.MovieDetailModel;
-import com.nullptr.one.model.moviedetail.MovieDetailModelImpl;
-import com.nullptr.one.model.moviedetail.OnMovieDetailListener;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.MovieDetailPresenter;
+import com.nullptr.one.model.MovieDetailModelImpl;
+import com.nullptr.one.model.interfaces.IDetailListener.OnMovieDetailListener;
+import com.nullptr.one.model.interfaces.IDetailModel.MovieDetailModel;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.MovieDetailPresenter;
 import com.nullptr.one.view.interfaces.IDetailView.MovieDetailView;
 
 /**

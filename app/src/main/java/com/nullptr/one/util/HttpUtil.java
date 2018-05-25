@@ -1,6 +1,5 @@
 package com.nullptr.one.util;
 
-import com.nullptr.one.bean.URLData;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

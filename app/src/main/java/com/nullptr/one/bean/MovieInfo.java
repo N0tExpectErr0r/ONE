@@ -1,7 +1,5 @@
 package com.nullptr.one.bean;
 
-import android.graphics.Bitmap;
-
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/19
@@ -27,16 +25,16 @@ public class MovieInfo {
         return movieTitle;
     }
 
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
+    }
+
     public String getCoverURL() {
         return coverURL;
     }
 
     public void setCoverURL(String coverURL) {
         this.coverURL = coverURL;
-    }
-
-    public void setMovieTitle(String movieTitle) {
-        this.movieTitle = movieTitle;
     }
 
     public String getInfo() {

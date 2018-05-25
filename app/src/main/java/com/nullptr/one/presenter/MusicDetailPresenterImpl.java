@@ -1,10 +1,10 @@
 package com.nullptr.one.presenter;
 
 import com.nullptr.one.bean.MusicDetail;
-import com.nullptr.one.model.musicdetail.MusicDetailModel;
-import com.nullptr.one.model.musicdetail.MusicDetailModelImpl;
-import com.nullptr.one.model.musicdetail.OnMusicDetailListener;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.MusicDetailPresenter;
+import com.nullptr.one.model.MusicDetailModelImpl;
+import com.nullptr.one.model.interfaces.IDetailListener.OnMusicDetailListener;
+import com.nullptr.one.model.interfaces.IDetailModel.MusicDetailModel;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.MusicDetailPresenter;
 import com.nullptr.one.view.interfaces.IDetailView.MusicDetailView;
 
 /**

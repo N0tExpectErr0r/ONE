@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.nullptr.one.view.ui.LoadMoreListView;
 import java.util.List;
 
 /**
@@ -50,7 +51,6 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = ViewHolder.get(mContext, convertView, parent, mLayoutId, position);
-
         convert(holder, mDatas.get(position));
 
         return holder.getConvertView();

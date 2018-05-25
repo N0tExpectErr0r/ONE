@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import com.nullptr.one.R;
+import com.nullptr.one.bean.Movie;
 import com.nullptr.one.view.adapter.ViewPagerAdapter;
 import com.nullptr.one.view.fragment.ArticleListFragment;
 import com.nullptr.one.view.fragment.MovieListFragment;
@@ -32,6 +33,10 @@ public class MainActivity extends BaseActivity {
     private NavigationView mNvNavigationView;
     private TabLayout mTlTabLayout;
     private ViewPager mVpViewPager;
+
+    final private static int ARTICLE = 0;
+    final private static int MUSIC = 1;
+    final private static int MOVIE = 2;
 
     @Override
     protected void initVariables() {
@@ -69,13 +74,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
-                    case 0:
+                    case ARTICLE:
                         mNvNavigationView.setCheckedItem(R.id.nav_article);
                         break;
-                    case 1:
+                    case MUSIC:
                         mNvNavigationView.setCheckedItem(R.id.nav_music);
                         break;
-                    case 2:
+                    case MOVIE:
                         mNvNavigationView.setCheckedItem(R.id.nav_video);
                         break;
                     default:
@@ -104,24 +109,25 @@ public class MainActivity extends BaseActivity {
                         switch (item.getItemId()) {
                             case R.id.nav_article:
                                 //选中文章Tab
-                                mTlTabLayout.getTabAt(0).select();
+                                mTlTabLayout.getTabAt(ARTICLE).select();
                                 //跳转到文章Fragment
                                 break;
                             case R.id.nav_music:
                                 //选中音乐Tab
-                                mTlTabLayout.getTabAt(1).select();
+                                mTlTabLayout.getTabAt(MUSIC).select();
                                 //跳转到音乐Fragment
                                 break;
                             case R.id.nav_video:
                                 //选中影视Tab
-                                mTlTabLayout.getTabAt(2).select();
+                                mTlTabLayout.getTabAt(MOVIE).select();
                                 //跳转到视频Fragment
                                 break;
                             case R.id.nav_image:
                                 //选中图文Tab
                                 //跳转到图文Activity
                                 mNvNavigationView.setCheckedItem(R.id.nav_article);
-                                Intent intent = new Intent(MainActivity.this,ImageDetailActivity.class);
+                                Intent intent = new Intent(MainActivity.this,
+                                        ImageDetailActivity.class);
                                 startActivity(intent);
                                 break;
                             default:

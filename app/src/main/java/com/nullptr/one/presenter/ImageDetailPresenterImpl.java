@@ -1,10 +1,10 @@
 package com.nullptr.one.presenter;
 
 import com.nullptr.one.bean.ImageDetail;
-import com.nullptr.one.model.imagedetail.ImageDetailModel;
-import com.nullptr.one.model.imagedetail.ImageDetailModelImpl;
-import com.nullptr.one.model.imagedetail.OnImageDetailListener;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.ImageDetailPresenter;
+import com.nullptr.one.model.ImageDetailModelImpl;
+import com.nullptr.one.model.interfaces.IDetailListener.OnImageDetailListener;
+import com.nullptr.one.model.interfaces.IDetailModel.ImageDetailModel;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.ImageDetailPresenter;
 import com.nullptr.one.view.interfaces.IDetailView.ImageDetailView;
 import java.util.List;
 

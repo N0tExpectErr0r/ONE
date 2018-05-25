@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.nullptr.one.R;
-import com.nullptr.one.view.adapter.MusicAdapter;
 import com.nullptr.one.bean.Music;
 import com.nullptr.one.presenter.MusicListPresenterImpl;
-import com.nullptr.one.presenter.interfaces.ListPresenter;
-import com.nullptr.one.view.ui.LoadMoreListView;
+import com.nullptr.one.presenter.interfaces.IListPresenter;
 import com.nullptr.one.view.activity.MusicDetailActivity;
+import com.nullptr.one.view.adapter.MusicAdapter;
 import com.nullptr.one.view.interfaces.IListView.MusicListView;
+import com.nullptr.one.view.ui.LoadMoreListView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class MusicListFragment extends Fragment implements MusicListView,
 
     private LoadMoreListView mLvListView;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
-    private ListPresenter mMusicListPresenter;
+    private IListPresenter mMusicListPresenter;
     private MusicAdapter mAdapter;
     private List<Music> mMusicList;
 

@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import com.nullptr.one.presenter.ArticleDetailPresenterImpl;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.ArticleDetail;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.ArticleDetailPresenter;
+import com.nullptr.one.presenter.ArticleDetailPresenterImpl;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.ArticleDetailPresenter;
 import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.view.interfaces.IDetailView.ArticleDetailView;
 
@@ -23,6 +22,7 @@ import com.nullptr.one.view.interfaces.IDetailView.ArticleDetailView;
  * @DESCRIPTION 文章详细内容Activity
  */
 public class ArticleDetailActivity extends BaseActivity implements ArticleDetailView {
+
     final public static String ACTION = "ARTICLE_DETAIL";
 
     private String mItemId;
@@ -106,7 +106,7 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
 
                 mTvTitle.setText(article.getTitle());
                 mTvContent
-                        .setText(HtmlPraser.getInstance().prase(article.getContent()));  //通过Android自带的Html解析工具解析成文本
+                        .setText(HtmlPraser.getInstance().prase(article.getContent()));
                 mTvDate.setText(article.getDate());
             }
         });

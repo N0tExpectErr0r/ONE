@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,13 +14,14 @@ import com.nullptr.one.bean.MovieDetail;
 import com.nullptr.one.bean.MovieInfo;
 import com.nullptr.one.presenter.MovieDetailPresenterImpl;
 import com.nullptr.one.presenter.MovieInfoPresenterImpl;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.MovieDetailPresenter;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.MovieInfoPresenter;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.MovieDetailPresenter;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.MovieInfoPresenter;
 import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.util.ImageLoader;
 import com.nullptr.one.view.interfaces.IDetailView.MovieDetailView;
 
 public class MovieDetailActivity extends BaseActivity implements MovieDetailView {
+
     final public static String ACTION = "MOVIE_DETAIL";
 
     private String mItemId;
@@ -112,7 +112,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ImageLoader.getInstance().loadImg(mIvCover,musicInfo.getCoverURL());
+                ImageLoader.getInstance().loadImg(mIvCover, musicInfo.getCoverURL());
                 mTvMovieTitle.setText(musicInfo.getMovieTitle());
                 mTvStory.setText(musicInfo.getStory());
                 mTvInfo.setText(musicInfo.getInfo());

@@ -18,19 +18,17 @@ import java.net.URL;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/11
- * @DESCRIPTION 图片加载工具类
+ * @DESCRIPTION 图片加载工具类 三层缓存机制，优先级： 1. 从内存获取 最快 2. 从本地获取 稍慢 3. 从网络获取 最慢
  */
 public class ImageLoader {
 
-    private static ImageLoader sInstance = new ImageLoader();
+    private static final String CACHE_PATH =
+            Environment.getExternalStorageDirectory().getAbsolutePath() + "/ONE";   //本地缓存路径
 
     //使用LruCache的原因:当缓存空间满了的时候，将最近最少使用的数据从缓存空间中删除以增加可用的缓存空间来缓存新内容。
     //内部其实是由LinkHashMap实现
-
+    private static ImageLoader sInstance = new ImageLoader();
     private static LruCache<String, Bitmap> sMemoryCache;
-
-    private static final String CACHE_PATH =
-            Environment.getExternalStorageDirectory().getAbsolutePath() + "/ONE";   //本地缓存路径
 
     public ImageLoader() {
         if (sMemoryCache == null) {

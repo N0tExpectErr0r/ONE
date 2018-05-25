@@ -6,6 +6,7 @@ package com.nullptr.one.bean;
  * @DESCRIPTION 图片详细信息bean
  */
 public class ImageDetail {
+
     private String imageURL;
     private String title;
     private String content;

@@ -13,7 +13,8 @@ import java.util.List;
  * @DESCRIPTION 各类详情view对应接口
  */
 public interface IDetailView {
-    interface BaseDetailView{
+
+    interface BaseDetailView {
 
         void showError(String errorMsg);
 
@@ -22,22 +23,24 @@ public interface IDetailView {
         void hideLoading();
     }
 
-    interface ArticleDetailView extends BaseDetailView{
+    interface ArticleDetailView extends BaseDetailView {
 
         void setArticle(ArticleDetail article);
     }
 
-    interface ImageDetailView extends BaseDetailView{
+    interface ImageDetailView extends BaseDetailView {
+
         void setImageDetailList(List<ImageDetail> imageDetailList);
     }
 
-    interface MovieDetailView extends BaseDetailView{
+    interface MovieDetailView extends BaseDetailView {
+
         void setMovieDetail(MovieDetail musicDetail);
 
         void setMovieInfo(MovieInfo musicInfo);
     }
 
-    interface MusicDetailView extends BaseDetailView{
+    interface MusicDetailView extends BaseDetailView {
 
         void setMusic(MusicDetail music);
 

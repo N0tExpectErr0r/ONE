@@ -5,9 +5,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.nullptr.one.R;
+import com.nullptr.one.view.adapter.CommonAdapter;
 
 
 /**
@@ -49,16 +51,25 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
 
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if (mTotalItemCount == mLastVisbleItem && scrollState == SCROLL_STATE_IDLE) {
-            //如果滚动到底端最后一个并且滚动停止了
-            if (!isLoading) {
-                //如果此时并非正在加载
-                isLoading = true;
-                mFooter.setVisibility(VISIBLE);   //显示底部布局
-                mListener.onLoadMore();
-            }
+        switch (scrollState) {
+            case SCROLL_STATE_IDLE:
+                //滚动停止时
+                if (mTotalItemCount == mLastVisbleItem) {
+                    //如果滚动到底端最后一个并且滚动停止了
+                    if (!isLoading) {
+                        //如果此时并非正在加载
+                        isLoading = true;
+                        mFooter.setVisibility(VISIBLE);   //显示底部布局
+                        mListener.onLoadMore();
+                    }
+                }
+                break;
+            default:
+                break;
         }
+
     }
+
 
     public void setLoadCompleted() {
         //加载完成，取消显示footer

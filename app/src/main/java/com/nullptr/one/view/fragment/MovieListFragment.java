@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.nullptr.one.R;
-import com.nullptr.one.view.adapter.MovieAdapter;
 import com.nullptr.one.bean.Movie;
 import com.nullptr.one.presenter.MovieListPresenterImpl;
-import com.nullptr.one.presenter.interfaces.ListPresenter;
+import com.nullptr.one.presenter.interfaces.IListPresenter;
 import com.nullptr.one.view.activity.MovieDetailActivity;
+import com.nullptr.one.view.adapter.MovieAdapter;
 import com.nullptr.one.view.interfaces.IListView.MovieListView;
 import com.nullptr.one.view.ui.LoadMoreListView;
 import com.nullptr.one.view.ui.LoadMoreListView.OnLoadMoreListener;
@@ -33,7 +33,7 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
 
     private LoadMoreListView mLvListView;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
-    private ListPresenter mMovieListPresenter;
+    private IListPresenter mMovieListPresenter;
     private MovieAdapter mAdapter;
     private List<Movie> mMovieList;
 

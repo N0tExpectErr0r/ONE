@@ -1,11 +1,11 @@
 package com.nullptr.one.presenter;
 
 import com.nullptr.one.bean.Article;
-import com.nullptr.one.model.articlelist.ArticleListModel;
-import com.nullptr.one.model.articlelist.ArticleListModelImpl;
-import com.nullptr.one.model.articlelist.OnArticleListListener;
-import com.nullptr.one.model.articlelist.OnMoreArticleListener;
-import com.nullptr.one.presenter.interfaces.ListPresenter;
+import com.nullptr.one.model.ArticleListModelImpl;
+import com.nullptr.one.model.interfaces.IListListener.OnArticleListListener;
+import com.nullptr.one.model.interfaces.IListModel.ArticleListModel;
+import com.nullptr.one.model.interfaces.IListMoreListener.OnMoreArticleListener;
+import com.nullptr.one.presenter.interfaces.IListPresenter;
 import com.nullptr.one.view.interfaces.IListView.ArticleListView;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/12
  * @DESCRIPTION ArticlePresenter实现类
  */
-public class ArticleListPresenterImpl implements ListPresenter, OnArticleListListener,
+public class ArticleListPresenterImpl implements IListPresenter, OnArticleListListener,
         OnMoreArticleListener {
 
     private ArticleListView mArticleListView;

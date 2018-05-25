@@ -1,7 +1,5 @@
 package com.nullptr.one.bean;
 
-import android.graphics.Bitmap;
-
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/12

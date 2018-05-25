@@ -1,11 +1,11 @@
 package com.nullptr.one.presenter;
 
 import com.nullptr.one.bean.Music;
-import com.nullptr.one.model.musiclist.MusicListModel;
-import com.nullptr.one.model.musiclist.MusicListModelImpl;
-import com.nullptr.one.model.musiclist.OnMoreMusicListener;
-import com.nullptr.one.model.musiclist.OnMusicListListener;
-import com.nullptr.one.presenter.interfaces.ListPresenter;
+import com.nullptr.one.model.MusicListModelImpl;
+import com.nullptr.one.model.interfaces.IListListener.OnMusicListListener;
+import com.nullptr.one.model.interfaces.IListModel.MusicListModel;
+import com.nullptr.one.model.interfaces.IListMoreListener.OnMoreMusicListener;
+import com.nullptr.one.presenter.interfaces.IListPresenter;
 import com.nullptr.one.view.interfaces.IListView.MusicListView;
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/13
  * @DESCRIPTION MusicPresenter实现类
  */
-public class MusicListPresenterImpl implements ListPresenter, OnMusicListListener,
+public class MusicListPresenterImpl implements IListPresenter, OnMusicListListener,
         OnMoreMusicListener {
 
     private MusicListView mMusicListView;

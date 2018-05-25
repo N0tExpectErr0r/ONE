@@ -1,10 +1,10 @@
 package com.nullptr.one.presenter;
 
 import com.nullptr.one.bean.ArticleDetail;
-import com.nullptr.one.model.articledetail.ArticleDetailModel;
-import com.nullptr.one.model.articledetail.ArticleDetailModelImpl;
-import com.nullptr.one.model.articledetail.OnArticleDetailListener;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.ArticleDetailPresenter;
+import com.nullptr.one.model.ArticleDetailModelImpl;
+import com.nullptr.one.model.interfaces.IDetailListener.OnArticleDetailListener;
+import com.nullptr.one.model.interfaces.IDetailModel.ArticleDetailModel;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.ArticleDetailPresenter;
 import com.nullptr.one.view.interfaces.IDetailView.ArticleDetailView;
 
 /**

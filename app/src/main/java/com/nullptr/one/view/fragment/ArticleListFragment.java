@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import com.nullptr.one.R;
-import com.nullptr.one.view.adapter.ArticleAdapter;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.presenter.ArticleListPresenterImpl;
-import com.nullptr.one.presenter.interfaces.ListPresenter;
+import com.nullptr.one.presenter.interfaces.IListPresenter;
 import com.nullptr.one.view.activity.ArticleDetailActivity;
+import com.nullptr.one.view.adapter.ArticleAdapter;
 import com.nullptr.one.view.interfaces.IListView.ArticleListView;
 import com.nullptr.one.view.ui.LoadMoreListView;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     private LoadMoreListView mLvListView;
     private ArticleAdapter mAdapter;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
-    private ListPresenter mArticleListPresenter;
+    private IListPresenter mArticleListPresenter;
 
 
     @Override
@@ -148,7 +148,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         String itemId = mArticleList.get(position).getItemId();
         Intent intent = new Intent(ArticleDetailActivity.ACTION);
         intent.putExtra("item_id", itemId);
-         startActivity(intent);
+        startActivity(intent);
     }
 
     @Override

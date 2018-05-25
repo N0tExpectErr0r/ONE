@@ -10,13 +10,13 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5Encoder {
 
-    public static String encode(String text){
+    public static String encode(String text) {
         StringBuffer hexString = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(text.getBytes());
             byte[] hash = md.digest();
-             hexString = new StringBuffer();
+            hexString = new StringBuffer();
             //填充字符串(不足的地方补0,凑够位数)
             for (int i = 0; i < hash.length; i++) {
                 if ((0xff & hash[i]) < 0x10) {

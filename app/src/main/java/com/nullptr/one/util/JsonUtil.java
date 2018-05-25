@@ -239,7 +239,7 @@ public class JsonUtil {
     }
 
     //Json解析为ImageIdList
-    public static List<String> parseJsonToImageList(String json){
+    public static List<String> parseJsonToImageList(String json) {
         List<String> imageList = null;
 
         try {
@@ -248,8 +248,8 @@ public class JsonUtil {
             //第二层
             imageList = new ArrayList<>();
             JSONArray imageArray = jsonObject.getJSONArray("data");
-            for (int i=0;i<imageArray.length();i++){
-                imageList.add((String)imageArray.get(i));
+            for (int i = 0; i < imageArray.length(); i++) {
+                imageList.add((String) imageArray.get(i));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -258,7 +258,7 @@ public class JsonUtil {
     }
 
     //Json解析为ImageDetail
-    public static ImageDetail parseJsonToImageDetail(String json){
+    public static ImageDetail parseJsonToImageDetail(String json) {
         ImageDetail imageDetail = null;
 
         try {

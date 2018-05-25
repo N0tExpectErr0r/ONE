@@ -6,14 +6,13 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.MusicDetail;
 import com.nullptr.one.presenter.MusicDetailPresenterImpl;
-import com.nullptr.one.presenter.interfaces.DetailPresenter.MusicDetailPresenter;
+import com.nullptr.one.presenter.interfaces.IDetailPresenter.MusicDetailPresenter;
 import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.util.ImageLoader;
 import com.nullptr.one.view.interfaces.IDetailView.MusicDetailView;
@@ -24,6 +23,7 @@ import com.nullptr.one.view.interfaces.IDetailView.MusicDetailView;
  * @DESCRIPTION 音乐详细内容Activity
  */
 public class MusicDetailActivity extends BaseActivity implements MusicDetailView {
+
     final public static String ACTION = "MUSIC_DETAIL";
 
     private String mItemId;
@@ -106,10 +106,11 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ImageLoader.getInstance().loadImg(mIvImage,music.getCoverURL());
+                ImageLoader.getInstance().loadImg(mIvImage, music.getCoverURL());
                 mTvTitle.setText(music.getStoryTitle());
                 mTvSummary.setText(music.getStorySummary());
-                mTvContent.setText(HtmlPraser.getInstance().prase(music.getStory()));  //通过Android自带的Html解析工具解析成文本
+                mTvContent.setText(HtmlPraser.getInstance()
+                        .prase(music.getStory()));  //通过Android自带的Html解析工具解析成文本
                 mTvAuthorName.setText(music.getAuthor().getName());
                 mTvDate.setText(music.getDate());
                 mTvMusicName.setText(music.getTitle());

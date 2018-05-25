@@ -2,11 +2,11 @@ package com.nullptr.one.presenter;
 
 
 import com.nullptr.one.bean.Movie;
-import com.nullptr.one.model.movielist.MovieListModel;
-import com.nullptr.one.model.movielist.MovieListModelImpl;
-import com.nullptr.one.model.movielist.OnMoreMovieListener;
-import com.nullptr.one.model.movielist.OnMovieListListener;
-import com.nullptr.one.presenter.interfaces.ListPresenter;
+import com.nullptr.one.model.MovieListModelImpl;
+import com.nullptr.one.model.interfaces.IListListener.OnMovieListListener;
+import com.nullptr.one.model.interfaces.IListModel.MovieListModel;
+import com.nullptr.one.model.interfaces.IListMoreListener.OnMoreMovieListener;
+import com.nullptr.one.presenter.interfaces.IListPresenter;
 import com.nullptr.one.view.interfaces.IListView.MovieListView;
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/17
  * @DESCRIPTION MoviePresenter实现类
  */
-public class MovieListPresenterImpl implements ListPresenter, OnMovieListListener,
+public class MovieListPresenterImpl implements IListPresenter, OnMovieListListener,
         OnMoreMovieListener {
 
     private MovieListView mMovieListView;
