@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.moduleArticle.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.moduleArticle.detail.IArticleDetail.ArticleDetailView;
 import com.nullptr.one.moduleArticle.detail.presenter.ArticleDetailPresenterImpl;
+import com.nullptr.one.moduleComment.view.CommentActivity;
 import com.nullptr.one.util.HtmlPraser;
 
 /**
@@ -24,8 +26,6 @@ import com.nullptr.one.util.HtmlPraser;
  * @DESCRIPTION 文章详细内容Activity
  */
 public class ArticleDetailActivity extends BaseActivity implements ArticleDetailView {
-
-    final public static String ACTION = "ARTICLE_DETAIL";
 
     private String mItemId;
     private TextView mTvTitle;
@@ -72,11 +72,20 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_items,menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 //菜单按钮,返回
                 finish();
+                break;
+            case R.id.comment:
+                CommentActivity.actionStart(ArticleDetailActivity.this,mItemId,"ARTICLE");
                 break;
             default:
         }

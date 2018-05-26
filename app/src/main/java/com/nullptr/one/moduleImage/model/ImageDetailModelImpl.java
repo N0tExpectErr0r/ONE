@@ -20,7 +20,11 @@ public class ImageDetailModelImpl implements ImageDetailModel {
 
     @Override
     public void getImageDetailList(final OnImageDetailListener onImageDetailListener) {
-        HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/hp/idlist/{id}", "0",
+        final StringBuilder url = new StringBuilder();
+        url.append("http://v3.wufazhuce.com:8000/api/hp/idlist/")
+                .append("0")
+                .append("?version=3.5.0&platform=android");
+        HttpUtil.sendHttpRequest(url.toString(),
                 new OnRequestListener() {
                     @Override
                     public void onResponse(String response) {
@@ -30,39 +34,41 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                         for (int i = 0; i < 10; i++) {
                             String imageId = imageList.get(i);
                             final int currentIndex = i;
-                            HttpUtil.sendHttpRequest(
-                                    "http://v3.wufazhuce.com:8000/api/hp/detail/{id}", imageId,
-                                    new OnRequestListener() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            ImageDetail imageDetail = JsonUtil
-                                                    .parseJsonToImageDetail(response);
-                                            //由于加载图片速度不同
-                                            //用数组来按获取到的顺序放，最后转为List
-                                            imageArr[currentIndex] = imageDetail;
-                                            if (imageList.get(currentIndex)
-                                                    .equals(imageList.get(imageList.size() - 1))) {
-                                                //如果是最后一个id，就反馈
-                                                onImageDetailListener
-                                                        .onSuccess(Arrays.asList(imageArr));
-                                            }
-                                        }
+                            StringBuilder imageUrl = new StringBuilder();
+                            imageUrl.append("http://v3.wufazhuce.com:8000/api/hp/detail/")
+                                    .append(imageId)
+                                    .append("?version=3.5.0&platform=android");
+                            HttpUtil.sendHttpRequest(imageUrl.toString(), new OnRequestListener() {
+                                @Override
+                                public void onResponse(String response) {
+                                    ImageDetail imageDetail = JsonUtil
+                                            .parseJsonToImageDetail(response);
+                                    //由于加载图片速度不同
+                                    //用数组来按获取到的顺序放，最后转为List
+                                    imageArr[currentIndex] = imageDetail;
+                                    if (imageList.get(currentIndex)
+                                            .equals(imageList.get(imageList.size() - 1))) {
+                                        //如果是最后一个id，就反馈
+                                        onImageDetailListener
+                                                .onSuccess(Arrays.asList(imageArr));
+                                    }
+                                }
 
-                                        @Override
-                                        public void onError(String errorMsg) {
-                                            onImageDetailListener.onFail(errorMsg);
-                                        }
+                                @Override
+                                public void onError(String errorMsg) {
+                                    onImageDetailListener.onFail(errorMsg);
+                                }
 
-                                        @Override
-                                        public void onStart() {
-                                            onImageDetailListener.onStart();
-                                        }
+                                @Override
+                                public void onStart() {
+                                    onImageDetailListener.onStart();
+                                }
 
-                                        @Override
-                                        public void onFinish() {
-                                            onImageDetailListener.onFinish();
-                                        }
-                                    });
+                                @Override
+                                public void onFinish() {
+                                    onImageDetailListener.onFinish();
+                                }
+                            });
                         }
                     }
 

@@ -73,9 +73,12 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
                 }
             }).start();
         } else {
+            StringBuilder url = new StringBuilder();
+            url.append("http://v3.wufazhuce.com:8000/api/essay/")
+                    .append(itemId)
+                    .append("?platform=android");
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest("http://v3.wufazhuce.com:8000/api/essay/{id}?platform=android",
-                    itemId,
+            HttpUtil.sendHttpRequest(url.toString(),
                     new OnRequestListener() {
                         @Override
                         public void onResponse(String response) {

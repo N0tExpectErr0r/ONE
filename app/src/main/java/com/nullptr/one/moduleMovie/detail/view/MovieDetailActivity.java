@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.bean.MovieDetail;
 import com.nullptr.one.bean.MovieInfo;
+import com.nullptr.one.moduleComment.view.CommentActivity;
 import com.nullptr.one.moduleMovie.detail.IMovieDetail.MovieDetailPresenter;
 import com.nullptr.one.moduleMovie.detail.IMovieDetail.MovieDetailView;
 import com.nullptr.one.moduleMovie.detail.IMovieDetail.MovieInfoPresenter;
@@ -23,8 +25,6 @@ import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.util.ImageLoader;
 
 public class MovieDetailActivity extends BaseActivity implements MovieDetailView {
-
-    final public static String ACTION = "MOVIE_DETAIL";
 
     private String mItemId;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
@@ -47,6 +47,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
     protected void initVariables() {
         Intent intent = getIntent();
         mItemId = intent.getStringExtra("item_id");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_items,menu);
+        return true;
     }
 
     @Override
@@ -85,6 +91,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
             case android.R.id.home:
                 //菜单按钮,返回
                 finish();
+                break;
+            case R.id.comment:
+                CommentActivity.actionStart(MovieDetailActivity.this,mItemId,"MOVIE");
                 break;
             default:
         }
@@ -137,4 +146,5 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
     public void hideLoading() {
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
+
 }

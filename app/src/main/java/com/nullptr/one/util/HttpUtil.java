@@ -16,8 +16,7 @@ import java.net.URL;
  */
 public class HttpUtil {
 
-    public static void sendHttpRequest(final String url, final String param,
-            final OnRequestListener listener) {
+    public static void sendHttpRequest(final String url, final OnRequestListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -26,9 +25,6 @@ public class HttpUtil {
                 try {
                     listener.onStart();
                     String address = url;
-                    if (param != null) {
-                        address = address.replace("{id}", param);   //替换网址
-                    }
 
                     URL url = new URL(address);
                     connection = (HttpURLConnection) url.openConnection();
@@ -46,8 +42,7 @@ public class HttpUtil {
                     if (listener != null) {
                         //回调OnResponse方法
                         listener.onResponse(response.toString());
-
-
+                        listener.onFinish();
                     }
                 } catch (ProtocolException e) {
                     listener.onError("网络出现错误");

@@ -1,0 +1,130 @@
+package com.nullptr.one.moduleComment.view;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.ListView;
+import com.nullptr.one.R;
+import com.nullptr.one.base.BaseActivity;
+import com.nullptr.one.bean.Comment;
+import com.nullptr.one.moduleComment.IComment.CommentPresenter;
+import com.nullptr.one.moduleComment.IComment.CommentView;
+import com.nullptr.one.moduleComment.adapter.CommentAdapter;
+import com.nullptr.one.moduleComment.presenter.CommentPresenterImpl;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * @AUTHOR nullptr
+ * @DATE 创建时间: 2018/5/26
+ * @DESCRIPTION 评论Activity
+ */
+public class CommentActivity extends BaseActivity implements CommentView {
+
+    private String mItemId;
+    private String mType;
+    private ListView mLvListView;
+    private SwipeRefreshLayout mSrlSwipeRefreshLayout;
+    private List<Comment> mCommentList;
+    private CommentAdapter mAdapter;
+    private CommentPresenter mCommentPresenter;
+
+    public static void actionStart(Context context, String itemId, String type) {
+        Intent intent = new Intent(context, CommentActivity.class);
+        intent.putExtra("item_id", itemId);
+        intent.putExtra("type", type);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void initVariables() {
+        Intent intent = getIntent();
+        mItemId = intent.getStringExtra("item_id");
+        mType = intent.getStringExtra("type");
+    }
+
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_comment);
+        initToolbar("评论");
+
+        mLvListView = findViewById(R.id.comment_lv_listview);
+        mSrlSwipeRefreshLayout = findViewById(R.id.comment_srl_swipe_refresh);
+        mCommentPresenter = new CommentPresenterImpl(this);
+
+        mSrlSwipeRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mCommentPresenter.getCommentList(mItemId, mType);
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            default:
+        }
+        return true;
+    }
+
+    @Override
+    protected void loadData() {
+        if (mCommentList == null || mCommentList.size() == 0) {
+            //不是每次都要刷新的，之前有数据的时候不需要刷新
+            mAdapter = new CommentAdapter(this, new ArrayList<Comment>(), R.layout.item_comment);
+            mLvListView.setAdapter(mAdapter);
+            mCommentPresenter.getCommentList(mItemId, mType);
+        }
+    }
+
+    @Override
+    public void setCommentList(List<Comment> commentList) {
+        mAdapter.setDataList(commentList);
+        mCommentList = commentList;
+    }
+
+    @Override
+    public void showError(String errorMsg) {
+        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
+        errorDialog
+                .setTitle("错误")
+                .setMessage(errorMsg)
+                .show();
+        //关闭App
+        finish();
+    }
+
+    @Override
+    public void showLoading() {
+        mSrlSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        mSrlSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    private Toolbar initToolbar(CharSequence title) {
+        Toolbar toolbar = findViewById(R.id.toolbar_detail);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(title);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
+        }
+        return toolbar;
+    }
+}

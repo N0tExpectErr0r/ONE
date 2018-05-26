@@ -94,7 +94,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
                 imageDetailList);
         mVpBanner.setAdapter(adapter);
         mHandler = new WeakHandler(ImageDetailActivity.this);
-        mHandler.sendEmptyMessageDelayed(0, 5000);   //开启自动轮播 5s一次
+        mHandler.sendEmptyMessageDelayed(0, 2000);   //开启自动轮播 2s一次
 
 
     }
@@ -158,7 +158,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
             //让ViewPager滑到下一页
             activity.mVpBanner.setCurrentItem(activity.mVpBanner.getCurrentItem() + 1);
             //延时，循环调用handler
-            sendEmptyMessageDelayed(0, 5000);
+            sendEmptyMessageDelayed(0, 2000);
         }
     }
 }

@@ -66,33 +66,35 @@ public class MovieInfoModelImpl implements MovieInfoModel {
             }).start();
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest(
-                    "http://v3.wufazhuce.com:8000/api/movie/detail/{id}?platform=android", itemId,
-                    new OnRequestListener() {
-                        @Override
-                        public void onResponse(String response) {
-                            //将该影视信息存入数据库
-                            MovieInfo movieInfo = JsonUtil.parseJsonToMovieInfo(response);
-                            mDatabase
-                                    .insert(MovieInfoTable.NAME, null, getContentValues(movieInfo));
-                            onMovieInfoListener.onSuccess(movieInfo);
-                        }
+            StringBuilder url = new StringBuilder();
+            url.append("http://v3.wufazhuce.com:8000/api/movie/detail/")
+                    .append(itemId)
+                    .append("?platform=android");
+            HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+                @Override
+                public void onResponse(String response) {
+                    //将该影视信息存入数据库
+                    MovieInfo movieInfo = JsonUtil.parseJsonToMovieInfo(response);
+                    mDatabase
+                            .insert(MovieInfoTable.NAME, null, getContentValues(movieInfo));
+                    onMovieInfoListener.onSuccess(movieInfo);
+                }
 
-                        @Override
-                        public void onError(String errorMsg) {
-                            onMovieInfoListener.onFail(errorMsg);
-                        }
+                @Override
+                public void onError(String errorMsg) {
+                    onMovieInfoListener.onFail(errorMsg);
+                }
 
-                        @Override
-                        public void onStart() {
-                            onMovieInfoListener.onStart();
-                        }
+                @Override
+                public void onStart() {
+                    onMovieInfoListener.onStart();
+                }
 
-                        @Override
-                        public void onFinish() {
-                            onMovieInfoListener.onFinish();
-                        }
-                    });
+                @Override
+                public void onFinish() {
+                    onMovieInfoListener.onFinish();
+                }
+            });
         }
     }
 }

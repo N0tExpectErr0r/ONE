@@ -16,6 +16,7 @@
         <activity android:name=".moduleMain.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -23,6 +24,8 @@
         <activity android:name=".moduleMusic.detail.view.MusicDetailActivity"/>
         <activity android:name=".moduleMovie.detail.view.MovieDetailActivity"/>
         <activity android:name=".moduleImage.view.ImageDetailActivity"/>
+        <activity android:name=".moduleComment.view.CommentActivity">
+        </activity>
     </application>
 
 </manifest>

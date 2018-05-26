@@ -20,55 +20,59 @@ public class MusicListModelImpl implements MusicListModel {
 
     @Override
     public void getList(final OnMusicListListener onMusicListListener) {
-        HttpUtil.sendHttpRequest(
-                "http://v3.wufazhuce.com:8000/api/channel/music/more/{id}?platform=android", "0",
-                new OnRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
-                        onMusicListListener.onSuccess(musicList);
-                    }
+        StringBuilder url = new StringBuilder();
+        url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
+                .append("0")
+                .append("?platform=android");
+        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
+                onMusicListListener.onSuccess(musicList);
+            }
 
-                    @Override
-                    public void onError(String errorMsg) {
-                        onMusicListListener.onFail(errorMsg);
-                    }
+            @Override
+            public void onError(String errorMsg) {
+                onMusicListListener.onFail(errorMsg);
+            }
 
-                    @Override
-                    public void onStart() {
-                        onMusicListListener.onStart();
-                    }
+            @Override
+            public void onStart() {
+                onMusicListListener.onStart();
+            }
 
-                    @Override
-                    public void onFinish() {
-                        onMusicListListener.onFinish();
-                    }
-                });
+            @Override
+            public void onFinish() {
+                onMusicListListener.onFinish();
+            }
+        });
     }
 
     @Override
     public void getMore(final OnMoreMusicListener onMoreMusicListener, String lastId) {
-        HttpUtil.sendHttpRequest(
-                "http://v3.wufazhuce.com:8000/api/channel/music/more/{id}?platform=android", lastId,
-                new OnRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
-                        onMoreMusicListener.onMoreSuccess(musicList);
-                    }
+        StringBuilder url = new StringBuilder();
+        url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
+                .append(lastId)
+                .append("?platform=android");
+        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
+                onMoreMusicListener.onMoreSuccess(musicList);
+            }
 
-                    @Override
-                    public void onError(String errorMsg) {
-                        onMoreMusicListener.onFail(errorMsg);
-                    }
+            @Override
+            public void onError(String errorMsg) {
+                onMoreMusicListener.onFail(errorMsg);
+            }
 
-                    @Override
-                    public void onStart() {
-                    }
+            @Override
+            public void onStart() {
+            }
 
-                    @Override
-                    public void onFinish() {
-                    }
-                });
+            @Override
+            public void onFinish() {
+            }
+        });
     }
 }

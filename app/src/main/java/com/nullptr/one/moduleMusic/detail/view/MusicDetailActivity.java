@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.bean.MusicDetail;
+import com.nullptr.one.moduleComment.view.CommentActivity;
 import com.nullptr.one.moduleMusic.detail.IMusicDetail.MusicDetailPresenter;
 import com.nullptr.one.moduleMusic.detail.IMusicDetail.MusicDetailView;
 import com.nullptr.one.moduleMusic.detail.presenter.MusicDetailPresenterImpl;
@@ -25,8 +28,6 @@ import com.nullptr.one.util.ImageLoader;
  * @DESCRIPTION 音乐详细内容Activity
  */
 public class MusicDetailActivity extends BaseActivity implements MusicDetailView {
-
-    final public static String ACTION = "MUSIC_DETAIL";
 
     private String mItemId;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
@@ -78,6 +79,12 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_items,menu);
+        return true;
+    }
+
+    @Override
     protected void loadData() {
         mMusicDetailPresenter = new MusicDetailPresenterImpl(this);
         mMusicDetailPresenter.getMusicDetail(mItemId);
@@ -89,6 +96,9 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
             case android.R.id.home:
                 //菜单按钮,返回
                 finish();
+                break;
+            case R.id.comment:
+                CommentActivity.actionStart(MusicDetailActivity.this,mItemId,"MUSIC");
                 break;
             default:
         }

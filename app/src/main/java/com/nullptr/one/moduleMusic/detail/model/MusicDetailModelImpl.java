@@ -81,32 +81,34 @@ public class MusicDetailModelImpl implements MusicDetailModel {
             }).start();
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest(
-                    "http://v3.wufazhuce.com:8000/api/music/detail/{id}?version=3.5.0&platform=android",
-                    itemId, new OnRequestListener() {
-                        @Override
-                        public void onResponse(String response) {
-                            //将该音乐详情存入数据库
-                            MusicDetail musicDetail = JsonUtil.parseJsonToMusicDetail(response);
-                            mDatabase.insert(MusicTable.NAME, null, getContentValues(musicDetail));
-                            onMusicDetailListener.onSuccess(musicDetail);
-                        }
+            StringBuilder url = new StringBuilder();
+            url.append("http://v3.wufazhuce.com:8000/api/music/detail/")
+                    .append(itemId)
+                    .append("?version=3.5.0&platform=android");
+            HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+                @Override
+                public void onResponse(String response) {
+                    //将该音乐详情存入数据库
+                    MusicDetail musicDetail = JsonUtil.parseJsonToMusicDetail(response);
+                    mDatabase.insert(MusicTable.NAME, null, getContentValues(musicDetail));
+                    onMusicDetailListener.onSuccess(musicDetail);
+                }
 
-                        @Override
-                        public void onError(String errorMsg) {
-                            onMusicDetailListener.onFail(errorMsg);
-                        }
+                @Override
+                public void onError(String errorMsg) {
+                    onMusicDetailListener.onFail(errorMsg);
+                }
 
-                        @Override
-                        public void onStart() {
-                            onMusicDetailListener.onStart();
-                        }
+                @Override
+                public void onStart() {
+                    onMusicDetailListener.onStart();
+                }
 
-                        @Override
-                        public void onFinish() {
-                            onMusicDetailListener.onFinish();
-                        }
-                    });
+                @Override
+                public void onFinish() {
+                    onMusicDetailListener.onFinish();
+                }
+            });
         }
     }
 }

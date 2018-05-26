@@ -3,6 +3,7 @@ package com.nullptr.one.util;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.bean.Author;
+import com.nullptr.one.bean.Comment;
 import com.nullptr.one.bean.ImageDetail;
 import com.nullptr.one.bean.Movie;
 import com.nullptr.one.bean.MovieDetail;
@@ -274,5 +275,44 @@ public class JsonUtil {
             e.printStackTrace();
         }
         return imageDetail;
+    }
+
+    //Json解析为Comment
+    public static List<Comment> parseJsonToCommentList(String json) {
+        List<Comment> commentList = null;
+
+        try {
+            //第一层
+            JSONObject jsonObject = new JSONObject(json);
+            //第二层
+            JSONObject newJsonObject = jsonObject.getJSONObject("data");
+            //第三层
+            commentList = new ArrayList<>();
+            JSONArray commentArray = newJsonObject.getJSONArray("data");
+            for (int i = 0; i < commentArray.length(); i++) {
+                //第四层
+                JSONObject commentObject = commentArray.getJSONObject(i);
+                Comment comment = new Comment();
+                comment.setQuote(commentObject.getString("quote"));
+                comment.setComment(commentObject.getString("content"));
+                //第五层
+                JSONObject userObject = commentObject.getJSONObject("user");
+                comment.setUser(userObject.getString("user_name"));
+
+                if (!commentObject.isNull("touser")) {
+                    JSONObject toUserObject = commentObject.getJSONObject("touser");
+                    comment.setReply(true);
+                    comment.setToUser(toUserObject.getString("user_name"));
+                }else{
+                    comment.setReply(false);
+                    comment.setToUser("");
+                }
+
+                commentList.add(comment);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return commentList;
     }
 }

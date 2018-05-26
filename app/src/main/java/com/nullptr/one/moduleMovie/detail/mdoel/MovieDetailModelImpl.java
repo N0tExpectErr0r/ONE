@@ -70,33 +70,35 @@ public class MovieDetailModelImpl implements MovieDetailModel {
 
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
-            HttpUtil.sendHttpRequest(
-                    "http://v3.wufazhuce.com:8000/api/movie/{id}/story/1/0?platform=android",
-                    itemId, new OnRequestListener() {
-                        @Override
-                        public void onResponse(String response) {
-                            //将该影视详情存入数据库
-                            MovieDetail movieDetail = JsonUtil.parseJsonToMovieDetail(response);
-                            mDatabase.insert(MovieDetailTable.NAME, null,
-                                    getContentValues(movieDetail));
-                            onMovieDetailListener.onSuccess(movieDetail);
-                        }
+            StringBuilder url = new StringBuilder();
+            url.append("http://v3.wufazhuce.com:8000/api/movie/")
+                    .append(itemId)
+                    .append("/story/1/0?platform=android");
+            HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+                @Override
+                public void onResponse(String response) {
+                    //将该影视详情存入数据库
+                    MovieDetail movieDetail = JsonUtil.parseJsonToMovieDetail(response);
+                    mDatabase.insert(MovieDetailTable.NAME, null,
+                            getContentValues(movieDetail));
+                    onMovieDetailListener.onSuccess(movieDetail);
+                }
 
-                        @Override
-                        public void onError(String errorMsg) {
-                            onMovieDetailListener.onFail(errorMsg);
-                        }
+                @Override
+                public void onError(String errorMsg) {
+                    onMovieDetailListener.onFail(errorMsg);
+                }
 
-                        @Override
-                        public void onStart() {
-                            onMovieDetailListener.onStart();
-                        }
+                @Override
+                public void onStart() {
+                    onMovieDetailListener.onStart();
+                }
 
-                        @Override
-                        public void onFinish() {
-                            onMovieDetailListener.onFinish();
-                        }
-                    });
+                @Override
+                public void onFinish() {
+                    onMovieDetailListener.onFinish();
+                }
+            });
         }
 
     }

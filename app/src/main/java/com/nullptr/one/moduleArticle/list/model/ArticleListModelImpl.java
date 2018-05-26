@@ -20,55 +20,59 @@ public class ArticleListModelImpl implements ArticleListModel {
 
     @Override
     public void getList(final OnArticleListListener onArticleListListener) {
-        HttpUtil.sendHttpRequest(
-                "http://v3.wufazhuce.com:8000/api/channel/reading/more/{id}?channel=wdj&version=4.0.2&platform=android",
-                "0", new OnRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
-                        onArticleListListener.onSuccess(articleList);
-                    }
+        StringBuilder url = new StringBuilder();
+        url.append("http://v3.wufazhuce.com:8000/api/channel/reading/more/")
+                .append("0")
+                .append("?channel=wdj&version=4.0.2&platform=android");
+        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
+                onArticleListListener.onSuccess(articleList);
+            }
 
-                    @Override
-                    public void onError(String errorMsg) {
-                        onArticleListListener.onFail(errorMsg);
-                    }
+            @Override
+            public void onError(String errorMsg) {
+                onArticleListListener.onFail(errorMsg);
+            }
 
-                    @Override
-                    public void onStart() {
-                        onArticleListListener.onStart();
-                    }
+            @Override
+            public void onStart() {
+                onArticleListListener.onStart();
+            }
 
-                    @Override
-                    public void onFinish() {
-                        onArticleListListener.onFinish();
-                    }
-                });
+            @Override
+            public void onFinish() {
+                onArticleListListener.onFinish();
+            }
+        });
     }
 
     @Override
     public void getMore(final OnMoreArticleListener onMoreArticleListener, String lastId) {
-        HttpUtil.sendHttpRequest(
-                "http://v3.wufazhuce.com:8000/api/channel/reading/more/{id}?channel=wdj&version=4.0.2&platform=android",
-                lastId, new OnRequestListener() {
-                    @Override
-                    public void onResponse(String response) {
-                        List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
-                        onMoreArticleListener.onMoreSuccess(articleList);
-                    }
+        StringBuilder url = new StringBuilder();
+        url.append("http://v3.wufazhuce.com:8000/api/channel/reading/more/")
+                .append(lastId)
+                .append("?channel=wdj&version=4.0.2&platform=android");
+        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+            @Override
+            public void onResponse(String response) {
+                List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
+                onMoreArticleListener.onMoreSuccess(articleList);
+            }
 
-                    @Override
-                    public void onError(String errorMsg) {
-                        onMoreArticleListener.onFail(errorMsg);
-                    }
+            @Override
+            public void onError(String errorMsg) {
+                onMoreArticleListener.onFail(errorMsg);
+            }
 
-                    @Override
-                    public void onStart() {
-                    }
+            @Override
+            public void onStart() {
+            }
 
-                    @Override
-                    public void onFinish() {
-                    }
-                });
+            @Override
+            public void onFinish() {
+            }
+        });
     }
 }
