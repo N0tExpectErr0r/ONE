@@ -3,6 +3,8 @@ package com.nullptr.one.util;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.LruCache;
 import android.widget.ImageView;
 import com.nullptr.one.R;
@@ -71,9 +73,11 @@ public class ImageLoader {
             //把图片的url当做文件名,并进行MD5加密
             fileName = MD5Encoder.encode(url);
             File file = new File(CACHE_PATH, fileName);
-
-            Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
-            addBitmapToMemoryCache(url, bitmap); //添加到内存缓存
+            Bitmap bitmap = null;
+            if (file.exists()) {
+                bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+                addBitmapToMemoryCache(url, bitmap); //添加到内存缓存
+            }
             return bitmap;
         } catch (Exception e) {
             e.printStackTrace();
@@ -128,9 +132,8 @@ public class ImageLoader {
         return bitmap;
     }
 
-
     public void loadImg(final ImageView imageView, final String url) {
-
+        final Handler uiHandler = new Handler(Looper.getMainLooper());
         imageView.setImageResource(R.drawable.mock);
         new Thread(new Runnable() {
             @Override
@@ -140,7 +143,7 @@ public class ImageLoader {
                 final Bitmap memoryBitmap = getBitmapFromMemoryCache(url);
                 if (memoryBitmap != null && !isLoaded) {
                     isLoaded = true;
-                    imageView.post(new Runnable() {
+                    uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             imageView.setImageBitmap(memoryBitmap);
@@ -151,7 +154,7 @@ public class ImageLoader {
                 final Bitmap localBitmap = getBitmapFromLocal(url);
                 if (localBitmap != null && !isLoaded) {
                     isLoaded = true;
-                    imageView.post(new Runnable() {
+                    uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             imageView.setImageBitmap(localBitmap);
@@ -162,7 +165,7 @@ public class ImageLoader {
                 final Bitmap netBitmap = getBitmapFromNet(url);
                 if (netBitmap != null && !isLoaded) {
                     isLoaded = true;
-                    imageView.post(new Runnable() {
+                    uiHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             imageView.setImageBitmap(netBitmap);

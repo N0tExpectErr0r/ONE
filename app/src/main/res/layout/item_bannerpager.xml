@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:text="VOL.0001"
         android:textColor="@color/lightTextColor"
-        android:text="VOL.2017"
         android:textSize="28sp"/>
     <TextView
         android:id="@+id/bannerpager_tv_content"
@@ -25,6 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:maxLines="5"
-        android:textColor="@color/grayTextColor"
-        android:text="记忆是盖棺论定的。不论曾经多么甜蜜或者痛苦的经历，变成记忆的时候，总是需要最终的结果来为之上色的。结果美满，曾经的艰涩苦楚也都能裹上蜜色；结果惨烈，曾经的甜蜜芬芳也必然蒙上尘土，时时刻刻提醒自己，早知如此，何必当初。 by 八月长安"/>
+        android:text="正在加载图文详情"
+        android:textColor="@color/grayTextColor"/>
 </LinearLayout>

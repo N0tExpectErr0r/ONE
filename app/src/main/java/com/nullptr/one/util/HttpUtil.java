@@ -46,7 +46,8 @@ public class HttpUtil {
                     if (listener != null) {
                         //回调OnResponse方法
                         listener.onResponse(response.toString());
-                        listener.onFinish();
+
+
                     }
                 } catch (ProtocolException e) {
                     listener.onError("网络出现错误");

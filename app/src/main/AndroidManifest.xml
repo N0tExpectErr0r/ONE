@@ -9,36 +9,20 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".MyApplication"
+        android:name=".ContextApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.MainActivity">
+        <activity android:name=".moduleMain.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.ArticleDetailActivity">
-            <intent-filter>
-                <action android:name="ARTICLE_DETAIL"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.MusicDetailActivity">
-            <intent-filter>
-                <action android:name="MUSIC_DETAIL"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.MovieDetailActivity">
-            <intent-filter>
-                <action android:name="MOVIE_DETAIL"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.ImageDetailActivity">
-        </activity>
+        <activity android:name=".moduleArticle.detail.view.ArticleDetailActivity"/>
+        <activity android:name=".moduleMusic.detail.view.MusicDetailActivity"/>
+        <activity android:name=".moduleMovie.detail.view.MovieDetailActivity"/>
+        <activity android:name=".moduleImage.view.ImageDetailActivity"/>
     </application>
 
 </manifest>
