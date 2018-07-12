@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 import com.nullptr.one.R;
@@ -27,15 +28,16 @@ public class ImageLoader {
     private static final String CACHE_PATH =
             Environment.getExternalStorageDirectory().getAbsolutePath() + "/ONE";   //本地缓存路径
 
-    //使用LruCache的原因:当缓存空间满了的时候，将最近最少使用的数据从缓存空间中删除以增加可用的缓存空间来缓存新内容。
-    //内部其实是由LinkHashMap实现
+    //使用LruCache的原因:有内存大小的限制，超过时则把使用最少的资源释放掉存入新资源
+    //内部其实是由LinkedHashMap实现
     private static ImageLoader sInstance = new ImageLoader();
     private static LruCache<String, Bitmap> sMemoryCache;
 
     public ImageLoader() {
         if (sMemoryCache == null) {
-            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
-            final int cacheSize = maxMemory / 8;
+            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);  //将最大内存换算为kb(原来以B为单位)
+            final int cacheSize = maxMemory / 8;    //取1/8的内存为LruCache的大小
+            //计算LruCache空间大小
             sMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
                 @Override
                 protected int sizeOf(String key, Bitmap bitmap) {
@@ -140,8 +142,8 @@ public class ImageLoader {
             public void run() {
                 boolean isLoaded = false;
                 //内存缓存
-                final Bitmap memoryBitmap = getBitmapFromMemoryCache(url);
-                if (memoryBitmap != null && !isLoaded) {
+                final Bitmap memoryBitmap =  getBitmapFromMemoryCache(url);
+                if (memoryBitmap != null) {
                     isLoaded = true;
                     uiHandler.post(new Runnable() {
                         @Override
@@ -151,26 +153,30 @@ public class ImageLoader {
                     });
                 }
                 //本地缓存
-                final Bitmap localBitmap = getBitmapFromLocal(url);
-                if (localBitmap != null && !isLoaded) {
-                    isLoaded = true;
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            imageView.setImageBitmap(localBitmap);
-                        }
-                    });
+                if(!isLoaded) {
+                    final Bitmap localBitmap = getBitmapFromLocal(url);
+                    if (localBitmap != null) {
+                        isLoaded = true;
+                        uiHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageView.setImageBitmap(localBitmap);
+                            }
+                        });
+                    }
                 }
                 //网络缓存
-                final Bitmap netBitmap = getBitmapFromNet(url);
-                if (netBitmap != null && !isLoaded) {
-                    isLoaded = true;
-                    uiHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            imageView.setImageBitmap(netBitmap);
-                        }
-                    });
+                if(!isLoaded) {
+                    final Bitmap netBitmap = getBitmapFromNet(url);
+                    if (netBitmap != null && !isLoaded) {
+                        isLoaded = true;
+                        uiHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageView.setImageBitmap(netBitmap);
+                            }
+                        });
+                    }
                 }
             }
         }).start();

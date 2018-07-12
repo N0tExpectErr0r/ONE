@@ -41,7 +41,7 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
     private void initView(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
         //用LayoutInflater初始化底部布局
-        mFooter = inflater.from(context).inflate(R.layout.footer_layout, null);
+        mFooter = inflater.inflate(R.layout.footer_layout, null);
         mFooter.setVisibility(GONE);    //设置底部布局默认不可见
         addFooterView(mFooter);
         setOnScrollListener(this);  //设置滚动监听
@@ -53,7 +53,7 @@ public class LoadMoreListView extends ListView implements AbsListView.OnScrollLi
             case SCROLL_STATE_IDLE:
                 //滚动停止时
                 if (mTotalItemCount == mLastVisbleItem) {
-                    //如果滚动到底端最后一个并且滚动停止了
+                    //如果滚动到底端最后一个
                     if (!isLoading) {
                         //如果此时并非正在加载
                         isLoading = true;

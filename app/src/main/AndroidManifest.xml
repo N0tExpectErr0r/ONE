@@ -13,19 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".moduleMain.view.MainActivity">
+        <activity android:name=".main.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".moduleArticle.detail.view.ArticleDetailActivity"/>
-        <activity android:name=".moduleMusic.detail.view.MusicDetailActivity"/>
-        <activity android:name=".moduleMovie.detail.view.MovieDetailActivity"/>
-        <activity android:name=".moduleImage.view.ImageDetailActivity"/>
-        <activity android:name=".moduleComment.view.CommentActivity">
+        <activity android:name=".article.detail.view.ArticleDetailActivity"/>
+        <activity android:name=".music.detail.view.MusicDetailActivity"/>
+        <activity android:name=".movie.detail.view.MovieDetailActivity"/>
+        <activity android:name=".image.view.ImageDetailActivity"/>
+        <activity android:name=".comment.view.CommentActivity">
         </activity>
+
     </application>
 
 </manifest>

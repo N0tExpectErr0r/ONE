@@ -48,24 +48,28 @@ public class HtmlPraser {
             Drawable drawable = null;
             //内存缓存
             Bitmap memoryBitmap = ImageLoader.getInstance().getBitmapFromMemoryCache(url);
-            if (memoryBitmap != null && !isLoaded) {
+            if (memoryBitmap != null) {
                 isLoaded = true;
                 drawable = new BitmapDrawable(memoryBitmap);
                 drawable.setBounds(0, 0, memoryBitmap.getWidth(), memoryBitmap.getHeight());
             }
             //本地缓存
-            Bitmap localBitmap = ImageLoader.getInstance().getBitmapFromLocal(url);
-            if (localBitmap != null && !isLoaded) {
-                isLoaded = true;
-                drawable = new BitmapDrawable(localBitmap);
-                drawable.setBounds(0, 0, localBitmap.getWidth(), localBitmap.getHeight());
+            if (!isLoaded) {
+                Bitmap localBitmap = ImageLoader.getInstance().getBitmapFromLocal(url);
+                if (localBitmap != null) {
+                    isLoaded = true;
+                    drawable = new BitmapDrawable(localBitmap);
+                    drawable.setBounds(0, 0, localBitmap.getWidth(), localBitmap.getHeight());
+                }
             }
             //网络缓存
-            Bitmap netBitmap = ImageLoader.getInstance().getBitmapFromNet(url);
-            if (netBitmap != null && !isLoaded) {
-                isLoaded = true;
-                drawable = new BitmapDrawable(netBitmap);
-                drawable.setBounds(0, 0, netBitmap.getWidth(), netBitmap.getHeight());
+            if (!isLoaded) {
+                Bitmap netBitmap = ImageLoader.getInstance().getBitmapFromNet(url);
+                if (netBitmap != null) {
+                    isLoaded = true;
+                    drawable = new BitmapDrawable(netBitmap);
+                    drawable.setBounds(0, 0, netBitmap.getWidth(), netBitmap.getHeight());
+                }
             }
             return drawable;
         }

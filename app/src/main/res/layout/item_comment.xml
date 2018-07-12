@@ -9,18 +9,18 @@
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="新西兰："/>
+        android:text=""/>
     <TextView
         android:id="@+id/comment_tv_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="何必！朋友"/>
+        android:text=""/>
     <LinearLayout
         android:id="@+id/comment_cv_comment_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="16dp"
         android:layout_marginTop="10dp"
         android:background="#eee"
         android:orientation="vertical">

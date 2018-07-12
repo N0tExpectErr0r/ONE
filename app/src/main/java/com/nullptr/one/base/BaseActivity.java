@@ -7,8 +7,10 @@ import com.nullptr.one.util.ActivityCollector;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/7
- * @DESCRIPTION 所有Activity的基类，将Activity的onCreate划分为三个子部分 <p> 1.initVariables 用于初始化变量，包括Intent带的数据及Activity内的变量
- * 2.initViews 加载layout布局文件，初始化控件，为控件挂上事件方法 3.loadData 调用MobileAPI获取数据 <p> 参考自《App研发录》
+ * @DESCRIPTION 所有Activity的基类，将Activity的onCreate划分为三个子部分
+ * 1.initVariables 用于初始化变量，包括Intent带的数据及Activity内的变量
+ * 2.initViews 加载layout布局文件，初始化控件，为控件挂上事件方法
+ * 3.loadData 调用MobileAPI获取数据
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

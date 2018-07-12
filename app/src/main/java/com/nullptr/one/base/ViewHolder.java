@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.nullptr.one.util.ImageLoader;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @AUTHOR nullptr
@@ -26,7 +28,7 @@ public class ViewHolder {
 
     public ViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
         this.mPosition = position;
-        this.mViews = new SparseArray<View>();
+        this.mViews = new SparseArray<>();
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
         mConvertView.setTag(this);
     }
@@ -82,7 +84,7 @@ public class ViewHolder {
 
 
     //设置ImageView的图片(drawable)
-    public ViewHolder setImageResource(int viewId, Drawable drawable) {
+    public ViewHolder setImageDrawable(int viewId, Drawable drawable) {
         ImageView imageView = getView(viewId);
         imageView.setImageDrawable(drawable);
         return this;
