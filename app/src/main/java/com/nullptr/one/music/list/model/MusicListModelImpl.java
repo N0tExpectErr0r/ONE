@@ -1,12 +1,21 @@
 package com.nullptr.one.music.list.model;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.bean.Music;
+import com.nullptr.one.bean.Singer;
 import com.nullptr.one.music.list.IMusicList.MusicListModel;
 import com.nullptr.one.music.list.IMusicList.OnMoreMusicListener;
 import com.nullptr.one.music.list.IMusicList.OnMusicListListener;
+import com.nullptr.one.music.list.db.MusicListBaseHelper;
+import com.nullptr.one.music.list.db.MusicListDbSchema.MusicListTable;
+import com.nullptr.one.music.list.db.MusicListDbSchema.MusicListTable.Cols;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +26,58 @@ import java.util.List;
  * @DESCRIPTION MusicModel实现类
  */
 public class MusicListModelImpl implements MusicListModel {
+    private SQLiteDatabase mDatabase;   //本地缓存音乐列表的数据库
+
+    public MusicListModelImpl() {
+        mDatabase = new MusicListBaseHelper(ContextApplication.getContext()).getWritableDatabase();
+    }
+
 
     @Override
     public void getList(final OnMusicListListener onMusicListListener) {
+        final Cursor cursor = mDatabase.query(MusicListTable.NAME, null, null,null,
+                null, null, null);
+        if (cursor.getCount() > 0) {
+            //如果数据库已经有数据
+            getListFromLocal(cursor,onMusicListListener);
+        }else{
+            //如果数据库没有数据库，向服务器申请数据并存入数据库
+            cursor.close();
+            getListFromNet(onMusicListListener);
+        }
+    }
+
+    private void getListFromLocal(final Cursor cursor, final OnMusicListListener onMusicListListener){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //耗时操作，在新线程
+                cursor.moveToFirst();
+                List<Music> musicList = new ArrayList<>();
+                while (!cursor.isLast()){
+                    Music music = new Music();
+                    music.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
+                    music.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+                    music.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+                    music.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
+                    music.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
+                    Singer singer = new Singer();
+                    singer.setName(cursor.getString(cursor.getColumnIndex(Cols.SINGER_NAME)));
+                    singer.setDesc(cursor.getString(cursor.getColumnIndex(Cols.SINGER_DESC)));
+                    music.setSinger(singer);
+                    musicList.add(music);
+
+                    cursor.moveToNext();
+                }
+                cursor.close();
+                onMusicListListener.onSuccess(musicList);
+                onMusicListListener.onFinish();
+            }
+        }).start();
+    }
+
+    @Override
+    public void getListFromNet(final OnMusicListListener onMusicListListener) {
         StringBuilder url = new StringBuilder();
         url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
                 .append("0")
@@ -28,6 +86,10 @@ public class MusicListModelImpl implements MusicListModel {
             @Override
             public void onResponse(String response) {
                 List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
+                mDatabase.delete(MusicListTable.NAME,null,null);
+                for (Music music : musicList) {
+                    mDatabase.insert(MusicListTable.NAME,null,getContentValues(music));
+                }
                 onMusicListListener.onSuccess(musicList);
             }
 
@@ -46,6 +108,19 @@ public class MusicListModelImpl implements MusicListModel {
                 onMusicListListener.onFinish();
             }
         });
+    }
+
+    private ContentValues getContentValues(Music music) {
+        ContentValues values = new ContentValues();
+        values.put(Cols.ID,music.getId());
+        values.put(Cols.ITEM_ID, music.getItemId());
+        values.put(Cols.TITLE, music.getTitle());
+        values.put(Cols.FORWARD, music.getForward());
+        values.put(Cols.IMG_URL,music.getImageURL());
+        values.put(Cols.SINGER_NAME,music.getSinger().getName());
+        values.put(Cols.SINGER_DESC, music.getSinger().getDesc());
+
+        return values;
     }
 
     @Override

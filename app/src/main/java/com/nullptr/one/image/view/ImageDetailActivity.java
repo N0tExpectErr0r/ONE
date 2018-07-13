@@ -12,6 +12,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ProgressBar;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.bean.ImageDetail;
@@ -32,6 +36,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
     private ImageDetailPresenter mPresenter;
     private ViewPager mVpBanner;
     private WeakHandler mHandler;
+    private ProgressBar mPbLoading;
 
     // Handler的内存泄漏问题
     // 比如用Handler发送一条延时消息，此时关闭Activity
@@ -67,6 +72,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
 
         mPresenter = new ImageDetailPresenterImpl(this);
         mVpBanner = findViewById(R.id.image_vp_banner);
+        mPbLoading = findViewById(R.id.image_pb_loading);
     }
 
     @Override
@@ -113,11 +119,11 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
+        mPbLoading.setVisibility(View.GONE);
     }
 
     private Toolbar initToolbar(CharSequence title) {

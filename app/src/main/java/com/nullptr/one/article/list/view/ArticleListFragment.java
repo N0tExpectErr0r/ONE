@@ -1,14 +1,29 @@
 package com.nullptr.one.article.list.view;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ClipData.Item;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.article.detail.view.ArticleDetailActivity;
@@ -16,6 +31,7 @@ import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
 import com.nullptr.one.article.list.adapter.ArticleAdapter;
 import com.nullptr.one.article.list.presenter.ArticleListPresenterImpl;
+import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.ui.LoadMoreListView;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +44,7 @@ import java.util.List;
 public class ArticleListFragment extends Fragment implements ArticleListView,
         ListView.OnItemClickListener, LoadMoreListView.OnLoadMoreListener {
 
+    private NotificationManager mManager;
     private List<Article> mArticleList;
     private LoadMoreListView mLvListView;
     private ArticleAdapter mAdapter;
@@ -61,7 +78,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
             @Override
             public void onRefresh() {
                 //刷新 加载初始数据
-                mArticleListPresenter.loadList();
+                mArticleListPresenter.updateList();
             }
         });
         if (mArticleList == null || mArticleList.size() == 0) {
@@ -83,15 +100,13 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         //在UI线程更新Adapter的DataList
         mAdapter.setDataList(articleList);
         mArticleList = articleList;
-
     }
 
     @Override
     public void showError(final String errorMsg) {
         //UI线程进行UI操作
         AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-        errorDialog
-                .setTitle("错误")
+        errorDialog.setTitle("错误")
                 .setMessage(errorMsg)
                 .show();
         //关闭App
@@ -131,4 +146,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         String lastId = mArticleList.get(mArticleList.size() - 1).getId();
         mArticleListPresenter.loadMore(lastId);
     }
+
+
 }

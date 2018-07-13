@@ -1,10 +1,18 @@
 package com.nullptr.one.article.detail.view;
 
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +29,7 @@ import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailView;
 import com.nullptr.one.article.detail.presenter.ArticleDetailPresenterImpl;
 import com.nullptr.one.comment.view.CommentActivity;
+import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.util.HtmlPraser;
 
 /**
@@ -127,7 +136,6 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
 
         mTvTitle.setText(article.getTitle());
         mTvDate.setText(article.getDate());
-        Log.d("haha", article.getContent());
         HtmlPraser.getInstance().setHtml(mTvContent, article.getContent());
     }
 

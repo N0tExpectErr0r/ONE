@@ -38,6 +38,9 @@ public class MovieListPresenterImpl implements MovieListPresenter, OnMovieListLi
     }
 
     @Override
+    public void updateList(){mMovieListModel.getListFromNet(this);}
+
+    @Override
     public void loadMore(String lastId) {
         mMovieListModel.getMore(this, lastId);
     }

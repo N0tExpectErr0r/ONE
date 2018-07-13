@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/image_vp_banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_height="match_parent"/>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/image_vp_banner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+    <android.support.v7.widget.Toolbar
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_detail"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-            <android.support.v7.widget.Toolbar
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar_detail"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        </FrameLayout>
-    </android.support.design.widget.AppBarLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+    <ProgressBar
+        android:id="@+id/image_pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+</FrameLayout>

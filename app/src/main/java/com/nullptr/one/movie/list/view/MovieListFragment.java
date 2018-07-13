@@ -1,8 +1,17 @@
 package com.nullptr.one.movie.list.view;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
@@ -10,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.Movie;
+import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.movie.detail.view.MovieDetailActivity;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
 import com.nullptr.one.movie.list.IMovieList.MovieListView;
@@ -29,7 +40,8 @@ import java.util.List;
  */
 public class MovieListFragment extends Fragment implements OnLoadMoreListener,
         ListView.OnItemClickListener, MovieListView {
-
+    private final int ID = 2;
+    private NotificationManager mManager;
     private LoadMoreListView mLvListView;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
     private MovieListPresenter mMovieListPresenter;
@@ -56,8 +68,7 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
             @Override
             public void onRefresh() {
                 //刷新加载数据
-                mMovieListPresenter.loadList();
-
+                mMovieListPresenter.updateList();
             }
         });
         if (mMovieList == null || mMovieList.size() == 0) {

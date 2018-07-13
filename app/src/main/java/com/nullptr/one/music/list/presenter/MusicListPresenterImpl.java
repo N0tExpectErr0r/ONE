@@ -37,6 +37,11 @@ public class MusicListPresenterImpl implements MusicListPresenter, OnMusicListLi
     }
 
     @Override
+    public void updateList() {
+        mMusicListModel.getListFromNet(this);
+    }
+
+    @Override
     public void loadMore(String lastId) {
         mMusicListModel.getMore(this, lastId);
     }

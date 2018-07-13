@@ -37,6 +37,11 @@ public class ArticleListPresenterImpl implements ArticleListPresenter, OnArticle
     }
 
     @Override
+    public void updateList() {
+        mArticleListModel.getListFromNet(this);
+    }
+
+    @Override
     public void loadMore(String lastId) {
         mArticleListModel.getMore(this, lastId);
     }

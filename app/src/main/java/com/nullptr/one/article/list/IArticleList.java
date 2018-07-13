@@ -15,6 +15,8 @@ public interface IArticleList {
 
         void getList(OnArticleListListener listener);
 
+        void getListFromNet(OnArticleListListener listener);
+
         void getMore(OnMoreArticleListener onMoreArticleListener, String lastId);
     }
 
@@ -40,6 +42,8 @@ public interface IArticleList {
     interface ArticleListPresenter {
 
         void loadList();
+
+        void updateList();
 
         void loadMore(String lastId);
     }

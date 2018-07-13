@@ -1,5 +1,6 @@
 package com.nullptr.one.main.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import com.nullptr.one.image.view.ImageDetailActivity;
 import com.nullptr.one.main.adapter.ViewPagerAdapter;
 import com.nullptr.one.movie.list.view.MovieListFragment;
 import com.nullptr.one.music.list.view.MusicListFragment;
+import com.nullptr.one.service.AutoUpdateService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -138,6 +140,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void loadData() {
         //TODO
+        Intent intent = new Intent(this,AutoUpdateService.class);
+        intent.putExtra("isStart",true);
+        startService(intent);
     }
 
 

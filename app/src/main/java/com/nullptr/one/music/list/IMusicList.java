@@ -15,6 +15,8 @@ public interface IMusicList {
 
         void getList(OnMusicListListener listener);
 
+        void getListFromNet(OnMusicListListener listener);
+
         void getMore(OnMoreMusicListener onMoreMusicListener, String lastId);
     }
 
@@ -40,6 +42,8 @@ public interface IMusicList {
     interface MusicListPresenter {
 
         void loadList();
+
+        void updateList();
 
         void loadMore(String lastId);
     }

@@ -1,16 +1,27 @@
 package com.nullptr.one.music.list.view;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.Music;
+import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.music.detail.view.MusicDetailActivity;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
 import com.nullptr.one.music.list.IMusicList.MusicListView;
@@ -28,6 +39,8 @@ import java.util.List;
 public class MusicListFragment extends Fragment implements MusicListView,
         ListView.OnItemClickListener, LoadMoreListView.OnLoadMoreListener {
 
+    private final int ID = 3;
+    private NotificationManager mManager;
     private LoadMoreListView mLvListView;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
     private MusicListPresenter mMusicListPresenter;
@@ -54,8 +67,7 @@ public class MusicListFragment extends Fragment implements MusicListView,
             @Override
             public void onRefresh() {
                 //刷新 加载初始数据
-                mMusicListPresenter.loadList();
-
+                mMusicListPresenter.updateList();
             }
         });
 
@@ -120,4 +132,6 @@ public class MusicListFragment extends Fragment implements MusicListView,
         String lastId = mMusicList.get(mMusicList.size() - 1).getId();
         mMusicListPresenter.loadMore(lastId);
     }
+
+
 }

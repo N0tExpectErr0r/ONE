@@ -16,6 +16,8 @@ public interface IMovieList {
         void getList(OnMovieListListener listener);
 
         void getMore(OnMoreMovieListener onMoreMovieListener, String lastId);
+
+        void getListFromNet(OnMovieListListener onMovieListListener);
     }
 
     interface OnMovieListListener {
@@ -41,6 +43,8 @@ public interface IMovieList {
     interface MovieListPresenter {
 
         void loadList();
+
+        void updateList();
 
         void loadMore(String lastId);
     }
