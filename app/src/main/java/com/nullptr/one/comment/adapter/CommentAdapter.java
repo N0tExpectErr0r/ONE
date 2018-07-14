@@ -1,6 +1,7 @@
 package com.nullptr.one.comment.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.nullptr.one.R;

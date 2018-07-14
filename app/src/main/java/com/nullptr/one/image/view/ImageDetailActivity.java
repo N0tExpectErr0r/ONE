@@ -77,7 +77,6 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
 
     @Override
     protected void loadData() {
-        Log.d("ImageDetailActivity","load");
         mPresenter.getImageDetailList();
     }
 

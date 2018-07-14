@@ -1,5 +1,6 @@
 package com.nullptr.one.comment.model;
 
+import android.support.v4.app.NotificationCompat;
 import com.nullptr.one.bean.Comment;
 import com.nullptr.one.comment.IComment.CommentModel;
 import com.nullptr.one.comment.IComment.OnCommentListListener;

@@ -87,7 +87,7 @@ public class ArticleListModelImpl implements ArticleListModel {
             @Override
             public void onResponse(String response) {
                 List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
-                onArticleListListener.onSuccess(articleList);
+                mDatabase.delete(ArticleListTable.NAME,null,null);
                 for (Article article : articleList) {
                     mDatabase.insert(ArticleListTable.NAME,null,getContentValues(article));
                 }

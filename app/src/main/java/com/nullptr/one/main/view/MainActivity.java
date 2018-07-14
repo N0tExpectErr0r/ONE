@@ -1,7 +1,12 @@
 package com.nullptr.one.main.view;
 
+import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +17,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.article.list.view.ArticleListFragment;
@@ -20,6 +27,7 @@ import com.nullptr.one.main.adapter.ViewPagerAdapter;
 import com.nullptr.one.movie.list.view.MovieListFragment;
 import com.nullptr.one.music.list.view.MusicListFragment;
 import com.nullptr.one.service.AutoUpdateService;
+import com.nullptr.one.service.DownloadArticleService;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +45,20 @@ public class MainActivity extends BaseActivity {
     private List<Fragment> mFragments = null;
     private DrawerLayout mDlDrawerLayout;
     private NavigationView mNvNavigationView;
+    private FloatingActionButton mFabDownload;
     private TabLayout mTlTabLayout;
     private ViewPager mVpViewPager;
+    private DownloadReceiver mDownloadReceiver;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mDownloadReceiver = new DownloadReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        //设置接收广播的类型
+        intentFilter.addAction("download");
+        registerReceiver(mDownloadReceiver, intentFilter);
+    }
 
     @Override
     protected void initVariables() {
@@ -134,6 +154,29 @@ public class MainActivity extends BaseActivity {
                         return true;
                     }
                 });
+        mFabDownload = findViewById(R.id.main_fab_download);
+        mFabDownload.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,DownloadArticleService.class);
+                startService(intent);
+                mFabDownload.setEnabled(false);
+            }
+        });
+    }
+
+    class DownloadReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String actionType = intent.getStringExtra("action_type");
+            switch (actionType){
+                case "OVER":
+                    mFabDownload.setEnabled(true);
+                    break;
+                default:
+            }
+        }
     }
 
     //加载数据

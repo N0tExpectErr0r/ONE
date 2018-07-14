@@ -33,6 +33,11 @@
             android:exported="true"
             android:name=".service.AutoUpdateService">
         </service>
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:name=".service.DownloadArticleService">
+        </service>
     </application>
 
 </manifest>

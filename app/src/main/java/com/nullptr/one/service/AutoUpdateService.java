@@ -1,11 +1,15 @@
 package com.nullptr.one.service;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
 import com.nullptr.one.article.list.presenter.ArticleListPresenterImpl;
@@ -18,18 +22,36 @@ import com.nullptr.one.movie.list.presenter.MovieListPresenterImpl;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
 import com.nullptr.one.music.list.IMusicList.MusicListView;
 import com.nullptr.one.music.list.presenter.MusicListPresenterImpl;
-import com.nullptr.one.util.NotificationUtil;
+import com.nullptr.one.util.UpdateNotificationFactory;
 import java.util.List;
 
-public class AutoUpdateService extends Service implements MusicListView,ArticleListView,MovieListView {
-    private MusicListPresenter mMusicListPresenter;
-    private MovieListPresenter mMovieListPresenter;
-    private ArticleListPresenter mArticleListPresenter;
+public class AutoUpdateService extends Service implements MusicListView, ArticleListView, MovieListView {
 
-    public AutoUpdateService() {
-        mMusicListPresenter = new MusicListPresenterImpl(this);
-        mMovieListPresenter = new MovieListPresenterImpl(this);
-        mArticleListPresenter = new ArticleListPresenterImpl(this);
+    private final static int ARTICLE_ID = 1;
+    private final static int MUSIC_ID = 2;
+    private final static int MOVIE_ID = 3;
+
+    private static MusicListPresenter sMusicListPresenter;
+    private static MovieListPresenter sMovieListPresenter;
+    private static ArticleListPresenter sArticleListPresenter;
+    private static NotificationManager sManager;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if (sMusicListPresenter == null) {
+            sMusicListPresenter = new MusicListPresenterImpl(this);
+        }
+        if (sMovieListPresenter == null) {
+            sMovieListPresenter = new MovieListPresenterImpl(this);
+        }
+        if (sArticleListPresenter == null) {
+            sArticleListPresenter = new ArticleListPresenterImpl(this);
+        }
+        if (sManager == null) {
+            sManager = (NotificationManager) ContextApplication.getContext()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
+        }
     }
 
     @Override
@@ -39,68 +61,69 @@ public class AutoUpdateService extends Service implements MusicListView,ArticleL
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        boolean isStart = intent.getBooleanExtra("isStart",false);
+        boolean isStart = intent.getBooleanExtra("isStart", false);
         if (!isStart) {
             //不是启动MainActivity时启动的服务才调用
-            mArticleListPresenter.updateList();
-            mMovieListPresenter.updateList();
-            mMusicListPresenter.updateList();
+            sArticleListPresenter.updateList();
+            sMovieListPresenter.updateList();
+            sMusicListPresenter.updateList();
         }
-        AlarmManager manager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        int loopTime = 8*60*60*1000;   //每8小时刷新一次
-        long triggerAtTime = SystemClock.elapsedRealtime()+loopTime;
-        Intent newIntent = new Intent(this,AutoUpdateService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this,0,newIntent,0);
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        int loopTime = 8 * 60 * 60 * 1000;   //每4小时刷新一次
+        long triggerAtTime = SystemClock.elapsedRealtime() + loopTime;
+        Intent newIntent = new Intent(this, AutoUpdateService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, newIntent, 0);
         manager.cancel(pendingIntent);
-        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,triggerAtTime,pendingIntent);
-        return super.onStartCommand(intent,flags,startId);
+        manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pendingIntent);
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void setArticleList(List<Article> articleList) {
         Article firstArticle = articleList.get(0);
-        NotificationUtil.showArticleNotification(firstArticle.getTitle(), firstArticle.getForward());
-    }
-
-    @Override
-    public void addArticleList(List<Article> articleList) {
-
+        Notification notification = UpdateNotificationFactory
+                .createNotification(UpdateNotificationFactory.TYPE_ARTICLE, firstArticle.getTitle(),
+                        firstArticle.getForward());
+        sManager.notify(ARTICLE_ID, notification);
     }
 
     @Override
     public void setMovieList(List<Movie> movieList) {
         Movie firstMovie = movieList.get(0);
-        NotificationUtil.showMovieNotification(firstMovie.getTitle(), firstMovie.getForward());
-    }
-
-    @Override
-    public void addMovieList(List<Movie> movieList) {
-
+        Notification notification = UpdateNotificationFactory
+                .createNotification(UpdateNotificationFactory.TYPE_MOVIE, firstMovie.getTitle(), firstMovie.getForward());
+        sManager.notify(MOVIE_ID, notification);
     }
 
     @Override
     public void setMusicList(List<Music> musicList) {
         Music firstMusic = musicList.get(0);
-        NotificationUtil.showMusicNotification(firstMusic.getTitle(),firstMusic.getForward());
+        Notification notification = UpdateNotificationFactory
+                .createNotification(UpdateNotificationFactory.TYPE_MUSIC, firstMusic.getTitle(), firstMusic.getForward());
+        sManager.notify(MUSIC_ID, notification);
+    }
+
+    @Override
+    public void addArticleList(List<Article> articleList) {
+    }
+
+    @Override
+    public void addMovieList(List<Movie> movieList) {
     }
 
     @Override
     public void addMusicList(List<Music> musicList) {
-
     }
 
     @Override
     public void showError(String errorMsg) {
-
     }
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
     public void hideLoading() {
-
     }
 }
