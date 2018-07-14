@@ -35,10 +35,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadArticleService extends Service implements ArticleListView,ArticleDetailView {
-    private int listIndex;
-    private int detailIndex;
-    private int listProgress;
-    private int detailProgress;
+    private static int listIndex;
+    private static int detailIndex;
+    private static int listProgress;
+    private static int detailProgress;
     private static ArticleListPresenter sListPresenter;
     private static ArticleDetailPresenter sDetailPresenter;
     private static SQLiteDatabase sListDatabase;
@@ -76,7 +76,6 @@ public class DownloadArticleService extends Service implements ArticleListView,A
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Download","init");
         listIndex = 0;
         detailIndex = 0;
         listProgress = 0;
