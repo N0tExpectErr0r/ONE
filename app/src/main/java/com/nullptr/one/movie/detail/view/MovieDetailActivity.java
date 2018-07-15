@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.bean.MovieDetail;
@@ -136,13 +137,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
 
     @Override
     public void showError(final String errorMsg) {
-        AlertDialog.Builder errorDialog = new AlertDialog.Builder(MovieDetailActivity.this);
-        errorDialog
-                .setTitle("错误")
-                .setMessage(errorMsg)
-                .show();
-        //关闭App
-        finish();
+        //网络出错的处理
+        Toast.makeText(this,"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -61,6 +61,12 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(mDownloadReceiver);
+    }
+
+    @Override
     protected void initVariables() {
     }
 

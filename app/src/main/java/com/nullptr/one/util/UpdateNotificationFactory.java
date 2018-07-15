@@ -13,7 +13,12 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationCompat.Style;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
+import com.nullptr.one.article.detail.view.ArticleDetailActivity;
+import com.nullptr.one.bean.ArticleDetail;
+import com.nullptr.one.bean.MovieDetail;
 import com.nullptr.one.main.view.MainActivity;
+import com.nullptr.one.movie.detail.view.MovieDetailActivity;
+import com.nullptr.one.music.detail.view.MusicDetailActivity;
 
 /**
  * @AUTHOR nullptr
@@ -26,14 +31,13 @@ public class UpdateNotificationFactory {
     public static final int TYPE_MOVIE = 2;
     private static NotificationManager mManager;
 
-    public static Notification createNotification(int type,String title, String content){
+    public static Notification createNotification(int type, String title, String content,String itemId){
         Bitmap icon = BitmapFactory.decodeResource(ContextApplication.getContext().getResources(),R.mipmap.ic_launcher);
         if (mManager == null) {
             mManager = (NotificationManager) ContextApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         }
-        Intent intent = new Intent(ContextApplication.getContext(), MainActivity.class);
+        Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(ContextApplication.getContext(), 0, intent, 0);
 
         NotificationCompat.BigTextStyle style = new NotificationCompat.BigTextStyle()
                 .setBigContentTitle(title)
@@ -48,18 +52,26 @@ public class UpdateNotificationFactory {
             case TYPE_ARTICLE:
                 channelId = "channel_article";
                 contentText = "最新文章推荐";
+                intent.setClass(ContextApplication.getContext(),ArticleDetailActivity.class);
+                intent.putExtra("item_id",itemId);
                 break;
             case TYPE_MUSIC:
                 channelId = "channel_article";
                 contentText = "最新乐评推荐";
+                intent.setClass(ContextApplication.getContext(),MusicDetailActivity.class);
+                intent.putExtra("item_id",itemId);
                 break;
             case TYPE_MOVIE:
                 channelId = "channel_article";
                 contentText = "最新影评推荐";
+                intent.setClass(ContextApplication.getContext(),MovieDetailActivity.class);
+                intent.putExtra("item_id",itemId);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong type to create Notification");
         }
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(ContextApplication.getContext(), 0, intent, 0);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = mManager.getNotificationChannel(channelId);

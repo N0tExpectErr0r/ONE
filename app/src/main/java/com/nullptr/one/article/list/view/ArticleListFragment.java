@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.bean.Article;
@@ -104,13 +105,8 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
 
     @Override
     public void showError(final String errorMsg) {
-        //UI线程进行UI操作
-        AlertDialog.Builder errorDialog = new AlertDialog.Builder(getActivity());
-        errorDialog.setTitle("错误")
-                .setMessage(errorMsg)
-                .show();
-        //关闭App
-        getActivity().finish();
+        //网络出错的处理
+        Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
     }
 
     @Override

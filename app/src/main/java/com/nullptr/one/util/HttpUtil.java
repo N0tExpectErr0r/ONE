@@ -1,6 +1,7 @@
 package com.nullptr.one.util;
 
 import android.util.Log;
+import android.view.View;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,14 +51,8 @@ public class HttpUtil {
                         listener.onResponse(response.toString());
                         listener.onFinish();
                     }
-                } catch (ProtocolException e) {
-                    listener.onError("网络出现错误");
-                } catch (MalformedURLException e) {
-                    listener.onError("网络出现错误");
-                } catch (IOException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    listener.onError("网络出现错误");
                 } finally {
                     if (connection != null) {
                         connection.disconnect();

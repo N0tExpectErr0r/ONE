@@ -99,6 +99,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         }
     }
 
+    //获取Notification对象
     private Notification getNotification(String title,int progress){
         Intent intent = new Intent(this,MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
@@ -119,6 +120,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         return builder.build();
     }
 
+    //配置Notification的Builder
     private Builder configBuilder(Builder builder, PendingIntent pendingIntent,String title,int progress){
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -148,11 +150,13 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         return values;
     }
 
+    //下载文章
     private void downloadArticleList() {
         sManager.notify(1,getNotification("正在下载文章列表...",listProgress));
         sListPresenter.updateList();
     }
 
+    //获得首页文章列表
     @Override
     public void setArticleList(List<Article> articleList) {
         listProgress+=20;
@@ -163,6 +167,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         sListPresenter.loadMore(lastId);
     }
 
+    //获得更多文章列表
     @Override
     public void addArticleList(List<Article> articleList) {
         if (listIndex < 3){
@@ -180,6 +185,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         }
     }
 
+    //下载文章详情
     private void downloadArticleDetail() {
         detailProgress+=2;
         sManager.notify(1,getNotification("正在下载文章详情...",detailProgress));
@@ -187,6 +193,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         sDetailPresenter.getArticleDetail(article.getItemId());
     }
 
+    //得到文章详情
     @Override
     public void setArticle(ArticleDetail article) {
         if (detailIndex < 49){
@@ -206,11 +213,13 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         }
     }
 
+    //保存文章详情至数据库
     private void saveDetailToDatabase(ArticleDetail article) {
         sDetailDatabase.insert(DownloadTable.NAME, null,
                 getDetailContentValues(article));
     }
 
+    //获取文章详情ContentValues
     private ContentValues getDetailContentValues(ArticleDetail article) {
         ContentValues values = new ContentValues();
         values.put(DownloadTable.Cols.ITEM_ID, article.getContentId());
@@ -224,10 +233,16 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         return values;
     }
 
+    //出现错误
     @Override
     public void showError(String errorMsg) {
         sManager.notify(1,getNotification("下载失败!",-1));
         Toast.makeText(this,"下载失败",Toast.LENGTH_SHORT).show();
+        //下载失败，发送下载结束的广播
+        Intent intent = new Intent();
+        intent.setAction("download");
+        intent.putExtra("action_type","OVER");
+        sendBroadcast(intent);
     }
 
     @Override

@@ -69,7 +69,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
             sMusicListPresenter.updateList();
         }
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int loopTime = 8 * 60 * 60 * 1000;   //每4小时刷新一次
+        int loopTime = 4*60*60 * 1000;   //每4小时刷新一次
         long triggerAtTime = SystemClock.elapsedRealtime() + loopTime;
         Intent newIntent = new Intent(this, AutoUpdateService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, newIntent, 0);
@@ -83,7 +83,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
         Article firstArticle = articleList.get(0);
         Notification notification = UpdateNotificationFactory
                 .createNotification(UpdateNotificationFactory.TYPE_ARTICLE, firstArticle.getTitle(),
-                        firstArticle.getForward());
+                        firstArticle.getForward(),firstArticle.getItemId());
         sManager.notify(ARTICLE_ID, notification);
     }
 
@@ -91,7 +91,8 @@ public class AutoUpdateService extends Service implements MusicListView, Article
     public void setMovieList(List<Movie> movieList) {
         Movie firstMovie = movieList.get(0);
         Notification notification = UpdateNotificationFactory
-                .createNotification(UpdateNotificationFactory.TYPE_MOVIE, firstMovie.getTitle(), firstMovie.getForward());
+                .createNotification(UpdateNotificationFactory.TYPE_MOVIE, firstMovie.getTitle(),
+                        firstMovie.getForward(),firstMovie.getItemId());
         sManager.notify(MOVIE_ID, notification);
     }
 
@@ -99,7 +100,8 @@ public class AutoUpdateService extends Service implements MusicListView, Article
     public void setMusicList(List<Music> musicList) {
         Music firstMusic = musicList.get(0);
         Notification notification = UpdateNotificationFactory
-                .createNotification(UpdateNotificationFactory.TYPE_MUSIC, firstMusic.getTitle(), firstMusic.getForward());
+                .createNotification(UpdateNotificationFactory.TYPE_MUSIC, firstMusic.getTitle(),
+                        firstMusic.getForward(),firstMusic.getItemId());
         sManager.notify(MUSIC_ID, notification);
     }
 
