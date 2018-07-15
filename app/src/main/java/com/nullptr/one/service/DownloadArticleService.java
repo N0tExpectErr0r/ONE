@@ -247,8 +247,8 @@ public class DownloadArticleService extends Service implements ArticleListView,A
 
     @Override
     public void showLoading() {
-
     }
+
 
     @Override
     public void hideLoading() {

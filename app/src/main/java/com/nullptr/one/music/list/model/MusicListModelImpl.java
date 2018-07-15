@@ -12,6 +12,10 @@ import com.nullptr.one.music.list.IMusicList.OnMusicListListener;
 import com.nullptr.one.music.list.db.MusicListBaseHelper;
 import com.nullptr.one.music.list.db.MusicListDbSchema.MusicListTable;
 import com.nullptr.one.music.list.db.MusicListDbSchema.MusicListTable.Cols;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -82,10 +86,11 @@ public class MusicListModelImpl implements MusicListModel {
         url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
                 .append("0")
                 .append("?platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
-                List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
+            public void onResponse(Response response) {
+                List<Music> musicList = JsonUtil.parseJsonToMusicList(response.getResult());
                 mDatabase.delete(MusicListTable.NAME,null,null);
                 for (Music music : musicList) {
                     mDatabase.insert(MusicListTable.NAME,null,getContentValues(music));
@@ -94,8 +99,8 @@ public class MusicListModelImpl implements MusicListModel {
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMusicListListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMusicListListener.onFail(e.getMessage());
             }
 
             @Override
@@ -129,16 +134,17 @@ public class MusicListModelImpl implements MusicListModel {
         url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
                 .append(lastId)
                 .append("?platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
-                List<Music> musicList = JsonUtil.parseJsonToMusicList(response);
+            public void onResponse(Response response) {
+                List<Music> musicList = JsonUtil.parseJsonToMusicList(response.getResult());
                 onMoreMusicListener.onMoreSuccess(musicList);
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMoreMusicListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMoreMusicListener.onFail(e.getMessage());
             }
 
             @Override

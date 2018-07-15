@@ -4,6 +4,10 @@ import android.util.Log;
 import com.nullptr.one.bean.ImageDetail;
 import com.nullptr.one.image.IImageDetail.ImageDetailModel;
 import com.nullptr.one.image.IImageDetail.OnImageDetailListener;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -25,11 +29,12 @@ public class ImageDetailModelImpl implements ImageDetailModel {
         url.append("http://v3.wufazhuce.com:8000/api/hp/idlist/")
                 .append("0")
                 .append("?version=3.5.0&platform=android");
-        HttpUtil.sendHttpRequest(url.toString(),
-                new OnRequestListener() {
+
+        final Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request,new HttpListener() {
                     @Override
-                    public void onResponse(String response) {
-                        final List<String> imageList = JsonUtil.parseJsonToImageList(response);
+                    public void onResponse(Response response) {
+                        final List<String> imageList = JsonUtil.parseJsonToImageList(response.getResult());
                         final ImageDetail[] imageArr = new ImageDetail[10];
                         //获得图片列表后，发送请求图片详情请求
                         for (int i = 0; i < 10; i++) {
@@ -39,11 +44,12 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                             imageUrl.append("http://v3.wufazhuce.com:8000/api/hp/detail/")
                                     .append(imageId)
                                     .append("?version=3.5.0&platform=android");
-                            HttpUtil.sendHttpRequest(imageUrl.toString(), new OnRequestListener() {
+                            Request imageRequest = new Request(imageUrl.toString());
+                            RequestExecutor.getInstance().execute(imageRequest, new HttpListener() {
                                 @Override
-                                public void onResponse(String response) {
+                                public void onResponse(Response response) {
                                     ImageDetail imageDetail = JsonUtil
-                                            .parseJsonToImageDetail(response);
+                                            .parseJsonToImageDetail(response.getResult());
                                     //由于加载图片速度不同
                                     //用数组来按获取到的顺序放，最后转为List
                                     imageArr[currentIndex] = imageDetail;
@@ -61,8 +67,8 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                                 }
 
                                 @Override
-                                public void onError(String errorMsg) {
-                                    onImageDetailListener.onFail(errorMsg);
+                                public void onError(Exception e) {
+                                    onImageDetailListener.onFail(e.getMessage());
                                 }
 
                                 @Override
@@ -79,8 +85,8 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                     }
 
                     @Override
-                    public void onError(String errorMsg) {
-                        onImageDetailListener.onFail(errorMsg);
+                    public void onError(Exception e) {
+                        onImageDetailListener.onFail(e.getMessage());
                     }
 
                     @Override

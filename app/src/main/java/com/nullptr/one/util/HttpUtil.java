@@ -52,7 +52,7 @@ public class HttpUtil {
                         listener.onFinish();
                     }
                 } catch (Exception e) {
-                    listener.onError("网络出现错误");
+                    listener.onError("网络错误，请检查网络设置");
                 } finally {
                     if (connection != null) {
                         connection.disconnect();

@@ -4,6 +4,10 @@ import android.support.v4.app.NotificationCompat;
 import com.nullptr.one.bean.Comment;
 import com.nullptr.one.comment.IComment.CommentModel;
 import com.nullptr.one.comment.IComment.OnCommentListListener;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -35,19 +39,20 @@ public class CommentModelImpl implements CommentModel {
                 .append(commentType)
                 .append("/" + itemId)
                 .append("/0?&platform=android");
-        HttpUtil.sendHttpRequest(url.toString(),
-                new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request,
+                new HttpListener() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(Response response) {
                         //将该文章详情存入数据库
                         List<Comment> articleDetail = JsonUtil
-                                .parseJsonToCommentList(response);
+                                .parseJsonToCommentList(response.getResult());
                         onCommentListListener.onSuccess(articleDetail);
                     }
 
                     @Override
-                    public void onError(String errorMsg) {
-                        onCommentListListener.onFail(errorMsg);
+                    public void onError(Exception e) {
+                        onCommentListListener.onFail(e.getMessage());
                     }
 
                     @Override

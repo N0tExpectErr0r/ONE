@@ -2,6 +2,7 @@ package com.nullptr.one.article.list.presenter;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.article.list.IArticleList.ArticleListModel;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;

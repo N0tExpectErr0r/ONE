@@ -14,9 +14,14 @@ import com.nullptr.one.movie.list.IMovieList.OnMovieListListener;
 import com.nullptr.one.movie.list.db.MovieListBaseHelper;
 import com.nullptr.one.movie.list.db.MovieListDbSchema.MovieListTable;
 import com.nullptr.one.movie.list.db.MovieListDbSchema.MovieListTable.Cols;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,10 +93,12 @@ public class MovieListModelImpl implements MovieListModel {
         url.append("http://v3.wufazhuce.com:8000/api/channel/movie/more/")
                 .append("0")
                 .append("?platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
-                List<Movie> movieList = JsonUtil.parseJsonToMovieList(response);
+            public void onResponse(Response response) {
+                List<Movie> movieList = JsonUtil.parseJsonToMovieList(response.getResult());
                 mDatabase.delete(MovieListTable.NAME,null,null);
                 for (Movie movie : movieList) {
                     mDatabase.insert(MovieListTable.NAME,null,getContentValues(movie));
@@ -100,8 +107,8 @@ public class MovieListModelImpl implements MovieListModel {
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMovieListListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMovieListListener.onFail(e.getMessage());
             }
 
             @Override
@@ -136,16 +143,17 @@ public class MovieListModelImpl implements MovieListModel {
         url.append("http://v3.wufazhuce.com:8000/api/channel/movie/more/")
                 .append(lastId)
                 .append("?platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
-                List<Movie> movieList = JsonUtil.parseJsonToMovieList(response);
+            public void onResponse(Response response) {
+                List<Movie> movieList = JsonUtil.parseJsonToMovieList(response.getResult());
                 onMoreMovieListener.onMoreSuccess(movieList);
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMoreMovieListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMoreMovieListener.onFail(e.getMessage());
             }
 
             @Override

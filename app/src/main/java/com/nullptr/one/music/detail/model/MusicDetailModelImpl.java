@@ -11,6 +11,10 @@ import com.nullptr.one.music.detail.IMusicDetail.OnMusicDetailListener;
 import com.nullptr.one.music.detail.db.MusicBaseHelper;
 import com.nullptr.one.music.detail.db.MusicDbSchema.MusicTable;
 import com.nullptr.one.music.detail.db.MusicDbSchema.MusicTable.Cols;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -81,18 +85,19 @@ public class MusicDetailModelImpl implements MusicDetailModel {
         url.append("http://v3.wufazhuce.com:8000/api/music/detail/")
                 .append(itemId)
                 .append("?version=3.5.0&platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Response response) {
                 //将该音乐详情存入数据库
-                MusicDetail musicDetail = JsonUtil.parseJsonToMusicDetail(response);
+                MusicDetail musicDetail = JsonUtil.parseJsonToMusicDetail(response.getResult());
                 mDatabase.insert(MusicTable.NAME, null, getContentValues(musicDetail));
                 onMusicDetailListener.onSuccess(musicDetail);
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMusicDetailListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMusicDetailListener.onFail(e.getMessage());
             }
 
             @Override

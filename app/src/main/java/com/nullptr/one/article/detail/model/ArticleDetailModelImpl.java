@@ -10,6 +10,10 @@ import com.nullptr.one.article.detail.IArticleDetail.OnArticleDetailListener;
 import com.nullptr.one.article.detail.db.ArticleBaseHelper;
 import com.nullptr.one.article.detail.db.ArticleDbSchema.ArticleTable;
 import com.nullptr.one.article.detail.db.ArticleDbSchema.ArticleTable.Cols;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -78,20 +82,21 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
                 .append("?platform=android");
         //如果数据库没有数据库，向服务器申请数据并存入数据库
 
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Response response) {
                 //将该文章详情存入数据库
                 ArticleDetail articleDetail = JsonUtil
-                        .parseJsonToArticleDetail(response);
+                        .parseJsonToArticleDetail(response.getResult());
                 mDatabase.insert(ArticleTable.NAME, null,
                         getContentValues(articleDetail));
                 onArticleDetailListener.onSuccess(articleDetail);
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onArticleDetailListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onArticleDetailListener.onFail(e.getMessage());
             }
 
             @Override

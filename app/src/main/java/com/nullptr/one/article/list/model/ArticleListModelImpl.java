@@ -3,6 +3,7 @@ package com.nullptr.one.article.list.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.article.list.db.ArticleListBaseHelper;
 import com.nullptr.one.article.list.db.ArticleListDbSchema.ArticleListTable;
@@ -12,6 +13,10 @@ import com.nullptr.one.article.list.IArticleList.ArticleListModel;
 import com.nullptr.one.article.list.IArticleList.OnArticleListListener;
 import com.nullptr.one.article.list.IArticleList.OnMoreArticleListener;
 import com.nullptr.one.bean.Author;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -83,10 +88,11 @@ public class ArticleListModelImpl implements ArticleListModel {
         url.append("http://v3.wufazhuce.com:8000/api/channel/reading/more/")
                 .append("0")
                 .append("?channel=wdj&version=4.0.2&platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
-                List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
+            public void onResponse(Response response) {
+                List<Article> articleList = JsonUtil.parseJsonToArticleList(response.getResult());
                 mDatabase.delete(ArticleListTable.NAME,null,null);
                 for (Article article : articleList) {
                     mDatabase.insert(ArticleListTable.NAME,null,getContentValues(article));
@@ -95,8 +101,8 @@ public class ArticleListModelImpl implements ArticleListModel {
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onArticleListListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onArticleListListener.onFail(e.getMessage());
             }
 
             @Override
@@ -132,16 +138,17 @@ public class ArticleListModelImpl implements ArticleListModel {
         url.append("http://v3.wufazhuce.com:8000/api/channel/reading/more/")
                 .append(lastId)
                 .append("?channel=wdj&version=4.0.2&platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
-                List<Article> articleList = JsonUtil.parseJsonToArticleList(response);
+            public void onResponse(Response response) {
+                List<Article> articleList = JsonUtil.parseJsonToArticleList(response.getResult());
                 onMoreArticleListener.onMoreSuccess(articleList);
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMoreArticleListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMoreArticleListener.onFail(e.getMessage());
             }
 
             @Override

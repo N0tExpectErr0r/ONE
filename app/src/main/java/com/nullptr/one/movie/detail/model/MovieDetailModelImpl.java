@@ -11,6 +11,10 @@ import com.nullptr.one.movie.detail.IMovieDetail.OnMovieDetailListener;
 import com.nullptr.one.movie.detail.db.MovieDetailBaseHelper;
 import com.nullptr.one.movie.detail.db.MovieDetailDbSchema.MovieDetailTable;
 import com.nullptr.one.movie.detail.db.MovieDetailDbSchema.MovieDetailTable.Cols;
+import com.nullptr.one.net.HttpListener;
+import com.nullptr.one.net.Request;
+import com.nullptr.one.net.RequestExecutor;
+import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
@@ -76,18 +80,19 @@ public class MovieDetailModelImpl implements MovieDetailModel {
         url.append("http://v3.wufazhuce.com:8000/api/movie/")
                 .append(itemId)
                 .append("/story/1/0?platform=android");
-        HttpUtil.sendHttpRequest(url.toString(), new OnRequestListener() {
+        Request request = new Request(url.toString());
+        RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(Response response) {
                 //将该影视详情存入数据库
-                MovieDetail movieDetail = JsonUtil.parseJsonToMovieDetail(response);
+                MovieDetail movieDetail = JsonUtil.parseJsonToMovieDetail(response.getResult());
                 mDatabase.insert(MovieDetailTable.NAME, null, getContentValues(movieDetail));
                 onMovieDetailListener.onSuccess(movieDetail);
             }
 
             @Override
-            public void onError(String errorMsg) {
-                onMovieDetailListener.onFail(errorMsg);
+            public void onError(Exception e) {
+                onMovieDetailListener.onFail(e.getMessage());
             }
 
             @Override
