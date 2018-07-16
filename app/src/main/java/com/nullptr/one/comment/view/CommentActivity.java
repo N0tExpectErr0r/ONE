@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.bean.Comment;
@@ -97,13 +98,8 @@ public class CommentActivity extends BaseActivity implements CommentView {
 
     @Override
     public void showError(String errorMsg) {
-        AlertDialog.Builder errorDialog = new AlertDialog.Builder(this);
-        errorDialog
-                .setTitle("错误")
-                .setMessage(errorMsg)
-                .show();
-        //关闭App
-        finish();
+        //网络出错的处理
+        Toast.makeText(this,"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
     }
 
     @Override

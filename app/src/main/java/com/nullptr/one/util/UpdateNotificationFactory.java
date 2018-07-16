@@ -14,9 +14,6 @@ import android.support.v4.app.NotificationCompat.Style;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.article.detail.view.ArticleDetailActivity;
-import com.nullptr.one.bean.ArticleDetail;
-import com.nullptr.one.bean.MovieDetail;
-import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.movie.detail.view.MovieDetailActivity;
 import com.nullptr.one.music.detail.view.MusicDetailActivity;
 
