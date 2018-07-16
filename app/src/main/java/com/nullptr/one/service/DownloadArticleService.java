@@ -44,6 +44,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     private static SQLiteDatabase sListDatabase;
     private static SQLiteDatabase sDetailDatabase;
     private static NotificationManager sManager;
+    private final int NOTIFICATION_ID = 4;
     private List<Article> mArticleList;
 
     public DownloadArticleService() {
@@ -102,6 +103,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //获取Notification对象
     private Notification getNotification(String title,int progress){
         Intent intent = new Intent(this,MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
         Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -152,7 +154,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
 
     //下载文章
     private void downloadArticleList() {
-        sManager.notify(1,getNotification("正在下载文章列表...",listProgress));
+        sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章列表...",listProgress));
         sListPresenter.updateList();
     }
 
@@ -160,7 +162,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     @Override
     public void setArticleList(List<Article> articleList) {
         listProgress+=20;
-        sManager.notify(1,getNotification("正在下载文章列表...",listProgress));
+        sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章列表...",listProgress));
         String lastId = articleList.get(articleList.size() - 1).getId();
         saveListToDatabase(articleList);
         mArticleList.addAll(articleList);
@@ -173,7 +175,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         if (listIndex < 3){
             listIndex++;
             listProgress+=20;
-            sManager.notify(1,getNotification("正在下载文章列表...",listProgress));
+            sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章列表...",listProgress));
             String lastId = articleList.get(articleList.size() - 1).getId();
             saveListToDatabase(articleList);
             mArticleList.addAll(articleList);
@@ -188,7 +190,7 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //下载文章详情
     private void downloadArticleDetail() {
         detailProgress+=2;
-        sManager.notify(1,getNotification("正在下载文章详情...",detailProgress));
+        sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章详情...",detailProgress));
         Article article = mArticleList.get(detailIndex);
         sDetailPresenter.getArticleDetail(article.getItemId());
     }
@@ -199,12 +201,12 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         if (detailIndex < 49){
             detailIndex++;
             detailProgress+=2;
-            sManager.notify(1,getNotification("正在下载文章详情...",detailProgress));
+            sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章详情...",detailProgress));
             Article newArticle = mArticleList.get(detailIndex);
             sDetailPresenter.getArticleDetail(newArticle.getItemId());
             saveDetailToDatabase(article);
         }else{
-            sManager.notify(2,getNotification("最近50条文章已全部下载完成！",-1));
+            sManager.notify(NOTIFICATION_ID,getNotification("最近50条文章已全部下载完成！",detailProgress));
             Toast.makeText(this,"下载文章完成",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setAction("download");
@@ -236,8 +238,10 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //出现错误
     @Override
     public void showError(String errorMsg) {
-        sManager.notify(1,getNotification("下载失败!",-1));
+        sManager.notify(NOTIFICATION_ID,getNotification("下载失败!",-1));
         Toast.makeText(this,"下载失败",Toast.LENGTH_SHORT).show();
+        //下载失败，清空数据库
+        cleanDatabase();
         //下载失败，发送下载结束的广播
         Intent intent = new Intent();
         intent.setAction("download");

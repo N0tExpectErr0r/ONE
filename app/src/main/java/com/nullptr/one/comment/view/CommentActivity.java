@@ -1,5 +1,7 @@
 package com.nullptr.one.comment.view;
 
+import android.animation.ValueAnimator;
+import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +11,9 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Scroller;
 import android.widget.Toast;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
@@ -123,4 +127,5 @@ public class CommentActivity extends BaseActivity implements CommentView {
         }
         return toolbar;
     }
+
 }
