@@ -207,10 +207,13 @@ public class DownloadArticleService extends Service implements ArticleListView,A
             saveDetailToDatabase(article);
         }else{
             sManager.notify(NOTIFICATION_ID,getNotification("最近50条文章已全部下载完成！",detailProgress));
+            //告诉Activity已下载完成
             Intent intent = new Intent();
             intent.setAction("download");
             intent.putExtra("action_type","OVER");
             sendBroadcast(intent);
+            //下载完成，停止自己
+            stopSelf();
         }
     }
 
@@ -240,6 +243,8 @@ public class DownloadArticleService extends Service implements ArticleListView,A
         sManager.notify(NOTIFICATION_ID,getNotification("下载失败!",-1));
         //下载失败，清空数据库
         cleanDatabase();
+        //停止自身
+        stopSelf();
         //下载失败，发送下载结束的广播
         Intent intent = new Intent();
         intent.setAction("download");
