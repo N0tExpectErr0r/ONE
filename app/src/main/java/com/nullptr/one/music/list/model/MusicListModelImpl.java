@@ -19,6 +19,7 @@ import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import com.nullptr.one.util.UrlUtil;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,11 +83,7 @@ public class MusicListModelImpl implements MusicListModel {
 
     @Override
     public void getListFromNet(final OnMusicListListener onMusicListListener) {
-        StringBuilder url = new StringBuilder();
-        url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
-                .append("0")
-                .append("?platform=android");
-        Request request = new Request(url.toString());
+        Request request = new Request(UrlUtil.getMusicListUrl("0"));
         RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
             public void onResponse(Response response) {
@@ -130,11 +127,8 @@ public class MusicListModelImpl implements MusicListModel {
 
     @Override
     public void getMore(final OnMoreMusicListener onMoreMusicListener, String lastId) {
-        StringBuilder url = new StringBuilder();
-        url.append("http://v3.wufazhuce.com:8000/api/channel/music/more/")
-                .append(lastId)
-                .append("?platform=android");
-        Request request = new Request(url.toString());
+
+        Request request = new Request(UrlUtil.getMusicListUrl(lastId));
         RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
             public void onResponse(Response response) {

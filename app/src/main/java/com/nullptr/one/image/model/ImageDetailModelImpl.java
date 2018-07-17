@@ -11,6 +11,7 @@ import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import com.nullptr.one.util.UrlUtil;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,12 +26,7 @@ public class ImageDetailModelImpl implements ImageDetailModel {
 
     @Override
     public void getImageDetailList(final OnImageDetailListener onImageDetailListener) {
-        final StringBuilder url = new StringBuilder();
-        url.append("http://v3.wufazhuce.com:8000/api/hp/idlist/")
-                .append("0")
-                .append("?version=3.5.0&platform=android");
-
-        final Request request = new Request(url.toString());
+        final Request request = new Request(UrlUtil.getImageIdUrl("0"));
         RequestExecutor.getInstance().execute(request,new HttpListener() {
                     @Override
                     public void onResponse(Response response) {
@@ -40,11 +36,7 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                         for (int i = 0; i < 10; i++) {
                             String imageId = imageList.get(i);
                             final int currentIndex = i;
-                            StringBuilder imageUrl = new StringBuilder();
-                            imageUrl.append("http://v3.wufazhuce.com:8000/api/hp/detail/")
-                                    .append(imageId)
-                                    .append("?version=3.5.0&platform=android");
-                            Request imageRequest = new Request(imageUrl.toString());
+                            Request imageRequest = new Request(UrlUtil.getImageDetailUrl(imageId));
                             RequestExecutor.getInstance().execute(imageRequest, new HttpListener() {
                                 @Override
                                 public void onResponse(Response response) {

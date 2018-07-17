@@ -18,6 +18,7 @@ import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import com.nullptr.one.util.UrlUtil;
 
 /**
  * Model层
@@ -81,11 +82,8 @@ public class MusicDetailModelImpl implements MusicDetailModel {
     }
 
     private void getFromNet(final String itemId, final OnMusicDetailListener onMusicDetailListener) {
-        StringBuilder url = new StringBuilder();
-        url.append("http://v3.wufazhuce.com:8000/api/music/detail/")
-                .append(itemId)
-                .append("?version=3.5.0&platform=android");
-        Request request = new Request(url.toString());
+
+        Request request = new Request(UrlUtil.getMusicDetailUrl(itemId));
         RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
             public void onResponse(Response response) {

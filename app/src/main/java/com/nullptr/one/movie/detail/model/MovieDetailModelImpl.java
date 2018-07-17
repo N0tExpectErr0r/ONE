@@ -18,6 +18,8 @@ import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import com.nullptr.one.util.UrlUtil;
+import java.net.URL;
 
 /**
  * Model层
@@ -76,11 +78,8 @@ public class MovieDetailModelImpl implements MovieDetailModel {
     }
 
     private void getFromNet(final String itemId,final OnMovieDetailListener onMovieDetailListener){
-        StringBuilder url = new StringBuilder();
-        url.append("http://v3.wufazhuce.com:8000/api/movie/")
-                .append(itemId)
-                .append("/story/1/0?platform=android");
-        Request request = new Request(url.toString());
+
+        Request request = new Request(UrlUtil.getMovieDetailUrl(itemId));
         RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
             public void onResponse(Response response) {

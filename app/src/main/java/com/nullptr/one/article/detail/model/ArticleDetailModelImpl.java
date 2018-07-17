@@ -17,6 +17,7 @@ import com.nullptr.one.net.Response;
 import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
 import com.nullptr.one.util.OnRequestListener;
+import com.nullptr.one.util.UrlUtil;
 
 /**
  * Model层
@@ -76,13 +77,9 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     }
 
     private void getFromNet(String itemId, final OnArticleDetailListener onArticleDetailListener) {
-        StringBuilder url = new StringBuilder();
-        url.append("http://v3.wufazhuce.com:8000/api/essay/")
-                .append(itemId)
-                .append("?platform=android");
         //如果数据库没有数据库，向服务器申请数据并存入数据库
 
-        Request request = new Request(url.toString());
+        Request request = new Request(UrlUtil.getArticleDetailUrl(itemId));
         RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
             public void onResponse(Response response) {
