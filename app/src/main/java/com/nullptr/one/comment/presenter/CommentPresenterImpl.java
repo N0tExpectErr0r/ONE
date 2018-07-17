@@ -17,15 +17,12 @@ import java.util.List;
  * @DESCRIPTION
  */
 public class CommentPresenterImpl implements CommentPresenter,OnCommentListListener {
-
     private CommentView mCommentView;
     private CommentModel mCommentModel;
-    private Handler mUiHandler;
 
     public CommentPresenterImpl(CommentView commentView){
         mCommentView = commentView;
         mCommentModel = new CommentModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -35,41 +32,21 @@ public class CommentPresenterImpl implements CommentPresenter,OnCommentListListe
 
     @Override
     public void onSuccess(final List<Comment> commentList) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mCommentView.setCommentList(commentList);
-            }
-        });
+        mCommentView.setCommentList(commentList);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mCommentView.showError(errorMsg);
-            }
-        });
+        mCommentView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mCommentView.showLoading();
-            }
-        });
+        mCommentView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mCommentView.hideLoading();
-            }
-        });
+        mCommentView.hideLoading();
     }
 }

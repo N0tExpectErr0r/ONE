@@ -9,6 +9,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/26
  * @DESCRIPTION Activity管理类
  */
+@Deprecated
 public class ActivityCollector {
 
     public static List<Activity> mActivityList = new ArrayList<>();

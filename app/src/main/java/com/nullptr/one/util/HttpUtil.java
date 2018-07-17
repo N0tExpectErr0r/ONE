@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
  * @DATE 创建时间: 2018/5/10
  * @DESCRIPTION Http工具类
  */
+@Deprecated
 public class HttpUtil {
 
     private static ExecutorService sThreadPool = Executors.newFixedThreadPool(10);

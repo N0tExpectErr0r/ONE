@@ -1,6 +1,5 @@
 package com.nullptr.one.image.presenter;
 
-import android.os.Handler;
 import android.os.Looper;
 import com.nullptr.one.bean.ImageDetail;
 import com.nullptr.one.image.IImageDetail.ImageDetailModel;
@@ -21,12 +20,10 @@ public class ImageDetailPresenterImpl implements ImageDetailPresenter, OnImageDe
 
     private ImageDetailView mImageDetailView;
     private ImageDetailModel mImageDetailModel;
-    private Handler mUiHandler;
 
     public ImageDetailPresenterImpl(ImageDetailView imageDetailView) {
         mImageDetailView = imageDetailView;
         mImageDetailModel = new ImageDetailModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -37,41 +34,22 @@ public class ImageDetailPresenterImpl implements ImageDetailPresenter, OnImageDe
 
     @Override
     public void onSuccess(final List<ImageDetail> imageDetailList) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mImageDetailView.setImageDetailList(imageDetailList);
-            }
-        });
+        mImageDetailView.setImageDetailList(imageDetailList);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mImageDetailView.showError(errorMsg);
-            }
-        });
+        mImageDetailView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mImageDetailView.showLoading();
-            }
-        });
+        mImageDetailView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mImageDetailView.hideLoading();
-            }
-        });
+
+        mImageDetailView.hideLoading();
     }
 }

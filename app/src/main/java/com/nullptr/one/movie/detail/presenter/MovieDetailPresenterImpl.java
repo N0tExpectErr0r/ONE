@@ -1,7 +1,5 @@
 package com.nullptr.one.movie.detail.presenter;
 
-import android.os.Handler;
-import android.os.Looper;
 import com.nullptr.one.bean.MovieDetail;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailModel;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailPresenter;
@@ -20,12 +18,10 @@ public class MovieDetailPresenterImpl implements MovieDetailPresenter, OnMovieDe
 
     private MovieDetailView mMovieDetailView;
     private MovieDetailModel mMovieDetailModel;
-    private Handler mUiHandler;
 
     public MovieDetailPresenterImpl(MovieDetailView movieDetailView) {
         mMovieDetailView = movieDetailView;
         mMovieDetailModel = new MovieDetailModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -36,42 +32,21 @@ public class MovieDetailPresenterImpl implements MovieDetailPresenter, OnMovieDe
 
     @Override
     public void onSuccess(final MovieDetail movieDetail) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.setMovieDetail(movieDetail);
-            }
-        });
+        mMovieDetailView.setMovieDetail(movieDetail);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.showError(errorMsg);
-            }
-        });
-
+        mMovieDetailView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.showLoading();
-            }
-        });
+        mMovieDetailView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.hideLoading();
-            }
-        });
+        mMovieDetailView.hideLoading();
     }
 }

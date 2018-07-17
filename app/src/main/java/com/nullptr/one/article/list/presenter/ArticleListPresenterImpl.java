@@ -1,15 +1,12 @@
 package com.nullptr.one.article.list.presenter;
 
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import com.nullptr.one.bean.Article;
 import com.nullptr.one.article.list.IArticleList.ArticleListModel;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
 import com.nullptr.one.article.list.IArticleList.OnArticleListListener;
 import com.nullptr.one.article.list.IArticleList.OnMoreArticleListener;
 import com.nullptr.one.article.list.model.ArticleListModelImpl;
+import com.nullptr.one.bean.Article;
 import java.util.List;
 
 /**
@@ -24,12 +21,10 @@ public class ArticleListPresenterImpl implements ArticleListPresenter, OnArticle
 
     private ArticleListView mArticleListView;
     private ArticleListModel mArticleListModel;
-    private Handler mUiHandler;
 
     public ArticleListPresenterImpl(ArticleListView articleListView) {
         mArticleListView = articleListView;
         mArticleListModel = new ArticleListModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -49,51 +44,27 @@ public class ArticleListPresenterImpl implements ArticleListPresenter, OnArticle
 
     @Override
     public void onSuccess(final List<Article> articleList) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleListView.setArticleList(articleList);
-            }
-        });
+        mArticleListView.setArticleList(articleList);
     }
 
     @Override
     public void onMoreSuccess(final List<Article> articleList) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleListView.addArticleList(articleList);
-            }
-        });
+        mArticleListView.addArticleList(articleList);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleListView.showError(errorMsg);
-            }
-        });
+        mArticleListView.showError(errorMsg);
+
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleListView.showLoading();
-            }
-        });
+        mArticleListView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleListView.hideLoading();
-            }
-        });
+        mArticleListView.hideLoading();
     }
 }

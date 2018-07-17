@@ -1,8 +1,6 @@
 package com.nullptr.one.movie.detail.presenter;
 
 
-import android.os.Handler;
-import android.os.Looper;
 import com.nullptr.one.bean.MovieInfo;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailView;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieInfoModel;
@@ -21,12 +19,10 @@ public class MovieInfoPresenterImpl implements MovieInfoPresenter, OnMovieInfoLi
 
     private MovieDetailView mMovieDetailView;
     private MovieInfoModel mMovieInfoModel;
-    private Handler mUiHandler;
 
     public MovieInfoPresenterImpl(MovieDetailView movieDetailView) {
         mMovieDetailView = movieDetailView;
         mMovieInfoModel = new MovieInfoModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -37,41 +33,21 @@ public class MovieInfoPresenterImpl implements MovieInfoPresenter, OnMovieInfoLi
 
     @Override
     public void onSuccess(final MovieInfo movieInfo) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.setMovieInfo(movieInfo);
-            }
-        });
+        mMovieDetailView.setMovieInfo(movieInfo);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.showError(errorMsg);
-            }
-        });
+        mMovieDetailView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.showLoading();
-            }
-        });
+        mMovieDetailView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieDetailView.hideLoading();
-            }
-        });
+        mMovieDetailView.hideLoading();
     }
 }

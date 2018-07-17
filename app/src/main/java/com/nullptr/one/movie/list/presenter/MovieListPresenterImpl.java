@@ -1,8 +1,6 @@
 package com.nullptr.one.movie.list.presenter;
 
 
-import android.os.Handler;
-import android.os.Looper;
 import com.nullptr.one.bean.Movie;
 import com.nullptr.one.movie.list.IMovieList.MovieListModel;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
@@ -24,12 +22,10 @@ public class MovieListPresenterImpl implements MovieListPresenter, OnMovieListLi
 
     private MovieListView mMovieListView;
     private MovieListModel mMovieListModel;
-    private Handler mUiHandler;
 
     public MovieListPresenterImpl(MovieListView movieListView) {
         mMovieListView = movieListView;
         mMovieListModel = new MovieListModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -38,7 +34,9 @@ public class MovieListPresenterImpl implements MovieListPresenter, OnMovieListLi
     }
 
     @Override
-    public void updateList(){mMovieListModel.getListFromNet(this);}
+    public void updateList() {
+        mMovieListModel.getListFromNet(this);
+    }
 
     @Override
     public void loadMore(String lastId) {
@@ -47,51 +45,26 @@ public class MovieListPresenterImpl implements MovieListPresenter, OnMovieListLi
 
     @Override
     public void onSuccess(final List<Movie> movieList) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieListView.setMovieList(movieList);
-            }
-        });
+        mMovieListView.setMovieList(movieList);
     }
 
     @Override
     public void onMoreSuccess(final List<Movie> movieList) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieListView.addMovieList(movieList);
-            }
-        });
+        mMovieListView.addMovieList(movieList);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieListView.showError(errorMsg);
-            }
-        });
+        mMovieListView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieListView.showLoading();
-            }
-        });
+        mMovieListView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMovieListView.hideLoading();
-            }
-        });
+        mMovieListView.hideLoading();
     }
 }

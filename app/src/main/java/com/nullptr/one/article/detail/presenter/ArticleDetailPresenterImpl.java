@@ -1,13 +1,11 @@
 package com.nullptr.one.article.detail.presenter;
 
-import android.os.Handler;
-import android.os.Looper;
-import com.nullptr.one.bean.ArticleDetail;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailModel;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailView;
 import com.nullptr.one.article.detail.IArticleDetail.OnArticleDetailListener;
 import com.nullptr.one.article.detail.model.ArticleDetailModelImpl;
+import com.nullptr.one.bean.ArticleDetail;
 
 /**
  * Presenter层
@@ -20,12 +18,10 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter, OnArt
 
     private ArticleDetailView mArticleDetailView;
     private ArticleDetailModel mArticleDetailModel;
-    private Handler mUiHandler;
 
     public ArticleDetailPresenterImpl(ArticleDetailView articleDetailView) {
         mArticleDetailView = articleDetailView;
         mArticleDetailModel = new ArticleDetailModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -36,41 +32,21 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter, OnArt
 
     @Override
     public void onSuccess(final ArticleDetail articleDetail) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleDetailView.setArticle(articleDetail);
-            }
-        });
+        mArticleDetailView.setArticle(articleDetail);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleDetailView.showError(errorMsg);
-            }
-        });
+        mArticleDetailView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleDetailView.showLoading();
-            }
-        });
+        mArticleDetailView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mArticleDetailView.hideLoading();
-            }
-        });
+        mArticleDetailView.hideLoading();
     }
 }

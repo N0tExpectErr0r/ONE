@@ -1,7 +1,5 @@
 package com.nullptr.one.music.detail.presenter;
 
-import android.os.Handler;
-import android.os.Looper;
 import com.nullptr.one.bean.MusicDetail;
 import com.nullptr.one.music.detail.IMusicDetail.MusicDetailModel;
 import com.nullptr.one.music.detail.IMusicDetail.MusicDetailPresenter;
@@ -20,12 +18,10 @@ public class MusicDetailPresenterImpl implements MusicDetailPresenter, OnMusicDe
 
     private MusicDetailView mMusicDetailView;
     private MusicDetailModel mMusicDetailModel;
-    private Handler mUiHandler;
 
     public MusicDetailPresenterImpl(MusicDetailView musicDetailView) {
         mMusicDetailView = musicDetailView;
         mMusicDetailModel = new MusicDetailModelImpl();
-        mUiHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -36,41 +32,21 @@ public class MusicDetailPresenterImpl implements MusicDetailPresenter, OnMusicDe
 
     @Override
     public void onSuccess(final MusicDetail musicDetail) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMusicDetailView.setMusic(musicDetail);
-            }
-        });
+        mMusicDetailView.setMusic(musicDetail);
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMusicDetailView.showError(errorMsg);
-            }
-        });
+        mMusicDetailView.showError(errorMsg);
     }
 
     @Override
     public void onStart() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMusicDetailView.showLoading();
-            }
-        });
+        mMusicDetailView.showLoading();
     }
 
     @Override
     public void onFinish() {
-        mUiHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mMusicDetailView.hideLoading();
-            }
-        });
+        mMusicDetailView.hideLoading();
     }
 }
