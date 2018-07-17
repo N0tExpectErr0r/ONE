@@ -101,7 +101,6 @@ public class ImageLoader {
             if (!parentFile.exists()) {
                 parentFile.mkdirs();
             }
-
             //把图片保存至本地
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
         } catch (Exception e) {

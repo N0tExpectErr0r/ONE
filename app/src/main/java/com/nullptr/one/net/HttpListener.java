@@ -9,7 +9,7 @@ public interface HttpListener {
 
     void onResponse(Response response);
 
-    void onError(Exception e);
+    void onError(String errorMsg);
 
     void onStart();
 

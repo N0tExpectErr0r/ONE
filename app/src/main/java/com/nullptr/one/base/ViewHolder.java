@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.nullptr.one.util.ImageLoader;
-import java.util.ArrayList;
-import java.util.HashMap;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.nullptr.one.ContextApplication;
+import com.nullptr.one.R;
+import com.nullptr.one.util.BitmapCache;
 
 /**
  * @AUTHOR nullptr
@@ -94,7 +95,14 @@ public class ViewHolder {
     public ViewHolder setImageUrl(int viewId, String url) {
         ImageView imageView = getView(viewId);
         imageView.setTag(url);
-        ImageLoader.getInstance().loadImg(imageView, url);
+
+        com.android.volley.toolbox.ImageLoader loader = new com.android.volley.toolbox.ImageLoader(
+                ContextApplication.getHttpQueues(), new BitmapCache());
+
+        ImageListener listener = com.android.volley.toolbox.ImageLoader
+                .getImageListener(imageView, R.drawable.mock, R.drawable.mock);
+
+        loader.get(url, listener, imageView.getWidth(), imageView.getHeight());
         return this;
     }
 

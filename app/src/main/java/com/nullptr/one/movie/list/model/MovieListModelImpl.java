@@ -6,8 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.bean.Author;
 import com.nullptr.one.bean.Movie;
-import com.nullptr.one.movie.detail.IMovieDetail.OnMovieDetailListener;
-import com.nullptr.one.movie.detail.db.MovieDetailDbSchema.MovieDetailTable;
 import com.nullptr.one.movie.list.IMovieList.MovieListModel;
 import com.nullptr.one.movie.list.IMovieList.OnMoreMovieListener;
 import com.nullptr.one.movie.list.IMovieList.OnMovieListListener;
@@ -18,11 +16,8 @@ import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
 import com.nullptr.one.net.Response;
-import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
-import com.nullptr.one.util.OnRequestListener;
 import com.nullptr.one.util.UrlUtil;
-import java.security.interfaces.RSAKey;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,8 +98,8 @@ public class MovieListModelImpl implements MovieListModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onMovieListListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onMovieListListener.onFail(errorMsg);
             }
 
             @Override
@@ -145,8 +140,8 @@ public class MovieListModelImpl implements MovieListModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onMoreMovieListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onMoreMovieListener.onFail(errorMsg);
             }
 
             @Override

@@ -1,14 +1,15 @@
 package com.nullptr.one.net;
 
 import android.util.Log;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.nullptr.one.ContextApplication;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @AUTHOR nullptr
@@ -28,56 +29,47 @@ public class RequestTask implements Runnable {
 
     @Override
     public void run() {
-
-        Exception exception = null;
-        int responseCode = -1;
-        Response response = null;
-
-        //1. 建立连接
         httpListener.onStart();
         String urlStr = request.getUrl();
         RequestMethod method = request.getMethod();
-        try {
-            URL url = new URL(urlStr);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            //2. 发送数据
-            connection.setRequestMethod(request.getMethod().toString());
-            switch (request.getMethod()){
-                case GET:
-                    break;
-                case POST:
-                    connection.setRequestProperty("Content-Type", "application/Json; charset=UTF-8");
-                    connection.setRequestProperty("Connection", "Keep-Alive");
-                    connection.setRequestProperty("Charset", "UTF-8");
-                    connection.connect();
-                    DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-                    for (KeyValue keyValue : request.getKeyValues()) {
-                        String param= keyValue.getKey()+URLEncoder.encode(keyValue.getValue().toString(),"UTF-8");
-                        outputStream.writeBytes(param);
+        StringRequest stringRequest = null;
+        switch (method.value()){
+            case "GET":
+                stringRequest = new StringRequest(Method.GET, urlStr, mSuccessListener, mErrorListener);
+                break;
+            case "POST":
+                stringRequest = new StringRequest(Method.POST, urlStr, mSuccessListener,mErrorListener){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<>();
+                        for (KeyValue keyValue : request.getKeyValues()) {
+                            params.put(keyValue.getKey(),keyValue.getValue().toString());
+                        }
+                        return params;
                     }
-                    outputStream.flush();
-                    outputStream.close();
-                    break;
-            }
-            InputStream in = connection.getInputStream();
-            responseCode = connection.getResponseCode();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-            //3. 读取响应
-            StringBuilder responseText = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                responseText.append(line);
-            }
-            response = new Response(responseCode,responseText.toString(),exception,request);
-
-        } catch (IOException e) {
-            exception = e;
-            response = new Response(responseCode,"",exception,request);
+                };
+                break;
+            default:
+                throw new IllegalArgumentException("请求方式填写错误");
         }
-
-        //发送响应数据到主线程
-        Message message = new Message(response, httpListener);
-        Poster.getInstance().post(message);
+        ContextApplication.getHttpQueues().add(stringRequest);
     }
+
+    private Listener<String> mSuccessListener = new Listener<String>() {
+        @Override
+        public void onResponse(String responseText) {
+            //收到响应数据
+            Response response = new Response(responseText, null, request);
+            httpListener.onResponse(response);
+            httpListener.onFinish();
+        }
+    };
+
+    private ErrorListener mErrorListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            //错误回调
+            httpListener.onError("网络错误，请检查网络设置");
+        }
+    };
 }

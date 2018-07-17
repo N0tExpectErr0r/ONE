@@ -7,9 +7,6 @@ package com.nullptr.one.net;
  */
 public class  Response {
 
-    //响应码
-    private int responseCode;
-
     //响应数据
     private String result;
 
@@ -24,10 +21,6 @@ public class  Response {
 
     private Request request;
 
-    public int getResponseCode() {
-        return responseCode;
-    }
-
 
     public String getResult() {
         return result;
@@ -39,8 +32,7 @@ public class  Response {
     }
 
 
-    public Response(int responseCode, String result, Exception exception, Request request) {
-        this.responseCode = responseCode;
+    public Response( String result, Exception exception, Request request) {
         this.result = result;
         this.exception = exception;
         this.request = request;

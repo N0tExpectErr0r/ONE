@@ -1,6 +1,5 @@
 package com.nullptr.one.image.model;
 
-import android.util.Log;
 import com.nullptr.one.bean.ImageDetail;
 import com.nullptr.one.image.IImageDetail.ImageDetailModel;
 import com.nullptr.one.image.IImageDetail.OnImageDetailListener;
@@ -8,9 +7,7 @@ import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
 import com.nullptr.one.net.Response;
-import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
-import com.nullptr.one.util.OnRequestListener;
 import com.nullptr.one.util.UrlUtil;
 import java.util.Arrays;
 import java.util.List;
@@ -59,8 +56,8 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                                 }
 
                                 @Override
-                                public void onError(Exception e) {
-                                    onImageDetailListener.onFail(e.getMessage());
+                                public void onError(String errorMsg) {
+                                    onImageDetailListener.onFail(errorMsg);
                                 }
 
                                 @Override
@@ -77,8 +74,8 @@ public class ImageDetailModelImpl implements ImageDetailModel {
                     }
 
                     @Override
-                    public void onError(Exception e) {
-                        onImageDetailListener.onFail(e.getMessage());
+                    public void onError(String errorMsg) {
+                        onImageDetailListener.onFail(errorMsg);
                     }
 
                     @Override

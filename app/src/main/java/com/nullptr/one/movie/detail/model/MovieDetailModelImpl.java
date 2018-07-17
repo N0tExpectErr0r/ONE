@@ -15,11 +15,8 @@ import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
 import com.nullptr.one.net.Response;
-import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
-import com.nullptr.one.util.OnRequestListener;
 import com.nullptr.one.util.UrlUtil;
-import java.net.URL;
 
 /**
  * Model层
@@ -90,8 +87,8 @@ public class MovieDetailModelImpl implements MovieDetailModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onMovieDetailListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onMovieDetailListener.onFail(errorMsg);
             }
 
             @Override

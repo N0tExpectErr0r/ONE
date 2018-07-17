@@ -16,9 +16,7 @@ import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
 import com.nullptr.one.net.Response;
-import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
-import com.nullptr.one.util.OnRequestListener;
 import com.nullptr.one.util.UrlUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +94,8 @@ public class MusicListModelImpl implements MusicListModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onMusicListListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onMusicListListener.onFail(errorMsg);
             }
 
             @Override
@@ -137,8 +135,8 @@ public class MusicListModelImpl implements MusicListModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onMoreMusicListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onMoreMusicListener.onFail(errorMsg);
             }
 
             @Override

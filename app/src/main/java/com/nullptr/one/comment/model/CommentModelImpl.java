@@ -1,6 +1,5 @@
 package com.nullptr.one.comment.model;
 
-import android.support.v4.app.NotificationCompat;
 import com.nullptr.one.bean.Comment;
 import com.nullptr.one.comment.IComment.CommentModel;
 import com.nullptr.one.comment.IComment.OnCommentListListener;
@@ -8,9 +7,7 @@ import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
 import com.nullptr.one.net.Response;
-import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
-import com.nullptr.one.util.OnRequestListener;
 import com.nullptr.one.util.UrlUtil;
 import java.util.List;
 
@@ -47,8 +44,8 @@ public class CommentModelImpl implements CommentModel {
                     }
 
                     @Override
-                    public void onError(Exception e) {
-                        onCommentListListener.onFail(e.getMessage());
+                    public void onError(String errorMsg) {
+                        onCommentListListener.onFail(errorMsg);
                     }
 
                     @Override

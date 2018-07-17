@@ -3,7 +3,6 @@ package com.nullptr.one.article.list.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.article.list.db.ArticleListBaseHelper;
 import com.nullptr.one.article.list.db.ArticleListDbSchema.ArticleListTable;
@@ -17,9 +16,7 @@ import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
 import com.nullptr.one.net.Response;
-import com.nullptr.one.util.HttpUtil;
 import com.nullptr.one.util.JsonUtil;
-import com.nullptr.one.util.OnRequestListener;
 import com.nullptr.one.util.UrlUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,8 +95,8 @@ public class ArticleListModelImpl implements ArticleListModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onArticleListListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onArticleListListener.onFail(errorMsg);
             }
 
             @Override
@@ -140,8 +137,8 @@ public class ArticleListModelImpl implements ArticleListModel {
             }
 
             @Override
-            public void onError(Exception e) {
-                onMoreArticleListener.onFail(e.getMessage());
+            public void onError(String errorMsg) {
+                onMoreArticleListener.onFail(errorMsg);
             }
 
             @Override

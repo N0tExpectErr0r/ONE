@@ -107,7 +107,7 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
     }
 
     @Override
-    public void showError(final String errorMsg) {
+    public void showError(String errorMsg) {
         //网络出错的处理
         Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
         mLvListView.setLoadCompleted();

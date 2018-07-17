@@ -207,7 +207,6 @@ public class DownloadArticleService extends Service implements ArticleListView,A
             saveDetailToDatabase(article);
         }else{
             sManager.notify(NOTIFICATION_ID,getNotification("最近50条文章已全部下载完成！",detailProgress));
-            Toast.makeText(this,"下载文章完成",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
             intent.setAction("download");
             intent.putExtra("action_type","OVER");
@@ -239,7 +238,6 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     @Override
     public void showError(String errorMsg) {
         sManager.notify(NOTIFICATION_ID,getNotification("下载失败!",-1));
-        Toast.makeText(this,"下载失败",Toast.LENGTH_SHORT).show();
         //下载失败，清空数据库
         cleanDatabase();
         //下载失败，发送下载结束的广播

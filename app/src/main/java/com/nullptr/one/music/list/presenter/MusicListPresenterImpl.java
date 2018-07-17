@@ -16,6 +16,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/13
  * @DESCRIPTION MusicPresenter实现类
  */
+@Deprecated
 public class MusicListPresenterImpl implements MusicListPresenter, OnMusicListListener,
         OnMoreMusicListener {
 
