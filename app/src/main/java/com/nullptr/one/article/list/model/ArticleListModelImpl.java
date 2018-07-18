@@ -57,27 +57,31 @@ public class ArticleListModelImpl implements ArticleListModel {
                 cursor.moveToFirst();
                 List<Article> articleList = new ArrayList<>();
                 while (!cursor.isLast()){
-                    Article article = new Article();
-                    article.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
-                    article.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
-                    article.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
-                    article.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
-                    article.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
-                    article.setLikeCount(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Cols.LIKE_COUNT))));
-                    article.setDate(cursor.getString(cursor.getColumnIndex(Cols.DATE)));
-                    Author author = new Author();
-                    author.setName(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_NAME)));
-                    author.setDesc(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_DESC)));
-                    article.setAuthor(author);
-                    articleList.add(article);
-
+                    articleList.add(getArticle(cursor));
                     cursor.moveToNext();
                 }
+                articleList.add(getArticle(cursor));
                 cursor.close();
                 onArticleListListener.onSuccess(articleList);
                 onArticleListListener.onFinish();
             }
         }).start();
+    }
+
+    private Article getArticle(Cursor cursor) {
+        Article article = new Article();
+        article.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
+        article.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+        article.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+        article.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
+        article.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
+        article.setLikeCount(Integer.parseInt(cursor.getString(cursor.getColumnIndex(Cols.LIKE_COUNT))));
+        article.setDate(cursor.getString(cursor.getColumnIndex(Cols.DATE)));
+        Author author = new Author();
+        author.setName(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_NAME)));
+        author.setDesc(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_DESC)));
+        article.setAuthor(author);
+        return article;
     }
 
     @Override

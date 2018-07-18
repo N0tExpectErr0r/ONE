@@ -8,11 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.nullptr.one.ui.LoadMoreListView
-            android:id="@+id/movie_lv_listview"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/movie_rv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/listviewBackground"
-            android:divider="@null" />
+            android:background="@color/listviewBackground" />
     </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
