@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.nullptr.one.ContextApplication;
-import com.nullptr.one.movie.list.Author;
 import com.nullptr.one.movie.list.IMovieList.MovieListModel;
 import com.nullptr.one.movie.list.IMovieList.OnMoreMovieListener;
 import com.nullptr.one.movie.list.IMovieList.OnMovieListListener;
@@ -37,12 +36,12 @@ public class MovieListModelImpl implements MovieListModel {
 
     @Override
     public void getList(final OnMovieListListener onMovieListListener) {
-        final Cursor cursor = mDatabase.query(MovieListTable.NAME, null, null,null,
+        final Cursor cursor = mDatabase.query(MovieListTable.NAME, null, null, null,
                 null, null, null);
         if (cursor.getCount() > 0) {
             //如果数据库已经有数据
-            getListFromLocal(cursor,onMovieListListener);
-        }else{
+            getListFromLocal(cursor, onMovieListListener);
+        } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
             cursor.close();
             getListFromNet(onMovieListListener);
@@ -50,14 +49,14 @@ public class MovieListModelImpl implements MovieListModel {
 
     }
 
-    private void getListFromLocal(final Cursor cursor, final OnMovieListListener onMovieListListener){
+    private void getListFromLocal(final Cursor cursor, final OnMovieListListener onMovieListListener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //耗时操作，在新线程
                 cursor.moveToFirst();
                 List<Movie> movieList = new ArrayList<>();
-                while (!cursor.isLast()){
+                while (!cursor.isLast()) {
                     movieList.add(getMovie(cursor));
                     cursor.moveToNext();
                 }
@@ -86,15 +85,15 @@ public class MovieListModelImpl implements MovieListModel {
     }
 
     @Override
-    public void getListFromNet(final OnMovieListListener onMovieListListener){
+    public void getListFromNet(final OnMovieListListener onMovieListListener) {
         Request request = new Request(UrlUtil.getMovieListUrl("0"));
         RequestExecutor.getInstance().execute(request, new HttpListener() {
             @Override
             public void onResponse(Response response) {
                 List<Movie> movieList = JsonUtil.parseJsonToMovieList(response.getResult());
-                mDatabase.delete(MovieListTable.NAME,null,null);
+                mDatabase.delete(MovieListTable.NAME, null, null);
                 for (Movie movie : movieList) {
-                    mDatabase.insert(MovieListTable.NAME,null,getContentValues(movie));
+                    mDatabase.insert(MovieListTable.NAME, null, getContentValues(movie));
                 }
                 onMovieListListener.onSuccess(movieList);
             }
@@ -118,13 +117,13 @@ public class MovieListModelImpl implements MovieListModel {
 
     private ContentValues getContentValues(Movie movie) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ID,movie.getId());
+        values.put(Cols.ID, movie.getId());
         values.put(Cols.ITEM_ID, movie.getItemId());
         values.put(Cols.TITLE, movie.getTitle());
-        values.put(Cols.SUBTITLE,movie.getSubTitle());
+        values.put(Cols.SUBTITLE, movie.getSubTitle());
         values.put(Cols.FORWARD, movie.getForward());
-        values.put(Cols.IMG_URL,movie.getImageURL());
-        values.put(Cols.DATE,movie.getDate());
+        values.put(Cols.IMG_URL, movie.getImageURL());
+        values.put(Cols.DATE, movie.getDate());
         values.put(Cols.AUTHOR_NAME, movie.getAuthor().getName());
 
         return values;

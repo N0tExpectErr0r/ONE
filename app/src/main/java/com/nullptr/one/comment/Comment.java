@@ -43,10 +43,11 @@ public class Comment {
     }
 
     public String getToUser() {
-        if (toUser == null)
+        if (toUser == null) {
             return null;
-        else
+        } else {
             return toUser.getName();
+        }
     }
 
     public void setToUser(String toUser) {

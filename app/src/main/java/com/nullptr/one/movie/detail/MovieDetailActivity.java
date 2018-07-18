@@ -79,7 +79,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         mFabComment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentActivity.actionStart(MovieDetailActivity.this,mItemId,"MOVIE");
+                CommentActivity.actionStart(MovieDetailActivity.this, mItemId, "MOVIE");
             }
         });
     }
@@ -133,7 +133,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
     @Override
     public void showError(final String errorMsg) {
         //网络出错的处理
-        Toast.makeText(this,"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
     }
 
     @Override

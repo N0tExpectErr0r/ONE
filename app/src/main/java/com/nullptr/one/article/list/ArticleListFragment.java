@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.nullptr.one.R;
-import com.nullptr.one.base.BaseAdapter.OnItemClickListener;
-import com.nullptr.one.base.OnMoreScrollListener;
 import com.nullptr.one.article.detail.ArticleDetailActivity;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
+import com.nullptr.one.base.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.OnMoreScrollListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
             //不是每次都要刷新的，之前有数据的时候不需要刷新
             //初始化ListView
             mAdapter = new ArticleAdapter(new ArrayList<Article>(),
-                    R.layout.item_list_article,10);
+                    R.layout.item_list_article, 10);
             mRvList.setAdapter(mAdapter);
             //设置加载更多监听
             mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
@@ -96,7 +96,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     @Override
     public void showError(final String errorMsg) {
         //网络出错的处理
-        Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
 

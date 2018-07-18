@@ -60,7 +60,7 @@ public class MusicListFragment extends Fragment implements MusicListView, OnItem
         if (mMusicList == null || mMusicList.size() == 0) {
             //不是每次都要刷新的，之前有数据的时候不需要刷新
             mAdapter = new MusicAdapter(new ArrayList<Music>(),
-                    R.layout.item_list_music,10);
+                    R.layout.item_list_music, 10);
             mRvList.setAdapter(mAdapter);
             mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
                 @Override
@@ -86,7 +86,7 @@ public class MusicListFragment extends Fragment implements MusicListView, OnItem
     @Override
     public void showError(final String errorMsg) {
         //网络出错的处理
-        Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -106,7 +106,6 @@ public class MusicListFragment extends Fragment implements MusicListView, OnItem
         mMusicList.addAll(musicList);
         mAdapter.setDatas(mMusicList);
     }
-
 
 
     @Override

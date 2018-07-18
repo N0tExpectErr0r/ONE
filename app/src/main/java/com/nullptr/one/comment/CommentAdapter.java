@@ -21,19 +21,19 @@ public class CommentAdapter extends CommonAdapter<Comment> {
 
     @Override
     public void convert(ViewHolder holder, Comment comment) {
-        holder.setText(R.id.comment_tv_content,comment.getComment())
-                .setText(R.id.comment_tv_user,comment.getUser()+"：");
+        holder.setText(R.id.comment_tv_content, comment.getComment())
+                .setText(R.id.comment_tv_user, comment.getUser() + "：");
         LinearLayout commentView = holder.getConvertView().findViewById(R.id.comment_cv_comment_view);
 
-        if (comment.getToUser() != null){
+        if (comment.getToUser() != null) {
             //如果是回复
-            holder.setText(R.id.comment_tv_quote,comment.getQuote())
-                    .setText(R.id.comment_tv_touser,"@"+comment.getToUser()+"：");
+            holder.setText(R.id.comment_tv_quote, comment.getQuote())
+                    .setText(R.id.comment_tv_touser, "@" + comment.getToUser() + "：");
             commentView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             //不是回复，不显示回复框
-             holder.setText(R.id.comment_tv_quote,"")
-                     .setText(R.id.comment_tv_touser,"");
+            holder.setText(R.id.comment_tv_quote, "")
+                    .setText(R.id.comment_tv_touser, "");
             commentView.setVisibility(View.GONE);
         }
     }

@@ -1,7 +1,5 @@
 package com.nullptr.one.movie.list;
 
-import android.animation.StateListAnimator;
-
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/7/13

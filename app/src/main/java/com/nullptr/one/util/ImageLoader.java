@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 import com.nullptr.one.R;
@@ -141,7 +140,7 @@ public class ImageLoader {
             public void run() {
                 boolean isLoaded = false;
                 //内存缓存
-                final Bitmap memoryBitmap =  getBitmapFromMemoryCache(url);
+                final Bitmap memoryBitmap = getBitmapFromMemoryCache(url);
                 if (memoryBitmap != null) {
                     isLoaded = true;
                     uiHandler.post(new Runnable() {
@@ -152,7 +151,7 @@ public class ImageLoader {
                     });
                 }
                 //本地缓存
-                if(!isLoaded) {
+                if (!isLoaded) {
                     final Bitmap localBitmap = getBitmapFromLocal(url);
                     if (localBitmap != null) {
                         isLoaded = true;
@@ -165,7 +164,7 @@ public class ImageLoader {
                     }
                 }
                 //网络缓存
-                if(!isLoaded) {
+                if (!isLoaded) {
                     final Bitmap netBitmap = getBitmapFromNet(url);
                     if (netBitmap != null && !isLoaded) {
                         isLoaded = true;

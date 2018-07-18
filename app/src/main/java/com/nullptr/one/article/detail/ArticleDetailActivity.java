@@ -14,9 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nullptr.one.R;
-import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailView;
+import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.comment.CommentActivity;
 import com.nullptr.one.util.HtmlPraser;
 
@@ -74,7 +74,7 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
         mFabComment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentActivity.actionStart(ArticleDetailActivity.this,mItemId,"ARTICLE");
+                CommentActivity.actionStart(ArticleDetailActivity.this, mItemId, "ARTICLE");
             }
         });
     }
@@ -130,7 +130,7 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
     @Override
     public void showError(final String errorMsg) {
         //网络出错的处理
-        Toast.makeText(this,"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
     }
 
     @Override

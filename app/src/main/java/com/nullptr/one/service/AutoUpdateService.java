@@ -10,17 +10,17 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
 import com.nullptr.one.ContextApplication;
+import com.nullptr.one.article.list.Article;
+import com.nullptr.one.article.list.ArticleListPresenterImpl;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
-import com.nullptr.one.article.list.ArticleListPresenterImpl;
-import com.nullptr.one.article.list.Article;
-import com.nullptr.one.movie.list.Movie;
-import com.nullptr.one.music.list.Music;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
 import com.nullptr.one.movie.list.IMovieList.MovieListView;
+import com.nullptr.one.movie.list.Movie;
 import com.nullptr.one.movie.list.MovieListPresenterImpl;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
 import com.nullptr.one.music.list.IMusicList.MusicListView;
+import com.nullptr.one.music.list.Music;
 import com.nullptr.one.music.list.MusicListPresenterImpl;
 import com.nullptr.one.util.UpdateNotificationFactory;
 import java.util.List;
@@ -58,7 +58,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
     public IBinder onBind(Intent intent) {
         return null;
     }
-    
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -70,7 +70,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
             sMusicListPresenter.updateList();
         }
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int loopTime = 4*60*60 * 1000;   //每4小时刷新一次
+        int loopTime = 4 * 60 * 60 * 1000;   //每4小时刷新一次
         long triggerAtTime = SystemClock.elapsedRealtime() + loopTime;
         Intent newIntent = new Intent(this, AutoUpdateService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, newIntent, 0);
@@ -84,7 +84,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
         Article firstArticle = articleList.get(0);
         Notification notification = UpdateNotificationFactory
                 .createNotification(UpdateNotificationFactory.TYPE_ARTICLE, firstArticle.getTitle(),
-                        firstArticle.getForward(),firstArticle.getItemId());
+                        firstArticle.getForward(), firstArticle.getItemId());
         sManager.notify(ARTICLE_ID, notification);
     }
 
@@ -93,7 +93,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
         Movie firstMovie = movieList.get(0);
         Notification notification = UpdateNotificationFactory
                 .createNotification(UpdateNotificationFactory.TYPE_MOVIE, firstMovie.getTitle(),
-                        firstMovie.getForward(),firstMovie.getItemId());
+                        firstMovie.getForward(), firstMovie.getItemId());
         sManager.notify(MOVIE_ID, notification);
     }
 
@@ -102,7 +102,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
         Music firstMusic = musicList.get(0);
         Notification notification = UpdateNotificationFactory
                 .createNotification(UpdateNotificationFactory.TYPE_MUSIC, firstMusic.getTitle(),
-                        firstMusic.getForward(),firstMusic.getItemId());
+                        firstMusic.getForward(), firstMusic.getItemId());
         sManager.notify(MUSIC_ID, notification);
     }
 

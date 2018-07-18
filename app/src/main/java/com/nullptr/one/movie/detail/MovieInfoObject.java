@@ -6,6 +6,7 @@ package com.nullptr.one.movie.detail;
  * @DESCRIPTION
  */
 public class MovieInfoObject {
+
     @com.google.gson.annotations.SerializedName("data")
     private MovieInfo movieInfo;
 

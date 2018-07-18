@@ -46,7 +46,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
 
     public static void actionStart(Context context, String itemId) {
         Intent intent = new Intent(context, MusicDetailActivity.class);
-        Log.d("MusicList",itemId);
+        Log.d("MusicList", itemId);
         intent.putExtra("item_id", itemId);
         context.startActivity(intent);
     }
@@ -84,7 +84,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         mFabComment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommentActivity.actionStart(MusicDetailActivity.this,mItemId,"MUSIC");
+                CommentActivity.actionStart(MusicDetailActivity.this, mItemId, "MUSIC");
             }
         });
 
@@ -141,7 +141,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
     @Override
     public void showError(final String errorMsg) {
         //网络出错的处理
-        Toast.makeText(this,"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
     }
 
     @Override

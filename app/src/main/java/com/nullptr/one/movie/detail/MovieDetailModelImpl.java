@@ -38,15 +38,15 @@ public class MovieDetailModelImpl implements MovieDetailModel {
                 new String[]{itemId}, null, null, null);
         if (cursor.getCount() > 0) {
             //如果已经有数据了，直接读取
-            getFromLocal(cursor,onMovieDetailListener);
+            getFromLocal(cursor, onMovieDetailListener);
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
             cursor.close();
-            getFromNet(itemId,onMovieDetailListener);
+            getFromNet(itemId, onMovieDetailListener);
         }
     }
 
-    private void getFromLocal(final Cursor cursor, final OnMovieDetailListener onMovieDetailListener){
+    private void getFromLocal(final Cursor cursor, final OnMovieDetailListener onMovieDetailListener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -71,7 +71,7 @@ public class MovieDetailModelImpl implements MovieDetailModel {
         }).start();
     }
 
-    private void getFromNet(final String itemId,final OnMovieDetailListener onMovieDetailListener){
+    private void getFromNet(final String itemId, final OnMovieDetailListener onMovieDetailListener) {
 
         Request request = new Request(UrlUtil.getMovieDetailUrl(itemId));
         RequestExecutor.getInstance().execute(request, new HttpListener() {

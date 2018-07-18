@@ -21,7 +21,7 @@ public class Request {
     private List<KeyValue> keyValues;
 
     public Request(String url) {
-        this(url,RequestMethod.GET);
+        this(url, RequestMethod.GET);
     }
 
     public Request(String url, RequestMethod method) {
@@ -31,16 +31,16 @@ public class Request {
         keyValues = new ArrayList<>();
     }
 
-    public void add(String key, int value){
-        keyValues.add(new KeyValue(key,Integer.toString(value)));
+    public void add(String key, int value) {
+        keyValues.add(new KeyValue(key, Integer.toString(value)));
     }
 
-    public void add(String key, String value){
-        keyValues.add(new KeyValue(key,value));
+    public void add(String key, String value) {
+        keyValues.add(new KeyValue(key, value));
     }
 
-    public void add(String key, File value){
-        keyValues.add(new KeyValue(key,value));
+    public void add(String key, File value) {
+        keyValues.add(new KeyValue(key, value));
     }
 
     public RequestMethod getMethod() {

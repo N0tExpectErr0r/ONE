@@ -15,14 +15,14 @@ import java.util.List;
  */
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements View.OnClickListener {
 
-    public List<T> mDatas;
     public static final int TYPE_OTHER = 1;
     public static final int TYPE_BOTTOM = 2;
+    public List<T> mDatas;
     private int mItemLayoutId;
     private int mItemCount;
     private OnItemClickListener mOnItemClickListener = null;
 
-    public BaseAdapter(List<T> data,int itemLayoutId,int itemCount){
+    public BaseAdapter(List<T> data, int itemLayoutId, int itemCount) {
         mDatas = data;
         mItemLayoutId = itemLayoutId;
         mItemCount = itemCount;
@@ -43,7 +43,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements Vie
         }
     }
 
-    public void setDatas(List<T> datas){
+    public void setDatas(List<T> datas) {
         mDatas = datas;
         notifyDataSetChanged();
     }
@@ -52,11 +52,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements Vie
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         if (getItemViewType(position) == TYPE_BOTTOM) {
             //对相应的onBindViewHolder进行处理
-        }else{
+        } else {
             T data = mDatas.get(position);
             CommonViewHolder holder = (CommonViewHolder) viewHolder;
             holder.itemView.setTag(position);
-            initItemView(holder,data);
+            initItemView(holder, data);
         }
 
     }
@@ -71,7 +71,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements Vie
 
     @Override
     public int getItemViewType(int position) {
-        if (!mDatas.isEmpty() && mDatas.size() <= position ) {
+        if (!mDatas.isEmpty() && mDatas.size() <= position) {
             return TYPE_BOTTOM;
         } else {
             return TYPE_OTHER;
@@ -82,17 +82,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements Vie
     public void onClick(View v) {
         if (mOnItemClickListener != null) {
             //注意这里使用getTag方法获取position
-            mOnItemClickListener.onItemClick(v,(int)v.getTag());
+            mOnItemClickListener.onItemClick(v, (int) v.getTag());
         }
     }
 
-    //点击事件接口
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mOnItemClickListener = listener;
     }
 
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mOnItemClickListener = listener;
+    //点击事件接口
+    public interface OnItemClickListener {
+
+        void onItemClick(View view, int position);
     }
 }

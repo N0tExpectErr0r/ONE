@@ -23,15 +23,18 @@ import com.nullptr.one.music.detail.MusicDetailActivity;
  * @DESCRIPTION 由于之前生成通知的重复部分很多，做一个Notification工厂来解决
  */
 public class UpdateNotificationFactory {
+
     public static final int TYPE_ARTICLE = 0;
     public static final int TYPE_MUSIC = 1;
     public static final int TYPE_MOVIE = 2;
     private static NotificationManager mManager;
 
-    public static Notification createNotification(int type, String title, String content,String itemId){
-        Bitmap icon = BitmapFactory.decodeResource(ContextApplication.getContext().getResources(),R.mipmap.ic_launcher);
+    public static Notification createNotification(int type, String title, String content, String itemId) {
+        Bitmap icon = BitmapFactory
+                .decodeResource(ContextApplication.getContext().getResources(), R.mipmap.ic_launcher);
         if (mManager == null) {
-            mManager = (NotificationManager) ContextApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+            mManager = (NotificationManager) ContextApplication.getContext()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
         }
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -45,24 +48,24 @@ public class UpdateNotificationFactory {
         String channelId;
         String contentText;
 
-        switch (type){
+        switch (type) {
             case TYPE_ARTICLE:
                 channelId = "channel_article";
                 contentText = "最新文章推荐";
-                intent.setClass(ContextApplication.getContext(),ArticleDetailActivity.class);
-                intent.putExtra("item_id",itemId);
+                intent.setClass(ContextApplication.getContext(), ArticleDetailActivity.class);
+                intent.putExtra("item_id", itemId);
                 break;
             case TYPE_MUSIC:
                 channelId = "channel_article";
                 contentText = "最新乐评推荐";
-                intent.setClass(ContextApplication.getContext(),MusicDetailActivity.class);
-                intent.putExtra("item_id",itemId);
+                intent.setClass(ContextApplication.getContext(), MusicDetailActivity.class);
+                intent.putExtra("item_id", itemId);
                 break;
             case TYPE_MOVIE:
                 channelId = "channel_article";
                 contentText = "最新影评推荐";
-                intent.setClass(ContextApplication.getContext(),MovieDetailActivity.class);
-                intent.putExtra("item_id",itemId);
+                intent.setClass(ContextApplication.getContext(), MovieDetailActivity.class);
+                intent.putExtra("item_id", itemId);
                 break;
             default:
                 throw new IllegalArgumentException("Wrong type to create Notification");
@@ -73,24 +76,27 @@ public class UpdateNotificationFactory {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = mManager.getNotificationChannel(channelId);
             if (channel == null) {
-                channel = new NotificationChannel(channelId, "Notification Channel", NotificationManager.IMPORTANCE_HIGH);
+                channel = new NotificationChannel(channelId, "Notification Channel",
+                        NotificationManager.IMPORTANCE_HIGH);
                 channel.setDescription("Notification Channel");
                 mManager.createNotificationChannel(channel);
             }
 
-            builder = configBuilder(new NotificationCompat.Builder(ContextApplication.getContext(),channelId),
-                    contentText,style,pendingIntent);
+            builder = configBuilder(new NotificationCompat.Builder(ContextApplication.getContext(), channelId),
+                    contentText, style, pendingIntent);
 
-        }else {
+        } else {
             builder = configBuilder(new NotificationCompat.Builder(ContextApplication.getContext()),
-                    contentText,style,pendingIntent);
+                    contentText, style, pendingIntent);
         }
 
         return builder.build();
     }
 
-    private static NotificationCompat.Builder configBuilder(NotificationCompat.Builder builder,String contentText,Style style,PendingIntent pendingIntent){
-        Bitmap icon = BitmapFactory.decodeResource(ContextApplication.getContext().getResources(),R.mipmap.ic_launcher);
+    private static NotificationCompat.Builder configBuilder(NotificationCompat.Builder builder, String contentText,
+            Style style, PendingIntent pendingIntent) {
+        Bitmap icon = BitmapFactory
+                .decodeResource(ContextApplication.getContext().getResources(), R.mipmap.ic_launcher);
 
         builder.setContentTitle("ONE · 一个")
                 .setContentText(contentText)

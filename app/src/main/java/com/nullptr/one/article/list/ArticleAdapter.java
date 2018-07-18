@@ -1,7 +1,6 @@
 package com.nullptr.one.article.list;
 
 import com.nullptr.one.R;
-
 import com.nullptr.one.base.BaseAdapter;
 import com.nullptr.one.base.CommonViewHolder;
 import java.util.List;
@@ -12,7 +11,8 @@ import java.util.List;
  * @DESCRIPTION 文章列表的Adapter
  */
 public class ArticleAdapter extends BaseAdapter<Article> {
-    public ArticleAdapter(List<Article> data, int layoutId,int itemCount) {
+
+    public ArticleAdapter(List<Article> data, int layoutId, int itemCount) {
         super(data, layoutId, itemCount);
     }
 

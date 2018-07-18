@@ -4,10 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.nullptr.one.ContextApplication;
-import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailModel;
-import com.nullptr.one.article.detail.IArticleDetail.OnArticleDetailListener;
 import com.nullptr.one.article.detail.ArticleDbSchema.ArticleTable;
 import com.nullptr.one.article.detail.ArticleDbSchema.ArticleTable.Cols;
+import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailModel;
+import com.nullptr.one.article.detail.IArticleDetail.OnArticleDetailListener;
 import com.nullptr.one.net.HttpListener;
 import com.nullptr.one.net.Request;
 import com.nullptr.one.net.RequestExecutor;
@@ -34,7 +34,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
     public void getArticleDetail(final OnArticleDetailListener onArticleDetailListener,
             final String itemId) {
         final Cursor cursor = mDatabase.query(ArticleTable.NAME, null, "item_id = ?",
-                        new String[]{itemId}, null, null, null);
+                new String[]{itemId}, null, null, null);
         if (cursor.getCount() > 0) {
             //如果已经有数据了，直接读取
             getFromLocal(cursor, onArticleDetailListener);

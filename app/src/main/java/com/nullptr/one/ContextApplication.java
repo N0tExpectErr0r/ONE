@@ -19,7 +19,7 @@ public class ContextApplication extends Application {
         return sContext;
     }
 
-    public static RequestQueue getHttpQueues(){
+    public static RequestQueue getHttpQueues() {
         return sQueue;
     }
 

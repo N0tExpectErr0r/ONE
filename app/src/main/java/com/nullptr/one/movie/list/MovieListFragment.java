@@ -25,6 +25,7 @@ import java.util.List;
  * @DESCRIPTION 电影列表fragment
  */
 public class MovieListFragment extends Fragment implements OnItemClickListener, MovieListView {
+
     private RecyclerView mRvList;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
     private MovieListPresenter mMovieListPresenter;
@@ -59,7 +60,7 @@ public class MovieListFragment extends Fragment implements OnItemClickListener, 
         if (mMovieList == null || mMovieList.size() == 0) {
             //不是每次都要刷新的，之前有数据的时候不需要刷新
             mAdapter = new MovieAdapter(new ArrayList<Movie>(),
-                    R.layout.item_list_movie,10);
+                    R.layout.item_list_movie, 10);
             mRvList.setAdapter(mAdapter);
             //设置加载更多监听
             mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
@@ -86,7 +87,7 @@ public class MovieListFragment extends Fragment implements OnItemClickListener, 
     @Override
     public void showError(String errorMsg) {
         //网络出错的处理
-        Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MovieAdapter extends BaseAdapter<Movie> {
 
-    public MovieAdapter(List<Movie> datas, int layoutId,int itemCount) {
+    public MovieAdapter(List<Movie> datas, int layoutId, int itemCount) {
         super(datas, layoutId, itemCount);
     }
 

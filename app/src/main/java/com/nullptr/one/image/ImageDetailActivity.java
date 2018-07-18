@@ -98,7 +98,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
     @Override
     public void showError(final String errorMsg) {
         //网络出错处理
-        Toast.makeText(this,"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -127,7 +127,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
     protected void onDestroy() {
         super.onDestroy();
         //移除所有消息
-        if (mHandler!=null) {
+        if (mHandler != null) {
             mHandler.removeCallbacksAndMessages(null);
         }
     }

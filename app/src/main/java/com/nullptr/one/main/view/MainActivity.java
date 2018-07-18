@@ -19,8 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import com.nullptr.one.R;
-import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.article.list.ArticleListFragment;
+import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.image.ImageDetailActivity;
 import com.nullptr.one.main.adapter.ViewPagerAdapter;
 import com.nullptr.one.movie.list.MovieListFragment;
@@ -92,8 +92,10 @@ public class MainActivity extends BaseActivity {
         mVpViewPager.setAdapter(adapter);
 
         //使TabLayout ViewPager NavigationView相关联
-        mTlTabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mVpViewPager));  //TabLayout随ViewPager变动
-        mVpViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTlTabLayout));    //ViewPager随TabLayout变动
+        mTlTabLayout.addOnTabSelectedListener(
+                new TabLayout.ViewPagerOnTabSelectedListener(mVpViewPager));  //TabLayout随ViewPager变动
+        mVpViewPager.addOnPageChangeListener(
+                new TabLayout.TabLayoutOnPageChangeListener(mTlTabLayout));    //ViewPager随TabLayout变动
         //NavigationView随TabLayout变动
         mTlTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -163,36 +165,21 @@ public class MainActivity extends BaseActivity {
         mFabDownload.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,DownloadArticleService.class);
+                Intent intent = new Intent(MainActivity.this, DownloadArticleService.class);
                 startService(intent);
                 mFabDownload.setEnabled(false);
             }
         });
     }
 
-    class DownloadReceiver extends BroadcastReceiver{
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String actionType = intent.getStringExtra("action_type");
-            switch (actionType){
-                case "OVER":
-                    mFabDownload.setEnabled(true);
-                    break;
-                default:
-            }
-        }
-    }
-
     //加载数据
     @Override
     protected void loadData() {
         //TODO
-        Intent intent = new Intent(this,AutoUpdateService.class);
-        intent.putExtra("isStart",true);
+        Intent intent = new Intent(this, AutoUpdateService.class);
+        intent.putExtra("isStart", true);
         startService(intent);
     }
-
 
     //按下Toolbar上的图标时
     @Override
@@ -217,5 +204,19 @@ public class MainActivity extends BaseActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
         return toolbar;
+    }
+
+    class DownloadReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String actionType = intent.getStringExtra("action_type");
+            switch (actionType) {
+                case "OVER":
+                    mFabDownload.setEnabled(true);
+                    break;
+                default:
+            }
+        }
     }
 }

@@ -15,11 +15,12 @@ import java.io.FileOutputStream;
  * @DESCRIPTION
  */
 public class BitmapCache implements ImageCache {
+
     private static final String CACHE_PATH =
             Environment.getExternalStorageDirectory().getAbsolutePath() + "/ONE";   //本地缓存路径
     private static LruCache<String, Bitmap> sMemoryCache;
 
-    public BitmapCache(){
+    public BitmapCache() {
         //初始化LruCache
         if (sMemoryCache == null) {
             final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);  //将最大内存换算为kb(原来以B为单位)
@@ -46,7 +47,7 @@ public class BitmapCache implements ImageCache {
                 return bitmap;
             }
         }
-        if(!isLoaded) {
+        if (!isLoaded) {
             //再从本地拿
             Bitmap bitmap = getBitmapFromLocal(url);
             if (bitmap != null) {
@@ -59,8 +60,8 @@ public class BitmapCache implements ImageCache {
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
-        addBitmapToMemoryCache(url,bitmap);
-        addBitmapToLocal(url,bitmap);
+        addBitmapToMemoryCache(url, bitmap);
+        addBitmapToLocal(url, bitmap);
     }
 
     /**

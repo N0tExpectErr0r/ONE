@@ -19,7 +19,8 @@ import com.nullptr.one.util.BitmapCache;
  * @DESCRIPTION
  */
 public class CommonViewHolder extends RecyclerView.ViewHolder {
-    private SparseArray<View>  mViews;
+
+    private SparseArray<View> mViews;
     private View mItemView;
 
     public CommonViewHolder(View itemView) {

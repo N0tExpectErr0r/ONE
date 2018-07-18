@@ -26,6 +26,7 @@ import java.util.List;
  * @DESCRIPTION ArticleModel实现类
  */
 public class ArticleListModelImpl implements ArticleListModel {
+
     private SQLiteDatabase mDatabase;   //本地缓存文章列表的数据库
 
     public ArticleListModelImpl() {
@@ -34,26 +35,26 @@ public class ArticleListModelImpl implements ArticleListModel {
 
     @Override
     public void getList(final OnArticleListListener onArticleListListener) {
-        final Cursor cursor = mDatabase.query(ArticleListTable.NAME, null, null,null,
+        final Cursor cursor = mDatabase.query(ArticleListTable.NAME, null, null, null,
                 null, null, null);
         if (cursor.getCount() > 0) {
             //如果数据库已经有数据
-            getListFromLocal(cursor,onArticleListListener);
-        }else{
+            getListFromLocal(cursor, onArticleListListener);
+        } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
             cursor.close();
             getListFromNet(onArticleListListener);
         }
     }
 
-    private void getListFromLocal(final Cursor cursor,final OnArticleListListener onArticleListListener){
+    private void getListFromLocal(final Cursor cursor, final OnArticleListListener onArticleListListener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //耗时操作，在新线程
                 cursor.moveToFirst();
                 List<Article> articleList = new ArrayList<>();
-                while (!cursor.isLast()){
+                while (!cursor.isLast()) {
                     articleList.add(getArticle(cursor));
                     cursor.moveToNext();
                 }
@@ -88,9 +89,9 @@ public class ArticleListModelImpl implements ArticleListModel {
             @Override
             public void onResponse(Response response) {
                 List<Article> articleList = JsonUtil.parseJsonToArticleList(response.getResult());
-                mDatabase.delete(ArticleListTable.NAME,null,null);
+                mDatabase.delete(ArticleListTable.NAME, null, null);
                 for (Article article : articleList) {
-                    mDatabase.insert(ArticleListTable.NAME,null,getContentValues(article));
+                    mDatabase.insert(ArticleListTable.NAME, null, getContentValues(article));
                 }
                 onArticleListListener.onSuccess(articleList);
             }
@@ -114,14 +115,14 @@ public class ArticleListModelImpl implements ArticleListModel {
 
     private ContentValues getContentValues(Article article) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ID,article.getId());
+        values.put(Cols.ID, article.getId());
         values.put(Cols.ITEM_ID, article.getItemId());
         values.put(Cols.TITLE, article.getTitle());
         values.put(Cols.FORWARD, article.getForward());
-        values.put(Cols.IMG_URL,article.getImageUrl());
-        values.put(Cols.LIKE_COUNT,String.valueOf(article.getLikeCount()));
-        values.put(Cols.DATE,article.getDate());
-        values.put(Cols.AUTHOR_NAME,article.getAuthor().getName());
+        values.put(Cols.IMG_URL, article.getImageUrl());
+        values.put(Cols.LIKE_COUNT, String.valueOf(article.getLikeCount()));
+        values.put(Cols.DATE, article.getDate());
+        values.put(Cols.AUTHOR_NAME, article.getAuthor().getName());
         values.put(Cols.AUTHOR_DESC, article.getAuthor().getDesc());
 
         return values;

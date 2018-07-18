@@ -31,7 +31,7 @@ public class CommentModelImpl implements CommentModel {
                 commentType = "movie";
                 break;
         }
-        Request request = new Request(UrlUtil.getCommentListUrl(commentType,itemId));
+        Request request = new Request(UrlUtil.getCommentListUrl(commentType, itemId));
         RequestExecutor.getInstance().execute(request,
                 new HttpListener() {
                     @Override

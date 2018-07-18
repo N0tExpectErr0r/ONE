@@ -1,7 +1,6 @@
 package com.nullptr.one.movie.list;
 
 import com.google.gson.annotations.SerializedName;
-import com.nullptr.one.movie.list.Author;
 
 /**
  * @AUTHOR nullptr

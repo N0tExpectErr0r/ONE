@@ -1,7 +1,8 @@
 package com.nullptr.one.net;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import android.os.Handler;
+import android.os.Looper;
+
 
 /**
  * @AUTHOR nullptr
@@ -9,8 +10,9 @@ import java.util.concurrent.Executors;
  * @DESCRIPTION
  */
 public class RequestExecutor {
+
     private static RequestExecutor sInstance;
-    private static ExecutorService sExecutorService = Executors.newFixedThreadPool(10);
+    private static Handler sHandler = new Handler(Looper.getMainLooper());
 
     public static RequestExecutor getInstance() {
         if (sInstance == null) {
@@ -25,9 +27,10 @@ public class RequestExecutor {
 
     /**
      * 执行一个请求
+     *
      * @param request 请求对象
      */
-    public void execute(Request request,HttpListener httpListener){
-        sExecutorService.execute(new RequestTask(request,httpListener));
+    public void execute(Request request, HttpListener httpListener) {
+        sHandler.post(new RequestTask(request, httpListener));
     }
 }

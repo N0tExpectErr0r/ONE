@@ -1,6 +1,5 @@
 package com.nullptr.one.util;
 
-import android.app.Notification.Builder;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,14 +7,11 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.Build.VERSION_CODES;
 import android.util.Base64;
-import android.util.Log;
 import java.io.ByteArrayOutputStream;
 
 /**
@@ -24,6 +20,7 @@ import java.io.ByteArrayOutputStream;
  * @DESCRIPTION Bitmap工具类
  */
 public class BitmapUtil {
+
     /**
      * 将 Bitmap 转化为 byte array
      */
@@ -82,8 +79,6 @@ public class BitmapUtil {
 
     /**
      * 转换图片为圆角矩形图片
-     * @param bitmap
-     * @return
      */
     public static Bitmap toRoundCorner(Bitmap bitmap) {
 
@@ -91,7 +86,7 @@ public class BitmapUtil {
         int width = bitmap.getHeight();
         Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         //API21以上才转为圆角矩形
-        if (VERSION.SDK_INT>=VERSION_CODES.LOLLIPOP) {
+        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
             Canvas canvas = new Canvas(output);
             Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
             //paint.setColor(Color.TRANSPARENT);
@@ -103,7 +98,6 @@ public class BitmapUtil {
         }
         return output;
     }
-
 
 
 }

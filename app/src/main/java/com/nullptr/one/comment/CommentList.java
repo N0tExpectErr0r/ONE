@@ -9,6 +9,7 @@ import java.util.List;
  * @DESCRIPTION
  */
 public class CommentList {
+
     @SerializedName("data")
     private List<Comment> commentList;
 

@@ -1,6 +1,5 @@
 package com.nullptr.one.net;
 
-import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
 import com.android.volley.Response.ErrorListener;
@@ -21,6 +20,22 @@ public class RequestTask implements Runnable {
     private Request request;
 
     private HttpListener httpListener;
+    private Listener<String> mSuccessListener = new Listener<String>() {
+        @Override
+        public void onResponse(String responseText) {
+            //收到响应数据
+            Response response = new Response(responseText, null, request);
+            httpListener.onResponse(response);
+            httpListener.onFinish();
+        }
+    };
+    private ErrorListener mErrorListener = new ErrorListener() {
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+            //错误回调
+            httpListener.onError("网络错误，请检查网络设置");
+        }
+    };
 
     public RequestTask(Request request, HttpListener httpListener) {
         this.request = request;
@@ -33,17 +48,17 @@ public class RequestTask implements Runnable {
         String urlStr = request.getUrl();
         RequestMethod method = request.getMethod();
         StringRequest stringRequest = null;
-        switch (method.value()){
+        switch (method.value()) {
             case "GET":
                 stringRequest = new StringRequest(Method.GET, urlStr, mSuccessListener, mErrorListener);
                 break;
             case "POST":
-                stringRequest = new StringRequest(Method.POST, urlStr, mSuccessListener,mErrorListener){
+                stringRequest = new StringRequest(Method.POST, urlStr, mSuccessListener, mErrorListener) {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String,String> params = new HashMap<>();
+                        Map<String, String> params = new HashMap<>();
                         for (KeyValue keyValue : request.getKeyValues()) {
-                            params.put(keyValue.getKey(),keyValue.getValue().toString());
+                            params.put(keyValue.getKey(), keyValue.getValue().toString());
                         }
                         return params;
                     }
@@ -54,22 +69,4 @@ public class RequestTask implements Runnable {
         }
         ContextApplication.getHttpQueues().add(stringRequest);
     }
-
-    private Listener<String> mSuccessListener = new Listener<String>() {
-        @Override
-        public void onResponse(String responseText) {
-            //收到响应数据
-            Response response = new Response(responseText, null, request);
-            httpListener.onResponse(response);
-            httpListener.onFinish();
-        }
-    };
-
-    private ErrorListener mErrorListener = new ErrorListener() {
-        @Override
-        public void onErrorResponse(VolleyError volleyError) {
-            //错误回调
-            httpListener.onError("网络错误，请检查网络设置");
-        }
-    };
 }

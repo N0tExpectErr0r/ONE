@@ -5,7 +5,7 @@ package com.nullptr.one.net;
  * @DATE 创建时间: 2018/7/14
  * @DESCRIPTION
  */
-public class  Response {
+public class Response {
 
     //响应数据
     private String result;
@@ -14,27 +14,23 @@ public class  Response {
     private Exception exception;
 
     //请求对象
+    private Request request;
+
+    public Response(String result, Exception exception, Request request) {
+        this.result = result;
+        this.exception = exception;
+        this.request = request;
+    }
 
     public Request getRequest() {
         return request;
     }
 
-    private Request request;
-
-
     public String getResult() {
         return result;
     }
 
-
     public Exception getException() {
         return exception;
-    }
-
-
-    public Response( String result, Exception exception, Request request) {
-        this.result = result;
-        this.exception = exception;
-        this.request = request;
     }
 }

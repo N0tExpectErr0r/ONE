@@ -26,6 +26,7 @@ import java.util.List;
  * @DESCRIPTION MusicModel实现类
  */
 public class MusicListModelImpl implements MusicListModel {
+
     private SQLiteDatabase mDatabase;   //本地缓存音乐列表的数据库
 
     public MusicListModelImpl() {
@@ -35,26 +36,26 @@ public class MusicListModelImpl implements MusicListModel {
 
     @Override
     public void getList(final OnMusicListListener onMusicListListener) {
-        final Cursor cursor = mDatabase.query(MusicListTable.NAME, null, null,null,
+        final Cursor cursor = mDatabase.query(MusicListTable.NAME, null, null, null,
                 null, null, null);
         if (cursor.getCount() > 0) {
             //如果数据库已经有数据
-            getListFromLocal(cursor,onMusicListListener);
-        }else{
+            getListFromLocal(cursor, onMusicListListener);
+        } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
             cursor.close();
             getListFromNet(onMusicListListener);
         }
     }
 
-    private void getListFromLocal(final Cursor cursor, final OnMusicListListener onMusicListListener){
+    private void getListFromLocal(final Cursor cursor, final OnMusicListListener onMusicListListener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 //耗时操作，在新线程
                 cursor.moveToFirst();
                 List<Music> musicList = new ArrayList<>();
-                while (!cursor.isLast()){
+                while (!cursor.isLast()) {
                     musicList.add(getMusic(cursor));
                     cursor.moveToNext();
                 }
@@ -87,9 +88,9 @@ public class MusicListModelImpl implements MusicListModel {
             @Override
             public void onResponse(Response response) {
                 List<Music> musicList = JsonUtil.parseJsonToMusicList(response.getResult());
-                mDatabase.delete(MusicListTable.NAME,null,null);
+                mDatabase.delete(MusicListTable.NAME, null, null);
                 for (Music music : musicList) {
-                    mDatabase.insert(MusicListTable.NAME,null,getContentValues(music));
+                    mDatabase.insert(MusicListTable.NAME, null, getContentValues(music));
                 }
                 onMusicListListener.onSuccess(musicList);
             }
@@ -113,12 +114,12 @@ public class MusicListModelImpl implements MusicListModel {
 
     private ContentValues getContentValues(Music music) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ID,music.getId());
+        values.put(Cols.ID, music.getId());
         values.put(Cols.ITEM_ID, music.getItemId());
         values.put(Cols.TITLE, music.getTitle());
         values.put(Cols.FORWARD, music.getForward());
-        values.put(Cols.IMG_URL,music.getImageURL());
-        values.put(Cols.SINGER_NAME,music.getSinger().getName());
+        values.put(Cols.IMG_URL, music.getImageURL());
+        values.put(Cols.SINGER_NAME, music.getSinger().getName());
         values.put(Cols.SINGER_DESC, music.getSinger().getDesc());
 
         return values;

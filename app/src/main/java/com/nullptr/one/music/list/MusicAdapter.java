@@ -13,7 +13,7 @@ import java.util.List;
 public class MusicAdapter extends BaseAdapter<Music> {
 
     public MusicAdapter(List<Music> datas, int layoutId, int itemCount) {
-        super(datas, layoutId,itemCount);
+        super(datas, layoutId, itemCount);
     }
 
     @Override

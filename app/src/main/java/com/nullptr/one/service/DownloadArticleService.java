@@ -15,14 +15,14 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat.Builder;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
+import com.nullptr.one.article.detail.ArticleDetail;
+import com.nullptr.one.article.detail.ArticleDetailPresenterImpl;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailView;
-import com.nullptr.one.article.detail.ArticleDetailPresenterImpl;
+import com.nullptr.one.article.list.Article;
+import com.nullptr.one.article.list.ArticleListPresenterImpl;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
-import com.nullptr.one.article.list.ArticleListPresenterImpl;
-import com.nullptr.one.article.list.Article;
-import com.nullptr.one.article.detail.ArticleDetail;
 import com.nullptr.one.download.db.DownloadBaseHelper;
 import com.nullptr.one.download.db.DownloadDbSchema.DownloadTable;
 import com.nullptr.one.download.db.DownloadListBaseHelper;
@@ -32,7 +32,8 @@ import com.nullptr.one.main.view.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadArticleService extends Service implements ArticleListView,ArticleDetailView {
+public class DownloadArticleService extends Service implements ArticleListView, ArticleDetailView {
+
     private static int listIndex;
     private static int detailIndex;
     private static int listProgress;
@@ -51,20 +52,21 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     @Override
     public void onCreate() {
         super.onCreate();
-        if (sListPresenter == null){
+        if (sListPresenter == null) {
             sListPresenter = new ArticleListPresenterImpl(this);
         }
-        if (sListDatabase == null){
+        if (sListDatabase == null) {
             sListDatabase = new DownloadListBaseHelper(ContextApplication.getContext()).getWritableDatabase();
         }
-        if (sDetailPresenter == null){
+        if (sDetailPresenter == null) {
             sDetailPresenter = new ArticleDetailPresenterImpl(this);
         }
-        if (sDetailDatabase == null){
+        if (sDetailDatabase == null) {
             sDetailDatabase = new DownloadBaseHelper(ContextApplication.getContext()).getWritableDatabase();
         }
-        if (sManager == null){
-            sManager = (NotificationManager) ContextApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        if (sManager == null) {
+            sManager = (NotificationManager) ContextApplication.getContext()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
         }
     }
 
@@ -87,49 +89,50 @@ public class DownloadArticleService extends Service implements ArticleListView,A
 
     //清空数据库
     private void cleanDatabase() {
-        sListDatabase.delete(DownloadListTable.NAME,null,null);
-        sDetailDatabase.delete(DownloadTable.NAME,null,null);
+        sListDatabase.delete(DownloadListTable.NAME, null, null);
+        sDetailDatabase.delete(DownloadTable.NAME, null, null);
     }
 
     //存储List到数据库
     private void saveListToDatabase(List<Article> articleList) {
         for (Article article : articleList) {
-            sListDatabase.insert(DownloadListTable.NAME,null, getListContentValues(article));
+            sListDatabase.insert(DownloadListTable.NAME, null, getListContentValues(article));
         }
     }
 
     //获取Notification对象
-    private Notification getNotification(String title,int progress){
-        Intent intent = new Intent(this,MainActivity.class);
+    private Notification getNotification(String title, int progress) {
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             String channelId = "channel_download";
             NotificationChannel channel = manager.getNotificationChannel(channelId);
             if (channel == null) {
-                channel = new NotificationChannel(channelId, "Download Channel", NotificationManager.IMPORTANCE_DEFAULT);
+                channel = new NotificationChannel(channelId, "Download Channel",
+                        NotificationManager.IMPORTANCE_DEFAULT);
                 channel.setDescription("Download Channel");
                 manager.createNotificationChannel(channel);
             }
-            builder = configBuilder(new Builder(this,channelId),pendingIntent,title,progress);
-        }else{
-            builder = configBuilder(new Builder(this),pendingIntent,title,progress);
+            builder = configBuilder(new Builder(this, channelId), pendingIntent, title, progress);
+        } else {
+            builder = configBuilder(new Builder(this), pendingIntent, title, progress);
         }
         return builder.build();
     }
 
     //配置Notification的Builder
-    private Builder configBuilder(Builder builder, PendingIntent pendingIntent,String title,int progress){
-        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher))
+    private Builder configBuilder(Builder builder, PendingIntent pendingIntent, String title, int progress) {
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
                 .setContentTitle(title);
-        if (progress>=0){
-            builder.setContentText(progress+"%");
-            builder.setProgress(100,progress,false);
+        if (progress >= 0) {
+            builder.setContentText(progress + "%");
+            builder.setProgress(100, progress, false);
         }
         return builder;
     }
@@ -137,14 +140,14 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //获取列表文章项ContentValues
     private ContentValues getListContentValues(Article article) {
         ContentValues values = new ContentValues();
-        values.put(Cols.ID,article.getId());
+        values.put(Cols.ID, article.getId());
         values.put(Cols.ITEM_ID, article.getItemId());
         values.put(Cols.TITLE, article.getTitle());
         values.put(Cols.FORWARD, article.getForward());
-        values.put(Cols.IMG_URL,article.getImageUrl());
-        values.put(Cols.LIKE_COUNT,String.valueOf(article.getLikeCount()));
-        values.put(Cols.DATE,article.getDate());
-        values.put(Cols.AUTHOR_NAME,article.getAuthor().getName());
+        values.put(Cols.IMG_URL, article.getImageUrl());
+        values.put(Cols.LIKE_COUNT, String.valueOf(article.getLikeCount()));
+        values.put(Cols.DATE, article.getDate());
+        values.put(Cols.AUTHOR_NAME, article.getAuthor().getName());
         values.put(Cols.AUTHOR_DESC, article.getAuthor().getDesc());
 
         return values;
@@ -152,15 +155,15 @@ public class DownloadArticleService extends Service implements ArticleListView,A
 
     //下载文章
     private void downloadArticleList() {
-        sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章列表...",listProgress));
+        sManager.notify(NOTIFICATION_ID, getNotification("正在下载文章列表...", listProgress));
         sListPresenter.updateList();
     }
 
     //获得首页文章列表
     @Override
     public void setArticleList(List<Article> articleList) {
-        listProgress+=20;
-        sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章列表...",listProgress));
+        listProgress += 20;
+        sManager.notify(NOTIFICATION_ID, getNotification("正在下载文章列表...", listProgress));
         String lastId = articleList.get(articleList.size() - 1).getId();
         saveListToDatabase(articleList);
         mArticleList.addAll(articleList);
@@ -170,15 +173,15 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //获得更多文章列表
     @Override
     public void addArticleList(List<Article> articleList) {
-        if (listIndex < 3){
+        if (listIndex < 3) {
             listIndex++;
-            listProgress+=20;
-            sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章列表...",listProgress));
+            listProgress += 20;
+            sManager.notify(NOTIFICATION_ID, getNotification("正在下载文章列表...", listProgress));
             String lastId = articleList.get(articleList.size() - 1).getId();
             saveListToDatabase(articleList);
             mArticleList.addAll(articleList);
             sListPresenter.loadMore(lastId);
-        }else {
+        } else {
             saveListToDatabase(articleList);
             mArticleList.addAll(articleList);
             downloadArticleDetail();
@@ -187,8 +190,8 @@ public class DownloadArticleService extends Service implements ArticleListView,A
 
     //下载文章详情
     private void downloadArticleDetail() {
-        detailProgress+=2;
-        sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章详情...",detailProgress));
+        detailProgress += 2;
+        sManager.notify(NOTIFICATION_ID, getNotification("正在下载文章详情...", detailProgress));
         Article article = mArticleList.get(detailIndex);
         sDetailPresenter.getArticleDetail(article.getItemId());
     }
@@ -196,19 +199,19 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //得到文章详情
     @Override
     public void setArticle(ArticleDetail article) {
-        if (detailIndex < 49){
+        if (detailIndex < 49) {
             detailIndex++;
-            detailProgress+=2;
-            sManager.notify(NOTIFICATION_ID,getNotification("正在下载文章详情...",detailProgress));
+            detailProgress += 2;
+            sManager.notify(NOTIFICATION_ID, getNotification("正在下载文章详情...", detailProgress));
             Article newArticle = mArticleList.get(detailIndex);
             sDetailPresenter.getArticleDetail(newArticle.getItemId());
             saveDetailToDatabase(article);
-        }else{
-            sManager.notify(NOTIFICATION_ID,getNotification("最近50条文章已全部下载完成！",detailProgress));
+        } else {
+            sManager.notify(NOTIFICATION_ID, getNotification("最近50条文章已全部下载完成！", detailProgress));
             //告诉Activity已下载完成
             Intent intent = new Intent();
             intent.setAction("download");
-            intent.putExtra("action_type","OVER");
+            intent.putExtra("action_type", "OVER");
             sendBroadcast(intent);
         }
     }
@@ -236,13 +239,13 @@ public class DownloadArticleService extends Service implements ArticleListView,A
     //出现错误
     @Override
     public void showError(String errorMsg) {
-        sManager.notify(NOTIFICATION_ID,getNotification("下载失败!",-1));
+        sManager.notify(NOTIFICATION_ID, getNotification("下载失败!", -1));
         //下载失败，清空数据库
         cleanDatabase();
         //下载失败，发送下载结束的广播
         Intent intent = new Intent();
         intent.setAction("download");
-        intent.putExtra("action_type","OVER");
+        intent.putExtra("action_type", "OVER");
         sendBroadcast(intent);
     }
 

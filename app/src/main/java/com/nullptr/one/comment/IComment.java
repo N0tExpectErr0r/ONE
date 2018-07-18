@@ -8,10 +8,11 @@ import java.util.List;
  * @DESCRIPTION
  */
 public interface IComment {
+
     //Model层
     interface CommentModel {
 
-        void getCommentList(OnCommentListListener onCommentListListener,String itemId,String type);
+        void getCommentList(OnCommentListListener onCommentListListener, String itemId, String type);
     }
 
     interface OnCommentListListener {
@@ -28,7 +29,7 @@ public interface IComment {
     //Presenter层
     interface CommentPresenter {
 
-        void getCommentList(String itemId,String type);
+        void getCommentList(String itemId, String type);
     }
 
     //View层

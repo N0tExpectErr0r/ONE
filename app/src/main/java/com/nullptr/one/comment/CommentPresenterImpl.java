@@ -12,18 +12,19 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/26
  * @DESCRIPTION
  */
-public class CommentPresenterImpl implements CommentPresenter,OnCommentListListener {
+public class CommentPresenterImpl implements CommentPresenter, OnCommentListListener {
+
     private CommentView mCommentView;
     private CommentModel mCommentModel;
 
-    public CommentPresenterImpl(CommentView commentView){
+    public CommentPresenterImpl(CommentView commentView) {
         mCommentView = commentView;
         mCommentModel = new CommentModelImpl();
     }
 
     @Override
     public void getCommentList(String itemId, String type) {
-        mCommentModel.getCommentList(CommentPresenterImpl.this,itemId,type);
+        mCommentModel.getCommentList(CommentPresenterImpl.this, itemId, type);
     }
 
     @Override
