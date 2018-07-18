@@ -21,11 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".article.detail.view.ArticleDetailActivity"/>
-        <activity android:name=".music.detail.view.MusicDetailActivity"/>
-        <activity android:name=".movie.detail.view.MovieDetailActivity"/>
-        <activity android:name=".image.view.ImageDetailActivity"/>
-        <activity android:name=".comment.view.CommentActivity">
+        <activity android:name=".article.detail.ArticleDetailActivity"/>
+        <activity android:name=".music.detail.MusicDetailActivity"/>
+        <activity android:name=".movie.detail.MovieDetailActivity"/>
+        <activity android:name=".image.ImageDetailActivity"/>
+        <activity android:name=".comment.CommentActivity">
         </activity>
 
         <service

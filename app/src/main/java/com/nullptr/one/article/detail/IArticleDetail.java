@@ -1,7 +1,5 @@
 package com.nullptr.one.article.detail;
 
-import com.nullptr.one.bean.ArticleDetail;
-
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/26

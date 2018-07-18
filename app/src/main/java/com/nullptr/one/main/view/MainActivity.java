@@ -1,6 +1,5 @@
 package com.nullptr.one.main.view;
 
-import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -21,11 +20,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
-import com.nullptr.one.article.list.view.ArticleListFragment;
-import com.nullptr.one.image.view.ImageDetailActivity;
+import com.nullptr.one.article.list.ArticleListFragment;
+import com.nullptr.one.image.ImageDetailActivity;
 import com.nullptr.one.main.adapter.ViewPagerAdapter;
-import com.nullptr.one.movie.list.view.MovieListFragment;
-import com.nullptr.one.music.list.view.MusicListFragment;
+import com.nullptr.one.movie.list.MovieListFragment;
+import com.nullptr.one.music.list.MusicListFragment;
 import com.nullptr.one.service.AutoUpdateService;
 import com.nullptr.one.service.DownloadArticleService;
 import java.util.ArrayList;

@@ -1,6 +1,5 @@
 package com.nullptr.one.comment;
 
-import com.nullptr.one.bean.Comment;
 import java.util.List;
 
 /**

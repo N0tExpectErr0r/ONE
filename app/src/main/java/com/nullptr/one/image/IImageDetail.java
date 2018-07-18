@@ -1,6 +1,5 @@
 package com.nullptr.one.image;
 
-import com.nullptr.one.bean.ImageDetail;
 import java.util.List;
 
 /**

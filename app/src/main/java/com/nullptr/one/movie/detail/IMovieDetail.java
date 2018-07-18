@@ -1,8 +1,5 @@
 package com.nullptr.one.movie.detail;
 
-import com.nullptr.one.bean.MovieDetail;
-import com.nullptr.one.bean.MovieInfo;
-
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/26

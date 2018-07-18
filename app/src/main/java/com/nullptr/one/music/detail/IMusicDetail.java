@@ -1,7 +1,5 @@
 package com.nullptr.one.music.detail;
 
-import com.nullptr.one.bean.MusicDetail;
-
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/5/26

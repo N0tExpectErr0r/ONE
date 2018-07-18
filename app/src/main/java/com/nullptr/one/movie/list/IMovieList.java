@@ -1,6 +1,5 @@
 package com.nullptr.one.movie.list;
 
-import com.nullptr.one.bean.Movie;
 import java.util.List;
 
 /**

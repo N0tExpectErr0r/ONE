@@ -1,6 +1,5 @@
 package com.nullptr.one.article.list;
 
-import com.nullptr.one.bean.Article;
 import java.util.List;
 
 /**

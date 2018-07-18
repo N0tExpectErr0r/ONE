@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 /**
  * @AUTHOR nullptr
  * @DATE 创建时间: 2018/7/17
- * @DESCRIPTION
+ * @DESCRIPTION 上拉加载更多Listener
  */
 public abstract class OnMoreScrollListener extends RecyclerView.OnScrollListener {
     private RecyclerView mRecyclerView;

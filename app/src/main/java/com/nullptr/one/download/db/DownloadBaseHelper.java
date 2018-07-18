@@ -3,7 +3,6 @@ package com.nullptr.one.download.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.nullptr.one.article.detail.db.ArticleDbSchema.ArticleTable;
 import com.nullptr.one.download.db.DownloadDbSchema.DownloadTable;
 import com.nullptr.one.download.db.DownloadDbSchema.DownloadTable.Cols;
 

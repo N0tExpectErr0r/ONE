@@ -12,16 +12,16 @@ import android.os.SystemClock;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
-import com.nullptr.one.article.list.presenter.ArticleListPresenterImpl;
-import com.nullptr.one.bean.Article;
-import com.nullptr.one.bean.Movie;
-import com.nullptr.one.bean.Music;
+import com.nullptr.one.article.list.ArticleListPresenterImpl;
+import com.nullptr.one.article.list.Article;
+import com.nullptr.one.movie.list.Movie;
+import com.nullptr.one.music.list.Music;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
 import com.nullptr.one.movie.list.IMovieList.MovieListView;
-import com.nullptr.one.movie.list.presenter.MovieListPresenterImpl;
+import com.nullptr.one.movie.list.MovieListPresenterImpl;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
 import com.nullptr.one.music.list.IMusicList.MusicListView;
-import com.nullptr.one.music.list.presenter.MusicListPresenterImpl;
+import com.nullptr.one.music.list.MusicListPresenterImpl;
 import com.nullptr.one.util.UpdateNotificationFactory;
 import java.util.List;
 
@@ -58,6 +58,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
     public IBinder onBind(Intent intent) {
         return null;
     }
+    
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

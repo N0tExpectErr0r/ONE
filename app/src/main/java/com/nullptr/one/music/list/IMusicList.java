@@ -1,6 +1,5 @@
 package com.nullptr.one.music.list;
 
-import com.nullptr.one.bean.Music;
 import java.util.List;
 
 /**
