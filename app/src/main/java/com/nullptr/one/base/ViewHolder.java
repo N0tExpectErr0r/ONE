@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
@@ -96,7 +97,7 @@ public class ViewHolder {
         ImageView imageView = getView(viewId);
         imageView.setTag(url);
 
-        com.android.volley.toolbox.ImageLoader loader = new com.android.volley.toolbox.ImageLoader(
+        ImageLoader loader = new ImageLoader(
                 ContextApplication.getHttpQueues(), new BitmapCache());
 
         ImageListener listener = com.android.volley.toolbox.ImageLoader
