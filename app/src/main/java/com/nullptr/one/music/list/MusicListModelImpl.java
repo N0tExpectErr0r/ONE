@@ -49,22 +49,17 @@ public class MusicListModelImpl implements MusicListModel {
     }
 
     private void getListFromLocal(final Cursor cursor, final OnMusicListListener onMusicListListener) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //耗时操作，在新线程
-                cursor.moveToFirst();
-                List<Music> musicList = new ArrayList<>();
-                while (!cursor.isLast()) {
-                    musicList.add(getMusic(cursor));
-                    cursor.moveToNext();
-                }
-                musicList.add(getMusic(cursor));
-                cursor.close();
-                onMusicListListener.onSuccess(musicList);
-                onMusicListListener.onFinish();
-            }
-        }).start();
+        //耗时操作，在新线程
+        cursor.moveToFirst();
+        List<Music> musicList = new ArrayList<>();
+        while (!cursor.isLast()) {
+            musicList.add(getMusic(cursor));
+            cursor.moveToNext();
+        }
+        musicList.add(getMusic(cursor));
+        cursor.close();
+        onMusicListListener.onSuccess(musicList);
+        onMusicListListener.onFinish();
     }
 
     private Music getMusic(Cursor cursor) {

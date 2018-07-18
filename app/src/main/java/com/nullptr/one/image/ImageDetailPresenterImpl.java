@@ -5,6 +5,7 @@ import com.nullptr.one.image.IImageDetail.ImageDetailPresenter;
 import com.nullptr.one.image.IImageDetail.ImageDetailView;
 import com.nullptr.one.image.IImageDetail.OnImageDetailListener;
 import java.util.List;
+import java.util.logging.Handler;
 
 /**
  * Presenter层

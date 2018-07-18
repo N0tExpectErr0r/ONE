@@ -1,5 +1,7 @@
 package com.nullptr.one.article.detail;
 
+import android.os.Handler;
+import android.os.Looper;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailModel;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailView;
@@ -16,10 +18,12 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter, OnArt
 
     private ArticleDetailView mArticleDetailView;
     private ArticleDetailModel mArticleDetailModel;
+    private Handler mHandler;
 
     public ArticleDetailPresenterImpl(ArticleDetailView articleDetailView) {
         mArticleDetailView = articleDetailView;
         mArticleDetailModel = new ArticleDetailModelImpl();
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
 
@@ -30,21 +34,43 @@ public class ArticleDetailPresenterImpl implements ArticleDetailPresenter, OnArt
 
     @Override
     public void onSuccess(final ArticleDetail articleDetail) {
-        mArticleDetailView.setArticle(articleDetail);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleDetailView.setArticle(articleDetail);
+            }
+        });
+
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mArticleDetailView.showError(errorMsg);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleDetailView.showError(errorMsg);
+            }
+        });
+
     }
 
     @Override
     public void onStart() {
-        mArticleDetailView.showLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleDetailView.showLoading();
+            }
+        });
     }
 
     @Override
     public void onFinish() {
-        mArticleDetailView.hideLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleDetailView.hideLoading();
+            }
+        });
     }
 }

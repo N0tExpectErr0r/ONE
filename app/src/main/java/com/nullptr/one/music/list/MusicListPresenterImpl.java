@@ -1,5 +1,7 @@
 package com.nullptr.one.music.list;
 
+import android.os.Handler;
+import android.os.Looper;
 import com.nullptr.one.music.list.IMusicList.MusicListModel;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
 import com.nullptr.one.music.list.IMusicList.MusicListView;
@@ -20,10 +22,12 @@ public class MusicListPresenterImpl implements MusicListPresenter, OnMusicListLi
 
     private MusicListView mMusicListView;
     private MusicListModel mMusicListModel;
+    private Handler mHandler;
 
     public MusicListPresenterImpl(MusicListView musicListView) {
         mMusicListView = musicListView;
         mMusicListModel = new MusicListModelImpl();
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -43,26 +47,56 @@ public class MusicListPresenterImpl implements MusicListPresenter, OnMusicListLi
 
     @Override
     public void onSuccess(final List<Music> musicList) {
-        mMusicListView.setMusicList(musicList);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMusicListView.setMusicList(musicList);
+            }
+        });
+
     }
 
     @Override
     public void onMoreSuccess(final List<Music> musicList) {
-        mMusicListView.addMusicList(musicList);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMusicListView.addMusicList(musicList);
+            }
+        });
+
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mMusicListView.showError(errorMsg);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMusicListView.showError(errorMsg);
+            }
+        });
+
     }
 
     @Override
     public void onStart() {
-        mMusicListView.showLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMusicListView.showLoading();
+            }
+        });
+
     }
 
     @Override
     public void onFinish() {
-        mMusicListView.hideLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMusicListView.hideLoading();
+            }
+        });
+
     }
 }

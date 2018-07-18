@@ -7,8 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
-import com.nullptr.one.util.ImageLoader;
+import com.nullptr.one.util.BitmapCache;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +47,14 @@ public class BannerAdapter extends PagerAdapter {
         TextView title = view.findViewById(R.id.bannerpager_tv_title);
         TextView content = view.findViewById(R.id.bannerpager_tv_content);
 
-        ImageLoader.getInstance().loadImg(imageView, image.getImageURL());
+        ImageLoader loader = new ImageLoader(
+                ContextApplication.getHttpQueues(), new BitmapCache());
+
+        ImageListener listener = com.android.volley.toolbox.ImageLoader
+                .getImageListener(imageView, R.drawable.mock, R.drawable.mock);
+
+        loader.get(image.getImageURL(), listener, imageView.getWidth(), imageView.getHeight());
+
         title.setText(image.getTitle());
         content.setText(image.getContent());
         mViewList.add(view);

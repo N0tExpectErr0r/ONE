@@ -1,6 +1,8 @@
 package com.nullptr.one.movie.list;
 
 
+import android.os.Handler;
+import android.os.Looper;
 import com.nullptr.one.movie.list.IMovieList.MovieListModel;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
 import com.nullptr.one.movie.list.IMovieList.MovieListView;
@@ -20,10 +22,12 @@ public class MovieListPresenterImpl implements MovieListPresenter, OnMovieListLi
 
     private MovieListView mMovieListView;
     private MovieListModel mMovieListModel;
+    private Handler mHandler;
 
     public MovieListPresenterImpl(MovieListView movieListView) {
         mMovieListView = movieListView;
         mMovieListModel = new MovieListModelImpl();
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -43,26 +47,55 @@ public class MovieListPresenterImpl implements MovieListPresenter, OnMovieListLi
 
     @Override
     public void onSuccess(final List<Movie> movieList) {
-        mMovieListView.setMovieList(movieList);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMovieListView.setMovieList(movieList);
+            }
+        });
+
     }
 
     @Override
     public void onMoreSuccess(final List<Movie> movieList) {
-        mMovieListView.addMovieList(movieList);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMovieListView.addMovieList(movieList);
+            }
+        });
+
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mMovieListView.showError(errorMsg);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMovieListView.showError(errorMsg);
+            }
+        });
+
     }
 
     @Override
     public void onStart() {
-        mMovieListView.showLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMovieListView.showLoading();
+            }
+        });
+
     }
 
     @Override
     public void onFinish() {
-        mMovieListView.hideLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mMovieListView.hideLoading();
+            }
+        });
     }
 }

@@ -14,12 +14,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.comment.CommentActivity;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailPresenter;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailView;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieInfoPresenter;
+import com.nullptr.one.util.BitmapCache;
 import com.nullptr.one.util.HtmlPraser;
 import com.nullptr.one.util.ImageLoader;
 
@@ -127,7 +130,13 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         mTvMovieTitle.setText(musicInfo.getMovieTitle());
         mTvStory.setText(musicInfo.getStory());
         mTvInfo.setText(musicInfo.getInfo());
-        ImageLoader.getInstance().loadImg(mIvCover, musicInfo.getCoverURL());
+        com.android.volley.toolbox.ImageLoader loader = new com.android.volley.toolbox.ImageLoader(
+                ContextApplication.getHttpQueues(), new BitmapCache());
+
+        ImageListener listener = com.android.volley.toolbox.ImageLoader
+                .getImageListener(mIvCover, R.drawable.mock, R.drawable.mock);
+
+        loader.get(musicInfo.getCoverURL(), listener, mIvCover.getWidth(), mIvCover.getHeight());
     }
 
     @Override

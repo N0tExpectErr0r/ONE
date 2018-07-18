@@ -1,5 +1,7 @@
 package com.nullptr.one.article.list;
 
+import android.os.Handler;
+import android.os.Looper;
 import com.nullptr.one.article.list.IArticleList.ArticleListModel;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
@@ -19,10 +21,12 @@ public class ArticleListPresenterImpl implements ArticleListPresenter, OnArticle
 
     private ArticleListView mArticleListView;
     private ArticleListModel mArticleListModel;
+    private Handler mHandler;
 
     public ArticleListPresenterImpl(ArticleListView articleListView) {
         mArticleListView = articleListView;
         mArticleListModel = new ArticleListModelImpl();
+        mHandler = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -42,27 +46,57 @@ public class ArticleListPresenterImpl implements ArticleListPresenter, OnArticle
 
     @Override
     public void onSuccess(final List<Article> articleList) {
-        mArticleListView.setArticleList(articleList);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleListView.setArticleList(articleList);
+            }
+        });
+
     }
 
     @Override
     public void onMoreSuccess(final List<Article> articleList) {
-        mArticleListView.addArticleList(articleList);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleListView.addArticleList(articleList);
+            }
+        });
+
     }
 
     @Override
     public void onFail(final String errorMsg) {
-        mArticleListView.showError(errorMsg);
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleListView.showError(errorMsg);
+            }
+        });
+
 
     }
 
     @Override
     public void onStart() {
-        mArticleListView.showLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleListView.showLoading();
+            }
+        });
+
     }
 
     @Override
     public void onFinish() {
-        mArticleListView.hideLoading();
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mArticleListView.hideLoading();
+            }
+        });
+
     }
 }

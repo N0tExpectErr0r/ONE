@@ -15,13 +15,16 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.comment.CommentActivity;
 import com.nullptr.one.music.detail.IMusicDetail.MusicDetailPresenter;
 import com.nullptr.one.music.detail.IMusicDetail.MusicDetailView;
+import com.nullptr.one.util.BitmapCache;
 import com.nullptr.one.util.HtmlPraser;
-import com.nullptr.one.util.ImageLoader;
 
 /**
  * @AUTHOR nullptr
@@ -134,7 +137,15 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         mTvMusicName.setText(music.getTitle());
         mTvMusicInfo.setText(music.getInfo());
         mTvMusicLyric.setText(music.getLyric());
-        ImageLoader.getInstance().loadImg(mIvImage, music.getCoverURL());
+
+        ImageLoader loader = new ImageLoader(
+                ContextApplication.getHttpQueues(), new BitmapCache());
+
+        ImageListener listener = com.android.volley.toolbox.ImageLoader
+                .getImageListener(mIvImage, R.drawable.mock, R.drawable.mock);
+
+        loader.get(music.getCoverURL(), listener, mIvImage.getWidth(), mIvImage.getHeight());
+
         HtmlPraser.getInstance().setHtml(mTvContent, music.getStory());
     }
 

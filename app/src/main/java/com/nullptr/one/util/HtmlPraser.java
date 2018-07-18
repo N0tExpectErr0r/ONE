@@ -9,6 +9,9 @@ import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.Spanned;
 import android.widget.TextView;
+import com.android.volley.toolbox.ImageLoader.ImageListener;
+import com.nullptr.one.ContextApplication;
+import com.nullptr.one.R;
 
 
 /**

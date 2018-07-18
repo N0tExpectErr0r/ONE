@@ -37,11 +37,11 @@ public class MovieInfoModelImpl implements MovieInfoModel {
                 new String[]{itemId}, null, null, null);
         if (cursor.getCount() > 1) {
             //如果已经有数据了，直接读取
-            getFromLocal(cursor, onMovieInfoListener);
+            getFromLocal(cursor,onMovieInfoListener);
         } else {
             //如果数据库没有数据库，向服务器申请数据并存入数据库
             cursor.close();
-            getFromNet(itemId, onMovieInfoListener);
+            getFromNet(itemId,onMovieInfoListener);
         }
     }
 
