@@ -12,6 +12,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/9
  * @DESCRIPTION 通用的ListView Adapter
  */
+@Deprecated
 public abstract class CommonAdapter<T> extends BaseAdapter {
 
     protected Context mContext; //上下文，用于创建LayoutInflater

@@ -10,15 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.nullptr.one.R;
-import com.nullptr.one.base.recyclerview.BaseAdapter.OnItemClickListener;
-import com.nullptr.one.base.recyclerview.OnMoreScrollListener;
+import com.nullptr.one.base.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.OnMoreScrollListener;
 import com.nullptr.one.bean.Music;
 import com.nullptr.one.music.detail.view.MusicDetailActivity;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
 import com.nullptr.one.music.list.IMusicList.MusicListView;
 import com.nullptr.one.music.list.adapter.MusicAdapter;
 import com.nullptr.one.music.list.presenter.MusicListPresenterImpl;
-import com.nullptr.one.ui.LoadMoreListView;
 import java.util.ArrayList;
 import java.util.List;
 

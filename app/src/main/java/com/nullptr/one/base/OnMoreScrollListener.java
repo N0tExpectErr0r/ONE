@@ -1,4 +1,4 @@
-package com.nullptr.one.base.recyclerview;
+package com.nullptr.one.base;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

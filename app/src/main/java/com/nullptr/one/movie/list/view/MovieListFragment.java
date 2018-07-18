@@ -1,6 +1,5 @@
 package com.nullptr.one.movie.list.view;
 
-import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,19 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 import com.nullptr.one.R;
-import com.nullptr.one.base.recyclerview.BaseAdapter.OnItemClickListener;
-import com.nullptr.one.base.recyclerview.OnMoreScrollListener;
+import com.nullptr.one.base.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.OnMoreScrollListener;
 import com.nullptr.one.bean.Movie;
 import com.nullptr.one.movie.detail.view.MovieDetailActivity;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
 import com.nullptr.one.movie.list.IMovieList.MovieListView;
 import com.nullptr.one.movie.list.adapter.MovieAdapter;
 import com.nullptr.one.movie.list.presenter.MovieListPresenterImpl;
-import com.nullptr.one.ui.LoadMoreListView.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
 

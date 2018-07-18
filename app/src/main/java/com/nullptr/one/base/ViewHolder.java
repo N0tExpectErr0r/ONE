@@ -20,6 +20,7 @@ import com.nullptr.one.util.BitmapCache;
  * @DATE 创建时间: 2018/5/9
  * @DESCRIPTION 通用的ListView ViewHolder
  */
+@Deprecated
 public class ViewHolder {
 
     //SparseArray实际上是一个Map，它的key已默认为Integer，value为Object

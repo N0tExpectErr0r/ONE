@@ -1,4 +1,4 @@
-package com.nullptr.one.base.recyclerview;
+package com.nullptr.one.base;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

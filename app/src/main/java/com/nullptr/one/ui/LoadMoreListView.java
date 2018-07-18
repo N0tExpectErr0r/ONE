@@ -15,6 +15,7 @@ import com.nullptr.one.R;
  * @DATE 创建时间: 2018/5/12
  * @DESCRIPTION 自定义View，实现了上拉加载更多
  */
+@Deprecated
 public class LoadMoreListView extends ListView implements AbsListView.OnScrollListener {
 
     private View mFooter;

@@ -2,8 +2,8 @@ package com.nullptr.one.article.list.adapter;
 
 import com.nullptr.one.R;
 
-import com.nullptr.one.base.recyclerview.BaseAdapter;
-import com.nullptr.one.base.recyclerview.CommonViewHolder;
+import com.nullptr.one.base.BaseAdapter;
+import com.nullptr.one.base.CommonViewHolder;
 import com.nullptr.one.bean.Article;
 import java.util.List;
 

@@ -1,11 +1,8 @@
 package com.nullptr.one.music.list.adapter;
 
-import android.content.Context;
 import com.nullptr.one.R;
-import com.nullptr.one.base.CommonAdapter;
-import com.nullptr.one.base.ViewHolder;
-import com.nullptr.one.base.recyclerview.BaseAdapter;
-import com.nullptr.one.base.recyclerview.CommonViewHolder;
+import com.nullptr.one.base.BaseAdapter;
+import com.nullptr.one.base.CommonViewHolder;
 import com.nullptr.one.bean.Music;
 import java.util.List;
 
