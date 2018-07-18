@@ -1,35 +1,27 @@
 package com.nullptr.one.movie.list.view;
 
-import android.app.AlertDialog;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
+import com.nullptr.one.base.recyclerview.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.recyclerview.OnMoreScrollListener;
 import com.nullptr.one.bean.Movie;
-import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.movie.detail.view.MovieDetailActivity;
 import com.nullptr.one.movie.list.IMovieList.MovieListPresenter;
 import com.nullptr.one.movie.list.IMovieList.MovieListView;
 import com.nullptr.one.movie.list.adapter.MovieAdapter;
 import com.nullptr.one.movie.list.presenter.MovieListPresenterImpl;
-import com.nullptr.one.ui.LoadMoreListView;
 import com.nullptr.one.ui.LoadMoreListView.OnLoadMoreListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +31,8 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/17
  * @DESCRIPTION 电影列表fragment
  */
-public class MovieListFragment extends Fragment implements OnLoadMoreListener,
-        ListView.OnItemClickListener, MovieListView {
-    private final int ID = 2;
-    private NotificationManager mManager;
-    private LoadMoreListView mLvListView;
+public class MovieListFragment extends Fragment implements OnItemClickListener, MovieListView {
+    private RecyclerView mRvList;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
     private MovieListPresenter mMovieListPresenter;
     private MovieAdapter mAdapter;
@@ -54,7 +43,9 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_movie, container, false);
         mMovieListPresenter = new MovieListPresenterImpl(this);
-        mLvListView = v.findViewById(R.id.movie_lv_listview);
+        mRvList = v.findViewById(R.id.movie_rv_list);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        mRvList.setLayoutManager(manager);
         mSrlSwipeRefreshLayout = v.findViewById(R.id.movie_srl_swipe_refresh);
         return v;
     }
@@ -74,35 +65,28 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
         });
         if (mMovieList == null || mMovieList.size() == 0) {
             //不是每次都要刷新的，之前有数据的时候不需要刷新
-            mAdapter = new MovieAdapter(getActivity(), new ArrayList<Movie>(),
-                    R.layout.item_list_movie);
-            mLvListView.setAdapter(mAdapter);
-            mLvListView.setFooterText("正在加载更多影视...");     //设置加载更多文字
-            mLvListView.setLoadMoreListener(this);              //设置加载更多监听
-            mLvListView.setOnItemClickListener(this);           //设置单击Item事件
+            mAdapter = new MovieAdapter(new ArrayList<Movie>(),
+                    R.layout.item_list_movie,10);
+            mRvList.setAdapter(mAdapter);
+            //设置加载更多监听
+            mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
+                @Override
+                public void onLoadMore() {
+                    //获取更多数据
+                    String lastId = mMovieList.get(mMovieList.size() - 1).getId();
+                    mMovieListPresenter.loadMore(lastId);
+                }
+            });
+            mAdapter.setOnItemClickListener(this);           //设置单击Item事件
             //加载初始数据
             mMovieListPresenter.loadList();
         }
     }
 
     @Override
-    public void onLoadMore() {
-        //ListView加载更多的回调
-        //获取更多数据
-        String lastId = mMovieList.get(mMovieList.size() - 1).getId();
-        mMovieListPresenter.loadMore(lastId);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        String itemId = mMovieList.get(position).getItemId();
-        MovieDetailActivity.actionStart(getActivity(), itemId);
-    }
-
-    @Override
     public void setMovieList(final List<Movie> movieList) {
         //在UI线程更新DataList
-        mAdapter.setDataList(movieList);
+        mAdapter.setDatas(movieList);
         mMovieList = movieList;
     }
 
@@ -110,7 +94,6 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
     public void showError(String errorMsg) {
         //网络出错的处理
         Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
-        mLvListView.setLoadCompleted();
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -131,7 +114,12 @@ public class MovieListFragment extends Fragment implements OnLoadMoreListener,
 
         //在UI线程更新DataList
         mMovieList.addAll(movieList);
-        mAdapter.setDataList(mMovieList);
-        mLvListView.setLoadCompleted();
+        mAdapter.setDatas(mMovieList);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        String itemId = mMovieList.get(position).getItemId();
+        MovieDetailActivity.actionStart(getActivity(), itemId);
     }
 }

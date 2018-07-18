@@ -58,25 +58,29 @@ public class MusicListModelImpl implements MusicListModel {
                 cursor.moveToFirst();
                 List<Music> musicList = new ArrayList<>();
                 while (!cursor.isLast()){
-                    Music music = new Music();
-                    music.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
-                    music.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
-                    music.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
-                    music.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
-                    music.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
-                    Singer singer = new Singer();
-                    singer.setName(cursor.getString(cursor.getColumnIndex(Cols.SINGER_NAME)));
-                    singer.setDesc(cursor.getString(cursor.getColumnIndex(Cols.SINGER_DESC)));
-                    music.setSinger(singer);
-                    musicList.add(music);
-
+                    musicList.add(getMusic(cursor));
                     cursor.moveToNext();
                 }
+                musicList.add(getMusic(cursor));
                 cursor.close();
                 onMusicListListener.onSuccess(musicList);
                 onMusicListListener.onFinish();
             }
         }).start();
+    }
+
+    private Music getMusic(Cursor cursor) {
+        Music music = new Music();
+        music.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
+        music.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+        music.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+        music.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
+        music.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
+        Singer singer = new Singer();
+        singer.setName(cursor.getString(cursor.getColumnIndex(Cols.SINGER_NAME)));
+        singer.setDesc(cursor.getString(cursor.getColumnIndex(Cols.SINGER_DESC)));
+        music.setSinger(singer);
+        return music;
     }
 
     @Override

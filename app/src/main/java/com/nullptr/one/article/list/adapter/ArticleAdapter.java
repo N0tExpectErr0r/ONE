@@ -1,9 +1,9 @@
 package com.nullptr.one.article.list.adapter;
 
-import android.content.Context;
 import com.nullptr.one.R;
-import com.nullptr.one.base.CommonAdapter;
-import com.nullptr.one.base.ViewHolder;
+
+import com.nullptr.one.base.recyclerview.BaseAdapter;
+import com.nullptr.one.base.recyclerview.CommonViewHolder;
 import com.nullptr.one.bean.Article;
 import java.util.List;
 
@@ -12,15 +12,14 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/12
  * @DESCRIPTION 文章列表的Adapter
  */
-public class ArticleAdapter extends CommonAdapter<Article> {
-
-    public ArticleAdapter(Context context, List<Article> datas, int layoutId) {
-        super(context, datas, layoutId);
+public class ArticleAdapter extends BaseAdapter<Article> {
+    public ArticleAdapter(List<Article> data, int layoutId,int itemCount) {
+        super(data, layoutId, itemCount);
     }
 
 
     @Override
-    public void convert(ViewHolder holder, Article article) {
+    public void initItemView(CommonViewHolder holder, Article article) {
         holder.setImageUrl(R.id.article_iv_image, article.getImageUrl())
                 .setText(R.id.article_tv_title, article.getTitle())
                 .setText(R.id.article_tv_forward, article.getForward())

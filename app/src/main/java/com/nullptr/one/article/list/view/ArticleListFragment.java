@@ -1,41 +1,26 @@
 package com.nullptr.one.article.list.view;
 
-import android.app.AlertDialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ClipData.Item;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationCompat.Builder;
-import android.support.v4.view.NestedScrollingChildHelper;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.nullptr.one.ContextApplication;
 import com.nullptr.one.R;
+import com.nullptr.one.base.recyclerview.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.recyclerview.OnMoreScrollListener;
 import com.nullptr.one.bean.Article;
 import com.nullptr.one.article.detail.view.ArticleDetailActivity;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
 import com.nullptr.one.article.list.adapter.ArticleAdapter;
 import com.nullptr.one.article.list.presenter.ArticleListPresenterImpl;
-import com.nullptr.one.main.view.MainActivity;
 import com.nullptr.one.ui.LoadMoreListView;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +31,10 @@ import java.util.List;
  * @DESCRIPTION 文章Tab所对应的Fragment。
  */
 public class ArticleListFragment extends Fragment implements ArticleListView,
-        ListView.OnItemClickListener, LoadMoreListView.OnLoadMoreListener {
+        OnItemClickListener {
 
-    private NotificationManager mManager;
     private List<Article> mArticleList;
-    private LoadMoreListView mLvListView;
+    private RecyclerView mRvList;
     private ArticleAdapter mAdapter;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
     private ArticleListPresenter mArticleListPresenter;
@@ -62,7 +46,10 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         View v = inflater.inflate(R.layout.fragment_list_article, container, false);
         mArticleListPresenter = new ArticleListPresenterImpl(this);
         mSrlSwipeRefreshLayout = v.findViewById(R.id.article_srl_swipe_refresh);
-        mLvListView = v.findViewById(R.id.article_lv_listview);
+        mRvList = v.findViewById(R.id.article_rv_list);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        mRvList.setLayoutManager(manager);
+
         return v;
     }
 
@@ -88,12 +75,19 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         if (mArticleList == null || mArticleList.size() == 0) {
             //不是每次都要刷新的，之前有数据的时候不需要刷新
             //初始化ListView
-            mAdapter = new ArticleAdapter(getActivity(), new ArrayList<Article>(),
-                    R.layout.item_list_article);
-            mLvListView.setAdapter(mAdapter);
-            mLvListView.setFooterText("正在加载更多文章...");     //设置加载更多文字
-            mLvListView.setLoadMoreListener(this);              //设置加载更多监听
-            mLvListView.setOnItemClickListener(this);           //设置单击Item事件
+            mAdapter = new ArticleAdapter(new ArrayList<Article>(),
+                    R.layout.item_list_article,10);
+            mRvList.setAdapter(mAdapter);
+            //设置加载更多监听
+            mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
+                @Override
+                public void onLoadMore() {
+                    //获取更多数据
+                    String lastId = mArticleList.get(mArticleList.size() - 1).getId();
+                    mArticleListPresenter.loadMore(lastId);
+                }
+            });
+            mAdapter.setOnItemClickListener(this);           //设置单击Item事件
             //加载初始数据
             mArticleListPresenter.loadList();
         }
@@ -102,7 +96,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     @Override
     public void setArticleList(final List<Article> articleList) {
         //在UI线程更新Adapter的DataList
-        mAdapter.setDataList(articleList);
+        mAdapter.setDatas(articleList);
         mArticleList = articleList;
     }
 
@@ -110,7 +104,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     public void showError(final String errorMsg) {
         //网络出错的处理
         Toast.makeText(getActivity(),"网络出错，请检查网络设置",Toast.LENGTH_SHORT).show();
-        mLvListView.setLoadCompleted();
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -130,23 +123,12 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     @Override
     public void addArticleList(final List<Article> articleList) {
         mArticleList.addAll(articleList);
-        mAdapter.setDataList(mArticleList);
-        mLvListView.setLoadCompleted();
+        mAdapter.setDatas(mArticleList);
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(View view, int position) {
         String itemId = mArticleList.get(position).getItemId();
         ArticleDetailActivity.actionStart(getActivity(), itemId);
     }
-
-    @Override
-    public void onLoadMore() {
-        //ListView加载更多的回调
-        //获取更多数据
-        String lastId = mArticleList.get(mArticleList.size() - 1).getId();
-        mArticleListPresenter.loadMore(lastId);
-    }
-
-
 }

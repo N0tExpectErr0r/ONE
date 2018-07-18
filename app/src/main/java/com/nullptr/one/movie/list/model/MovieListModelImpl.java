@@ -60,27 +60,31 @@ public class MovieListModelImpl implements MovieListModel {
                 cursor.moveToFirst();
                 List<Movie> movieList = new ArrayList<>();
                 while (!cursor.isLast()){
-                    Movie movie = new Movie();
-                    movie.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
-                    movie.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
-                    movie.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
-                    movie.setSubTitle(cursor.getString(cursor.getColumnIndex(Cols.SUBTITLE)));
-                    movie.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
-                    movie.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
-                    movie.setDate(cursor.getString(cursor.getColumnIndex(Cols.DATE)));
-                    Author author = new Author();
-                    author.setName(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_NAME)));
-                    author.setDesc("");
-                    movie.setAuthor(author);
-                    movieList.add(movie);
-
+                    movieList.add(getMovie(cursor));
                     cursor.moveToNext();
                 }
+                movieList.add(getMovie(cursor));
                 cursor.close();
                 onMovieListListener.onSuccess(movieList);
                 onMovieListListener.onFinish();
             }
         }).start();
+    }
+
+    private Movie getMovie(Cursor cursor) {
+        Movie movie = new Movie();
+        movie.setId(cursor.getString(cursor.getColumnIndex(Cols.ID)));
+        movie.setItemId(cursor.getString(cursor.getColumnIndex(Cols.ITEM_ID)));
+        movie.setTitle(cursor.getString(cursor.getColumnIndex(Cols.TITLE)));
+        movie.setSubTitle(cursor.getString(cursor.getColumnIndex(Cols.SUBTITLE)));
+        movie.setForward(cursor.getString(cursor.getColumnIndex(Cols.FORWARD)));
+        movie.setImageURL(cursor.getString(cursor.getColumnIndex(Cols.IMG_URL)));
+        movie.setDate(cursor.getString(cursor.getColumnIndex(Cols.DATE)));
+        Author author = new Author();
+        author.setName(cursor.getString(cursor.getColumnIndex(Cols.AUTHOR_NAME)));
+        author.setDesc("");
+        movie.setAuthor(author);
+        return movie;
     }
 
     @Override

@@ -4,6 +4,8 @@ import android.content.Context;
 import com.nullptr.one.R;
 import com.nullptr.one.base.CommonAdapter;
 import com.nullptr.one.base.ViewHolder;
+import com.nullptr.one.base.recyclerview.BaseAdapter;
+import com.nullptr.one.base.recyclerview.CommonViewHolder;
 import com.nullptr.one.bean.Movie;
 import java.util.List;
 
@@ -12,14 +14,14 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/17
  * @DESCRIPTION 影视列表的Adapter
  */
-public class MovieAdapter extends CommonAdapter<Movie> {
+public class MovieAdapter extends BaseAdapter<Movie> {
 
-    public MovieAdapter(Context context, List<Movie> datas, int layoutId) {
-        super(context, datas, layoutId);
+    public MovieAdapter(List<Movie> datas, int layoutId,int itemCount) {
+        super(datas, layoutId, itemCount);
     }
 
     @Override
-    public void convert(ViewHolder holder, Movie movie) {
+    public void initItemView(CommonViewHolder holder, Movie movie) {
         holder.setImageUrl(R.id.movie_iv_image, movie.getImageURL())
                 .setText(R.id.movie_tv_title, movie.getTitle())
                 .setText(R.id.movie_tv_subtitle, movie.getSubTitle())
