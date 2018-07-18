@@ -28,7 +28,7 @@ import com.nullptr.one.download.db.DownloadDbSchema.DownloadTable;
 import com.nullptr.one.download.db.DownloadListBaseHelper;
 import com.nullptr.one.download.db.DownloadListDbSchema.DownloadListTable;
 import com.nullptr.one.download.db.DownloadListDbSchema.DownloadListTable.Cols;
-import com.nullptr.one.main.view.MainActivity;
+import com.nullptr.one.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 

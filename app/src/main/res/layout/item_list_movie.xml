@@ -11,63 +11,68 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <ImageView
             android:id="@+id/movie_iv_image"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:scaleType="centerCrop"
             android:src="@drawable/mock"/>
-        <TextView
-            android:id="@+id/movie_tv_title"
-            android:textStyle="bold"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:maxLines="2"
-            android:text="正在加载标题"
-            android:textColor="#212121"
-            android:textSize="20sp"/>
+            android:padding="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/movie_tv_title"
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:maxLines="2"
+                android:text="正在加载标题"
+                android:textColor="#212121"
+                android:textSize="20sp"/>
 
-        <TextView
-            android:id="@+id/movie_tv_subtitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="正在加载副标题"
-            android:textColor="#666666"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/movie_tv_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="正在加载副标题"
+                android:textColor="#666666"
+                android:textSize="18sp"/>
 
-        <TextView
-            android:id="@+id/movie_tv_forward"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:text="正在加载概述"
-            android:textColor="#888888"/>
+            <TextView
+                android:id="@+id/movie_tv_forward"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:text="正在加载概述"
+                android:textColor="#888888"/>
 
-        <TextView
-            android:id="@+id/movie_tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:text="1970-01-01 00:00"/>
+            <TextView
+                android:id="@+id/movie_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="1970-01-01 00:00"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="#EEEEEE"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="#EEEEEE"/>
 
-        <TextView
-            android:id="@+id/movie_tv_author_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="作者：正在加载"/>
+            <TextView
+                android:id="@+id/movie_tv_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="作者：正在加载"/>
 
+        </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
