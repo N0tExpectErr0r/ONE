@@ -1,6 +1,8 @@
 package com.nullptr.one.music.list;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.nullptr.one.R;
 import com.nullptr.one.base.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.LazyFragment;
 import com.nullptr.one.base.OnMoreScrollListener;
 import com.nullptr.one.music.detail.MusicDetailActivity;
 import com.nullptr.one.music.list.IMusicList.MusicListPresenter;
@@ -23,7 +26,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/13
  * @DESCRIPTION 音乐列表fragment
  */
-public class MusicListFragment extends Fragment implements MusicListView, OnItemClickListener {
+public class MusicListFragment extends LazyFragment implements MusicListView, OnItemClickListener {
 
     private RecyclerView mRvList;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
@@ -31,23 +34,18 @@ public class MusicListFragment extends Fragment implements MusicListView, OnItem
     private MusicAdapter mAdapter;
     private List<Music> mMusicList;
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    protected View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_music, container, false);
         mMusicListPresenter = new MusicListPresenterImpl(this);
         mRvList = v.findViewById(R.id.music_rv_list);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRvList.setLayoutManager(manager);
         mSrlSwipeRefreshLayout = v.findViewById(R.id.music_srl_swipe_refresh);
-        return v;
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //在onStart中初始化原因同ArticleListFragment
-
+        mSrlSwipeRefreshLayout.setRefreshing(true);
         //初始化SwipeRefreshLayout
         mSrlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,24 +54,32 @@ public class MusicListFragment extends Fragment implements MusicListView, OnItem
                 mMusicListPresenter.updateList();
             }
         });
+        return v;
+    }
 
-        if (mMusicList == null || mMusicList.size() == 0) {
-            //不是每次都要刷新的，之前有数据的时候不需要刷新
-            mAdapter = new MusicAdapter(new ArrayList<Music>(),
-                    R.layout.item_list_music, 10);
-            mRvList.setAdapter(mAdapter);
-            mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
-                @Override
-                public void onLoadMore() {
-                    //获取更多数据
-                    String lastId = mMusicList.get(mMusicList.size() - 1).getId();
-                    mMusicListPresenter.loadMore(lastId);
-                }
-            });              //设置加载更多监听
-            mAdapter.setOnItemClickListener(this);           //设置单击Item事件
-            //加载初始数据
-            mMusicListPresenter.loadList();
-        }
+    @Override
+    protected void initData() {
+        //不是每次都要刷新的，之前有数据的时候不需要刷新
+        mAdapter = new MusicAdapter(new ArrayList<Music>(),
+                R.layout.item_list_music, 10);
+        mRvList.setAdapter(mAdapter);
+        mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
+            @Override
+            public void onLoadMore() {
+                //获取更多数据
+                String lastId = mMusicList.get(mMusicList.size() - 1).getId();
+                mMusicListPresenter.loadMore(lastId);
+            }
+        });
+        mAdapter.setOnItemClickListener(this);           //设置单击Item事件
+        //加载初始数据
+        mMusicListPresenter.loadList();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //在onStart中初始化原因同ArticleListFragment
     }
 
 

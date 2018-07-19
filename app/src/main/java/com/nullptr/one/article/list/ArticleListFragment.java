@@ -1,6 +1,8 @@
 package com.nullptr.one.article.list;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import com.nullptr.one.article.detail.ArticleDetailActivity;
 import com.nullptr.one.article.list.IArticleList.ArticleListPresenter;
 import com.nullptr.one.article.list.IArticleList.ArticleListView;
 import com.nullptr.one.base.BaseAdapter.OnItemClickListener;
+import com.nullptr.one.base.LazyFragment;
 import com.nullptr.one.base.OnMoreScrollListener;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ import java.util.List;
  * @DATE 创建时间: 2018/5/11
  * @DESCRIPTION 文章Tab所对应的Fragment。
  */
-public class ArticleListFragment extends Fragment implements ArticleListView,
+public class ArticleListFragment extends LazyFragment implements ArticleListView,
         OnItemClickListener {
 
     private List<Article> mArticleList;
@@ -34,8 +37,8 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    protected View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_article, container, false);
         mArticleListPresenter = new ArticleListPresenterImpl(this);
         mSrlSwipeRefreshLayout = v.findViewById(R.id.article_srl_swipe_refresh);
@@ -43,13 +46,7 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRvList.setLayoutManager(manager);
 
-        return v;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
+        mSrlSwipeRefreshLayout.setRefreshing(true);
         //初始化SwipeRefreshLayout
         mSrlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -58,25 +55,33 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
                 mArticleListPresenter.updateList();
             }
         });
-        if (mArticleList == null || mArticleList.size() == 0) {
-            //不是每次都要刷新的，之前有数据的时候不需要刷新
-            //初始化ListView
-            mAdapter = new ArticleAdapter(new ArrayList<Article>(),
-                    R.layout.item_list_article, 10);
-            mRvList.setAdapter(mAdapter);
-            //设置加载更多监听
-            mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
-                @Override
-                public void onLoadMore() {
-                    //获取更多数据
-                    String lastId = mArticleList.get(mArticleList.size() - 1).getId();
-                    mArticleListPresenter.loadMore(lastId);
-                }
-            });
-            mAdapter.setOnItemClickListener(this);           //设置单击Item事件
-            //加载初始数据
-            mArticleListPresenter.loadList();
-        }
+
+        return v;
+    }
+
+    @Override
+    protected void initData() {
+        mAdapter = new ArticleAdapter(new ArrayList<Article>(),
+                R.layout.item_list_article, 10);
+        mRvList.setAdapter(mAdapter);
+        //设置加载更多监听
+        mRvList.setOnScrollListener(new OnMoreScrollListener(mRvList) {
+            @Override
+            public void onLoadMore() {
+                //获取更多数据
+                String lastId = mArticleList.get(mArticleList.size() - 1).getId();
+                mArticleListPresenter.loadMore(lastId);
+            }
+        });
+        mAdapter.setOnItemClickListener(this);           //设置单击Item事件
+        //加载初始数据
+        mArticleListPresenter.loadList();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     @Override
