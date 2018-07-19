@@ -111,16 +111,14 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
         mPbLoading.setVisibility(View.GONE);
     }
 
-    private Toolbar initToolbar(CharSequence title) {
+    private void initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(title);
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-        }
-        return toolbar;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     @Override
@@ -136,7 +134,7 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
 
         WeakReference<ImageDetailActivity> mWeakReference;
 
-        public WeakHandler(ImageDetailActivity activity) {
+        WeakHandler(ImageDetailActivity activity) {
             mWeakReference = new WeakReference<>(activity);
         }
 

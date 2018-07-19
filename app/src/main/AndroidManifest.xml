@@ -21,9 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".article.detail.ArticleDetailActivity"/>
-        <activity android:name=".music.detail.MusicDetailActivity"/>
-        <activity android:name=".movie.detail.MovieDetailActivity"/>
+        <activity android:name=".article.detail.ArticleDetailActivity"
+            android:theme="@style/OneActivityTheme"/>
+        <activity android:name=".music.detail.MusicDetailActivity"
+            android:theme="@style/OneActivityTheme"/>
+        <activity android:name=".movie.detail.MovieDetailActivity"
+            android:theme="@style/OneActivityTheme"/>
         <activity android:name=".image.ImageDetailActivity"/>
         <activity android:name=".comment.CommentActivity">
         </activity>

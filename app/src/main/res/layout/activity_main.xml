@@ -13,9 +13,15 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include
-                android:id="@id/toolbar"
-                layout="@layout/toolbar"/>
+            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                android:elevation="4dp"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/main_tl_tab"
@@ -23,7 +29,9 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFC"
                 app:tabSelectedTextColor="@color/colorAccent"
-                app:tabTextColor="@color/colorPrimaryDark">
+                app:tabTextColor="@color/colorPrimaryDark"
+                app:tabIndicatorHeight="2dp"
+                android:elevation="8dp">
 
                 <android.support.design.widget.TabItem
                     android:layout_width="match_parent"
@@ -62,5 +70,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_download"/>
+        android:src="@drawable/ic_download"
+        android:elevation="8dp"/>
 </FrameLayout>
