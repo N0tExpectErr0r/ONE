@@ -32,7 +32,7 @@ public class ImageLoader {
     private static ImageLoader sInstance = new ImageLoader();
     private static LruCache<String, Bitmap> sMemoryCache;
 
-    public ImageLoader() {
+    private ImageLoader() {
         if (sMemoryCache == null) {
             final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);  //将最大内存换算为kb(原来以B为单位)
             final int cacheSize = maxMemory / 8;    //取1/8的内存为LruCache的大小
@@ -53,20 +53,20 @@ public class ImageLoader {
     /**
      * 内存缓存
      */
-    public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemoryCache(key) == null) {
             sMemoryCache.put(key, bitmap);  //图片没有放入时将图片放入内存
         }
     }
 
-    public Bitmap getBitmapFromMemoryCache(String key) {
+    private Bitmap getBitmapFromMemoryCache(String key) {
         return sMemoryCache.get(key);   //从内存取出对应图片
     }
 
     /**
      * 本地缓存
      */
-    public Bitmap getBitmapFromLocal(String url) {
+    private Bitmap getBitmapFromLocal(String url) {
         String fileName = null;
         try {
             //进行MD5加密的原因：不让一些特殊的url影响文件的存储
@@ -87,7 +87,7 @@ public class ImageLoader {
         return null;
     }
 
-    public void addBitmapToLocal(String url, Bitmap bitmap) {
+    private void addBitmapToLocal(String url, Bitmap bitmap) {
         try {
             //进行MD5加密的原因：不让一些特殊的url影响文件的存储
             //同时让接口不被用户看到
@@ -111,7 +111,7 @@ public class ImageLoader {
     /**
      * 网络缓存
      */
-    public Bitmap getBitmapFromNet(String url) {
+    private Bitmap getBitmapFromNet(String url) {
         URL imgUrl = null;
         Bitmap bitmap = null;
         try {
@@ -124,8 +124,6 @@ public class ImageLoader {
             addBitmapToMemoryCache(url, bitmap); //添加到内存缓存
             addBitmapToLocal(url, bitmap);   //添加到本地缓存
             is.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

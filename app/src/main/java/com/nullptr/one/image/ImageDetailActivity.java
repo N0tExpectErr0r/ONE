@@ -31,23 +31,6 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
     private WeakHandler mHandler;
     private ProgressBar mPbLoading;
 
-    // Handler的内存泄漏问题
-    // 比如用Handler发送一条延时消息，此时关闭Activity
-    // 此时的Message持有Handler的引用，Handler又持有Activity的引用，
-    // 因此Activity就不会被回收，导致内存泄漏.
-    // 所以换另一种写法
-    //
-    // Handler handler = new Handler() {
-    //     public void handleMessage(android.os.Message msg) {
-    //         //让ViewPager滑到下一页
-    //         mVpBanner.setCurrentItem(mVpBanner.getCurrentItem() + 1);
-    //         //延时，循环调用handler
-    //         handler.sendEmptyMessageDelayed(0, 5000);
-    //     }
-    //
-    //     ;
-    // };
-
     public static void actionStart(Context context) {
         Intent intent = new Intent(context, ImageDetailActivity.class);
         context.startActivity(intent);
@@ -99,7 +82,6 @@ public class ImageDetailActivity extends BaseActivity implements ImageDetailView
     public void showError(final String errorMsg) {
         //网络出错处理
         Toast.makeText(this, "网络出错，请检查网络设置", Toast.LENGTH_SHORT).show();
-
     }
 
     @Override

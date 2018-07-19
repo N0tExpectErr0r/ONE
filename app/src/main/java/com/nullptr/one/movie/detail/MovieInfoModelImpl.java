@@ -26,7 +26,7 @@ public class MovieInfoModelImpl implements MovieInfoModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存音乐详情的数据库
 
-    public MovieInfoModelImpl() {
+    MovieInfoModelImpl() {
         mDatabase = new MovieInfoBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

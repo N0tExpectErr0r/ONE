@@ -26,7 +26,7 @@ public class ArticleDetailModelImpl implements ArticleDetailModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存文章详情的数据库
 
-    public ArticleDetailModelImpl() {
+    ArticleDetailModelImpl() {
         mDatabase = new ArticleBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

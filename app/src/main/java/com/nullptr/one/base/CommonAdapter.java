@@ -15,14 +15,13 @@ import java.util.List;
 @Deprecated
 public abstract class CommonAdapter<T> extends BaseAdapter {
 
-    protected Context mContext; //上下文，用于创建LayoutInflater
-    protected List<T> mDatas;   //数据(T为保存要显示在内容中的bean)
-    protected LayoutInflater mInflater;
-    protected int mLayoutId;    //item布局id
+    private Context mContext; //上下文，用于创建LayoutInflater
+    private List<T> mDatas;   //数据(T为保存要显示在内容中的bean)
+    private int mLayoutId;    //item布局id
 
     public CommonAdapter(Context context, List<T> datas, int layoutId) {
         this.mDatas = datas;
-        mInflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mLayoutId = layoutId;
     }

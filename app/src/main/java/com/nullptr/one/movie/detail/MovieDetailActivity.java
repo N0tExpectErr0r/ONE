@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +38,6 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
     private TextView mTvStory;
     private TextView mTvAuthorName;
     private WebView mWvContent;
-    private FloatingActionButton mFabComment;
 
     public static void actionStart(Context context, String itemId) {
         Intent intent = new Intent(context, MovieDetailActivity.class);
@@ -70,7 +68,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         mTvAuthorName = findViewById(R.id.movie_detail_tv_author_name);
         mWvContent = findViewById(R.id.movie_detail_wv_content);
         mWvContent.getSettings().setSupportZoom(false);
-        mFabComment = findViewById(R.id.movie_detail_fab_comment);
+        FloatingActionButton fabComment = findViewById(R.id.movie_detail_fab_comment);
 
         mSrlSwipeRefreshLayout = findViewById(R.id.movie_detail_srl_swipe_refresh);
         mSrlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -81,7 +79,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
             }
         });
 
-        mFabComment.setOnClickListener(new OnClickListener() {
+        fabComment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 CommentActivity.actionStart(MovieDetailActivity.this, mItemId, "MOVIE");
@@ -109,16 +107,14 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         return true;
     }
 
-    private Toolbar initToolbar(CharSequence title) {
+    private void initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(title);
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-        }
-        return toolbar;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     @Override

@@ -37,7 +37,7 @@ public class RequestTask implements Runnable {
         }
     };
 
-    public RequestTask(Request request, HttpListener httpListener) {
+    RequestTask(Request request, HttpListener httpListener) {
         this.request = request;
         this.httpListener = httpListener;
     }
@@ -47,7 +47,7 @@ public class RequestTask implements Runnable {
         httpListener.onStart();
         String urlStr = request.getUrl();
         RequestMethod method = request.getMethod();
-        StringRequest stringRequest = null;
+        StringRequest stringRequest;
         switch (method.value()) {
             case "GET":
                 stringRequest = new StringRequest(Method.GET, urlStr, mSuccessListener, mErrorListener);
@@ -55,7 +55,7 @@ public class RequestTask implements Runnable {
             case "POST":
                 stringRequest = new StringRequest(Method.POST, urlStr, mSuccessListener, mErrorListener) {
                     @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
+                    protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<>();
                         for (KeyValue keyValue : request.getKeyValues()) {
                             params.put(keyValue.getKey(), keyValue.getValue().toString());

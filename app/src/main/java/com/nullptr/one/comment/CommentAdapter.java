@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class CommentAdapter extends CommonAdapter<Comment> {
 
-    public CommentAdapter(Context context, List<Comment> datas, int layoutId) {
+    CommentAdapter(Context context, List<Comment> datas, int layoutId) {
         super(context, datas, layoutId);
     }
 

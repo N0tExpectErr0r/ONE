@@ -43,16 +43,16 @@ public class Request {
         keyValues.add(new KeyValue(key, value));
     }
 
-    public RequestMethod getMethod() {
+    RequestMethod getMethod() {
         return method;
     }
 
-    public String getUrl() {
+    String getUrl() {
 
         return url;
     }
 
-    public List<KeyValue> getKeyValues() {
+    List<KeyValue> getKeyValues() {
         return keyValues;
     }
 }

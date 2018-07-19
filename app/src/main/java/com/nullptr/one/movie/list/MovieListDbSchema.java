@@ -16,7 +16,7 @@ public class MovieListDbSchema {
             public static final String ID = "id";
             public static final String ITEM_ID = "item_id";
             public static final String TITLE = "title";
-            public static final String SUBTITLE = "subtitle";
+            static final String SUBTITLE = "subtitle";
             public static final String FORWARD = "forward";
             public static final String IMG_URL = "img_url";
             public static final String DATE = "data";

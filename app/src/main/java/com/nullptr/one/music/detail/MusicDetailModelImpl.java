@@ -26,7 +26,7 @@ public class MusicDetailModelImpl implements MusicDetailModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存音乐详情的数据库
 
-    public MusicDetailModelImpl() {
+    MusicDetailModelImpl() {
         mDatabase = new MusicBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

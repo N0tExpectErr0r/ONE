@@ -17,7 +17,7 @@ public class CommentPresenterImpl implements CommentPresenter, OnCommentListList
     private CommentView mCommentView;
     private CommentModel mCommentModel;
 
-    public CommentPresenterImpl(CommentView commentView) {
+    CommentPresenterImpl(CommentView commentView) {
         mCommentView = commentView;
         mCommentModel = new CommentModelImpl();
     }

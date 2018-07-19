@@ -17,7 +17,4 @@ public class ImageObject {
         return imageDetail;
     }
 
-    public void setImageDetail(ImageDetail imageDetail) {
-        this.imageDetail = imageDetail;
-    }
 }

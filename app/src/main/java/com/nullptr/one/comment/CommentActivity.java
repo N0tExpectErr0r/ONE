@@ -108,16 +108,14 @@ public class CommentActivity extends BaseActivity implements CommentView {
         mSrlSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private Toolbar initToolbar(CharSequence title) {
+    private void initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(title);
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-        }
-        return toolbar;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
 }

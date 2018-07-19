@@ -45,7 +45,6 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
     private TextView mTvMusicName;
     private TextView mTvMusicInfo;
     private TextView mTvMusicLyric;
-    private FloatingActionButton mFabComment;
     private MusicDetailPresenter mMusicDetailPresenter;
 
     public static void actionStart(Context context, String itemId) {
@@ -76,7 +75,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         mTvMusicName = findViewById(R.id.music_detail_tv_music_name);
         mTvMusicInfo = findViewById(R.id.music_detail_tv_music_info);
         mTvMusicLyric = findViewById(R.id.music_detail_tv_music_lyric);
-        mFabComment = findViewById(R.id.music_detail_fab_comment);
+        FloatingActionButton fabComment = findViewById(R.id.music_detail_fab_comment);
 
         mSrlSwipeRefreshLayout = findViewById(R.id.music_detail_srl_swipe_refresh);
         mSrlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -86,7 +85,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
             }
         });
 
-        mFabComment.setOnClickListener(new OnClickListener() {
+        fabComment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 CommentActivity.actionStart(MusicDetailActivity.this, mItemId, "MUSIC");
@@ -118,16 +117,14 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         return true;
     }
 
-    private Toolbar initToolbar(CharSequence title) {
+    private void initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(title);
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
-        }
-        return toolbar;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
     }
 
     @Override

@@ -54,11 +54,11 @@ public class Movie {
         this.forward = forward;
     }
 
-    public String getImageURL() {
+    String getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 
@@ -78,11 +78,11 @@ public class Movie {
         this.author = author;
     }
 
-    public String getSubTitle() {
+    String getSubTitle() {
         return subTitle;
     }
 
-    public void setSubTitle(String subTitle) {
+    void setSubTitle(String subTitle) {
         this.subTitle = subTitle;
     }
 }

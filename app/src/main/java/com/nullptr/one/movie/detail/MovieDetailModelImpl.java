@@ -26,7 +26,7 @@ public class MovieDetailModelImpl implements MovieDetailModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存影视详情的数据库
 
-    public MovieDetailModelImpl() {
+    MovieDetailModelImpl() {
         mDatabase = new MovieDetailBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

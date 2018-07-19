@@ -16,7 +16,4 @@ public class ArticleDetailObject {
         return articleDetail;
     }
 
-    public void setArticleDetail(ArticleDetail articleDetail) {
-        this.articleDetail = articleDetail;
-    }
 }

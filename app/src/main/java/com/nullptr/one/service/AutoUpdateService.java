@@ -74,6 +74,7 @@ public class AutoUpdateService extends Service implements MusicListView, Article
         long triggerAtTime = SystemClock.elapsedRealtime() + loopTime;
         Intent newIntent = new Intent(this, AutoUpdateService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, newIntent, 0);
+        assert manager != null;
         manager.cancel(pendingIntent);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pendingIntent);
         return super.onStartCommand(intent, flags, startId);

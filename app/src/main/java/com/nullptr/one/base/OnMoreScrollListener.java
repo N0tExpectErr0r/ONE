@@ -12,7 +12,7 @@ public abstract class OnMoreScrollListener extends RecyclerView.OnScrollListener
 
     private RecyclerView mRecyclerView;
 
-    public OnMoreScrollListener(RecyclerView recyclerView) {
+    protected OnMoreScrollListener(RecyclerView recyclerView) {
         this.mRecyclerView = recyclerView;
     }
 

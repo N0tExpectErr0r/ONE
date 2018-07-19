@@ -29,7 +29,7 @@ public class MovieListModelImpl implements MovieListModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存影视列表的数据库
 
-    public MovieListModelImpl() {
+    MovieListModelImpl() {
         mDatabase = new MovieListBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

@@ -40,43 +40,43 @@ public class MusicDetail {
         this.title = title;
     }
 
-    public String getStorySummary() {
+    String getStorySummary() {
         return storySummary;
     }
 
-    public void setStorySummary(String storySummary) {
+    void setStorySummary(String storySummary) {
         this.storySummary = storySummary;
     }
 
-    public String getCoverURL() {
+    String getCoverURL() {
         return coverURL;
     }
 
-    public void setCoverURL(String coverURL) {
+    void setCoverURL(String coverURL) {
         this.coverURL = coverURL;
     }
 
-    public String getStoryTitle() {
+    String getStoryTitle() {
         return storyTitle;
     }
 
-    public void setStoryTitle(String storyTitle) {
+    void setStoryTitle(String storyTitle) {
         this.storyTitle = storyTitle;
     }
 
-    public String getStory() {
+    String getStory() {
         return story;
     }
 
-    public void setStory(String story) {
+    void setStory(String story) {
         this.story = story;
     }
 
-    public String getLyric() {
+    String getLyric() {
         return lyric;
     }
 
-    public void setLyric(String lyric) {
+    void setLyric(String lyric) {
         this.lyric = lyric;
     }
 

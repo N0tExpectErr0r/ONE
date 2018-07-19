@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5Encoder {
 
-    public static String encode(String text) {
+    static String encode(String text) {
         StringBuffer hexString = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -18,16 +18,17 @@ public class MD5Encoder {
             byte[] hash = md.digest();
             hexString = new StringBuffer();
             //填充字符串(不足的地方补0,凑够位数)
-            for (int i = 0; i < hash.length; i++) {
-                if ((0xff & hash[i]) < 0x10) {
-                    hexString.append("0" + Integer.toHexString((0xFF & hash[i])));
+            for (byte aHash : hash) {
+                if ((0xff & aHash) < 0x10) {
+                    hexString.append("0" + Integer.toHexString((0xFF & aHash)));
                 } else {
-                    hexString.append(Integer.toHexString(0xFF & hash[i]));
+                    hexString.append(Integer.toHexString(0xFF & aHash));
                 }
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        assert hexString != null;
         return hexString.toString();
     }
 

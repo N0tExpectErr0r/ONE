@@ -26,7 +26,7 @@ public class BannerAdapter extends PagerAdapter {
     private List<View> mViewList;
     private Context mContext;
 
-    public BannerAdapter(Context context, List<ImageDetail> imageList) {
+    BannerAdapter(Context context, List<ImageDetail> imageList) {
         mImageList = imageList;
         mViewList = new ArrayList<>(mImageList.size());
         mContext = context;

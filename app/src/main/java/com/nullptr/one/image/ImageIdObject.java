@@ -17,7 +17,4 @@ public class ImageIdObject {
         return idList;
     }
 
-    public void setIdList(List<String> idList) {
-        this.idList = idList;
-    }
 }

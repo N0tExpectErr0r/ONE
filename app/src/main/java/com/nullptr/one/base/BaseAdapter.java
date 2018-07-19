@@ -15,9 +15,9 @@ import java.util.List;
  */
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements View.OnClickListener {
 
-    public static final int TYPE_OTHER = 1;
-    public static final int TYPE_BOTTOM = 2;
-    public List<T> mDatas;
+    private static final int TYPE_OTHER = 1;
+    private static final int TYPE_BOTTOM = 2;
+    private List<T> mDatas;
     private int mItemLayoutId;
     private int mItemCount;
     private OnItemClickListener mOnItemClickListener = null;
@@ -50,15 +50,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter implements Vie
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        if (getItemViewType(position) == TYPE_BOTTOM) {
-            //对相应的onBindViewHolder进行处理
-        } else {
+        if (getItemViewType(position) != TYPE_BOTTOM) {
             T data = mDatas.get(position);
             CommonViewHolder holder = (CommonViewHolder) viewHolder;
             holder.itemView.setTag(position);
             initItemView(holder, data);
         }
-
+        //对相应的onBindViewHolder进行处理
     }
 
     //需要在继承的类中实现，初始化item布局的操作

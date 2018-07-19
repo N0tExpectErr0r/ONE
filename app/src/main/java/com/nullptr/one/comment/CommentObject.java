@@ -16,7 +16,4 @@ public class CommentObject {
         return commentData;
     }
 
-    public void setCommentData(CommentList commentData) {
-        this.commentData = commentData;
-    }
 }

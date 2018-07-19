@@ -17,12 +17,8 @@ public class Comment {
     @SerializedName("touser")
     private User toUser;
 
-    public String getQuote() {
+    String getQuote() {
         return quote;
-    }
-
-    public void setQuote(String quote) {
-        this.quote = quote;
     }
 
     public String getComment() {
@@ -33,25 +29,16 @@ public class Comment {
         this.comment = comment;
     }
 
-    public String getUser() {
+    String getUser() {
         return user.getName();
     }
 
-    public void setUser(String user) {
-        this.user = new User();
-        this.user.setName(user);
-    }
-
-    public String getToUser() {
+    String getToUser() {
         if (toUser == null) {
             return null;
         } else {
             return toUser.getName();
         }
-    }
-
-    public void setToUser(String toUser) {
-        this.toUser.setName(toUser);
     }
 
     public static class User {

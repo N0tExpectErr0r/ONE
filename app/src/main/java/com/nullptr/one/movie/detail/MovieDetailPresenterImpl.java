@@ -20,7 +20,7 @@ public class MovieDetailPresenterImpl implements MovieDetailPresenter, OnMovieDe
     private MovieDetailModel mMovieDetailModel;
     private Handler mHandler;
 
-    public MovieDetailPresenterImpl(MovieDetailView movieDetailView) {
+    MovieDetailPresenterImpl(MovieDetailView movieDetailView) {
         mMovieDetailView = movieDetailView;
         mMovieDetailModel = new MovieDetailModelImpl();
         mHandler = new Handler(Looper.getMainLooper());

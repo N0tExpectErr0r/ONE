@@ -20,7 +20,7 @@ public class MusicDetailPresenterImpl implements MusicDetailPresenter, OnMusicDe
     private MusicDetailModel mMusicDetailModel;
     private Handler mHandler;
 
-    public MusicDetailPresenterImpl(MusicDetailView musicDetailView) {
+    MusicDetailPresenterImpl(MusicDetailView musicDetailView) {
         mMusicDetailView = musicDetailView;
         mMusicDetailModel = new MusicDetailModelImpl();
         mHandler = new Handler(Looper.getMainLooper());

@@ -16,11 +16,11 @@ public class MovieDetail {
     @SerializedName("user")
     private Author author;
 
-    public String getMovieId() {
+    String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 

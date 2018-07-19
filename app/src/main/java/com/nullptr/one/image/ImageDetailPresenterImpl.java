@@ -18,7 +18,7 @@ public class ImageDetailPresenterImpl implements ImageDetailPresenter, OnImageDe
     private ImageDetailView mImageDetailView;
     private ImageDetailModel mImageDetailModel;
 
-    public ImageDetailPresenterImpl(ImageDetailView imageDetailView) {
+    ImageDetailPresenterImpl(ImageDetailView imageDetailView) {
         mImageDetailView = imageDetailView;
         mImageDetailModel = new ImageDetailModelImpl();
     }

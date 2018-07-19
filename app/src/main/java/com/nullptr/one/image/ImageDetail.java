@@ -16,7 +16,7 @@ public class ImageDetail {
     @SerializedName("hp_content")
     private String content;
 
-    public String getImageURL() {
+    String getImageURL() {
         return imageURL;
     }
 

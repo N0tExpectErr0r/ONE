@@ -29,7 +29,7 @@ public class ArticleListModelImpl implements ArticleListModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存文章列表的数据库
 
-    public ArticleListModelImpl() {
+    ArticleListModelImpl() {
         mDatabase = new ArticleListBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

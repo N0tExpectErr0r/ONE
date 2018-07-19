@@ -16,7 +16,7 @@ public class MusicBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "musicBase.db";
 
-    public MusicBaseHelper(Context context) {
+    MusicBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
 

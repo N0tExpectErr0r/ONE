@@ -5,7 +5,7 @@ package com.nullptr.one.movie.detail;
  * @DATE 创建时间: 2018/5/21
  * @DESCRIPTION Movie Schema，用于描述movie数据表
  */
-public class MovieInfoDbSchema {
+class MovieInfoDbSchema {
 
     public static final class MovieInfoTable {
 
@@ -14,10 +14,10 @@ public class MovieInfoDbSchema {
         public static final class Cols {
 
             public static final String ITEM_ID = "item_id";
-            public static final String COVER_URL = "cover_url";
-            public static final String MOVIE_TITLE = "movie_title";
-            public static final String INFO = "info";
-            public static final String STORY = "story";
+            static final String COVER_URL = "cover_url";
+            static final String MOVIE_TITLE = "movie_title";
+            static final String INFO = "info";
+            static final String STORY = "story";
         }
     }
 }

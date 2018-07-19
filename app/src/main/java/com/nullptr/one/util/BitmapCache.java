@@ -67,21 +67,21 @@ public class BitmapCache implements ImageCache {
     /**
      * 内存缓存
      */
-    public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
+    private void addBitmapToMemoryCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemoryCache(key) == null) {
             sMemoryCache.put(key, bitmap);  //图片没有放入时将图片放入内存
         }
     }
 
-    public Bitmap getBitmapFromMemoryCache(String key) {
+    private Bitmap getBitmapFromMemoryCache(String key) {
         return sMemoryCache.get(key);   //从内存取出对应图片
     }
 
     /**
      * 本地缓存
      */
-    public Bitmap getBitmapFromLocal(String url) {
-        String fileName = null;
+    private Bitmap getBitmapFromLocal(String url) {
+        String fileName;
         try {
             //进行MD5加密的原因：不让一些特殊的url影响文件的存储
             //同时让接口不被用户看到
@@ -101,7 +101,7 @@ public class BitmapCache implements ImageCache {
         return null;
     }
 
-    public void addBitmapToLocal(String url, Bitmap bitmap) {
+    private void addBitmapToLocal(String url, Bitmap bitmap) {
         try {
             //进行MD5加密的原因：不让一些特殊的url影响文件的存储
             //同时让接口不被用户看到

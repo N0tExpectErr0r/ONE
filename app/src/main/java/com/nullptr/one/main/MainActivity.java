@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -40,12 +41,10 @@ public class MainActivity extends BaseActivity {
     final private static int MUSIC = 1;     //音乐模块对应的Tab位置
     final private static int MOVIE = 2;     //电影模块对应的Tab位置
 
-    private List<Fragment> mFragments = null;
     private DrawerLayout mDlDrawerLayout;
     private NavigationView mNvNavigationView;
     private FloatingActionButton mFabDownload;
     private TabLayout mTlTabLayout;
-    private ViewPager mVpViewPager;
     private DownloadReceiver mDownloadReceiver;
 
     @Override
@@ -75,25 +74,25 @@ public class MainActivity extends BaseActivity {
         //初始化Toolbar(带菜单)
         initToolbar("ONE · 一个");
         //初始化ViewPager以及TabLayout
-        mVpViewPager = findViewById(R.id.main_vp_viewpager);
-        mVpViewPager.setOffscreenPageLimit(2);
+        ViewPager vpViewPager = findViewById(R.id.main_vp_viewpager);
+        vpViewPager.setOffscreenPageLimit(2);
         mTlTabLayout = findViewById(R.id.main_tl_tab);
 
         //初始化ViewPager中的Fragments对应的List
-        mFragments = new ArrayList<>();
-        mFragments.add(new ArticleListFragment());
-        mFragments.add(new MusicListFragment());
-        mFragments.add(new MovieListFragment());
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new ArticleListFragment());
+        fragments.add(new MusicListFragment());
+        fragments.add(new MovieListFragment());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         ViewPagerAdapter adapter = new ViewPagerAdapter(fragmentManager);
-        adapter.setFragments(mFragments);
-        mVpViewPager.setAdapter(adapter);
+        adapter.setFragments(fragments);
+        vpViewPager.setAdapter(adapter);
 
         //使TabLayout ViewPager NavigationView相关联
         mTlTabLayout.addOnTabSelectedListener(
-                new TabLayout.ViewPagerOnTabSelectedListener(mVpViewPager));  //TabLayout随ViewPager变动
-        mVpViewPager.addOnPageChangeListener(
+                new TabLayout.ViewPagerOnTabSelectedListener(vpViewPager));  //TabLayout随ViewPager变动
+        vpViewPager.addOnPageChangeListener(
                 new TabLayout.TabLayoutOnPageChangeListener(mTlTabLayout));    //ViewPager随TabLayout变动
         //NavigationView随TabLayout变动
         mTlTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -131,7 +130,7 @@ public class MainActivity extends BaseActivity {
         mNvNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
-                    public boolean onNavigationItemSelected(MenuItem item) {
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.nav_article:
                                 //选中文章Tab
@@ -193,16 +192,14 @@ public class MainActivity extends BaseActivity {
         return true;
     }
 
-    private Toolbar initToolbar(CharSequence title) {
+    private void initToolbar(CharSequence title) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setTitle(title);
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        }
-        return toolbar;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
     }
 
     class DownloadReceiver extends BroadcastReceiver {

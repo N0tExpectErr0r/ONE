@@ -17,7 +17,4 @@ public class MovieDetailList {
         return movieDetailList.get(0);
     }
 
-    public void setMovieDetailList(List<MovieDetail> movieDetailList) {
-        this.movieDetailList = movieDetailList;
-    }
 }

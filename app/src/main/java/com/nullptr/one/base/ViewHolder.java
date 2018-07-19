@@ -29,7 +29,7 @@ public class ViewHolder {
     private int mPosition;
     private View mConvertView;
 
-    public ViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
+    private ViewHolder(Context context, ViewGroup parent, int layoutId, int position) {
         this.mPosition = position;
         this.mViews = new SparseArray<>();
         mConvertView = LayoutInflater.from(context).inflate(layoutId, parent, false);
@@ -50,7 +50,7 @@ public class ViewHolder {
     }
 
     //通过viewId获取View
-    public <T extends View> T getView(int viewId) {
+    private <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
             //如果这个控件没有放入过，放入。

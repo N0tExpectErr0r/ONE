@@ -51,19 +51,19 @@ public class Music {
         this.forward = forward;
     }
 
-    public String getImageURL() {
+    String getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
+    void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 
-    public Singer getSinger() {
+    Singer getSinger() {
         return singer;
     }
 
-    public void setSinger(Singer singer) {
+    void setSinger(Singer singer) {
         this.singer = singer;
     }
 }

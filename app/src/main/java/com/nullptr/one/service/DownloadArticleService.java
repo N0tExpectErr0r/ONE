@@ -109,6 +109,7 @@ public class DownloadArticleService extends Service implements ArticleListView, 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             String channelId = "channel_download";
+            assert manager != null;
             NotificationChannel channel = manager.getNotificationChannel(channelId);
             if (channel == null) {
                 channel = new NotificationChannel(channelId, "Download Channel",

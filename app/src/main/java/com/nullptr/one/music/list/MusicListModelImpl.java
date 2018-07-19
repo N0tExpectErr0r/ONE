@@ -29,7 +29,7 @@ public class MusicListModelImpl implements MusicListModel {
 
     private SQLiteDatabase mDatabase;   //本地缓存音乐列表的数据库
 
-    public MusicListModelImpl() {
+    MusicListModelImpl() {
         mDatabase = new MusicListBaseHelper(ContextApplication.getContext()).getWritableDatabase();
     }
 

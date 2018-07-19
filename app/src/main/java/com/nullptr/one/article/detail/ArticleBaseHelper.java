@@ -16,7 +16,7 @@ public class ArticleBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "articleBase.db";
 
-    public ArticleBaseHelper(Context context) {
+    ArticleBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
 

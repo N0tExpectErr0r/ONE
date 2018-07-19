@@ -17,7 +17,4 @@ public class CommentList {
         return commentList;
     }
 
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
 }

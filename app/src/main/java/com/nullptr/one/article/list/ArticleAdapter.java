@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ArticleAdapter extends BaseAdapter<Article> {
 
-    public ArticleAdapter(List<Article> data, int layoutId, int itemCount) {
+    ArticleAdapter(List<Article> data, int layoutId, int itemCount) {
         super(data, layoutId, itemCount);
     }
 

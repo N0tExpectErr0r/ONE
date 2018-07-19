@@ -28,7 +28,7 @@ public class ArticleDetail {
         return contentId;
     }
 
-    public void setContentId(String contentId) {
+    void setContentId(String contentId) {
         this.contentId = contentId;
     }
 
@@ -44,7 +44,7 @@ public class ArticleDetail {
         return authorName;
     }
 
-    public void setAuthorName(String authorName) {
+    void setAuthorName(String authorName) {
         this.authorName = authorName;
     }
 
@@ -52,7 +52,7 @@ public class ArticleDetail {
         return authorDesc;
     }
 
-    public void setAuthorDesc(String authorDesc) {
+    void setAuthorDesc(String authorDesc) {
         this.authorDesc = authorDesc;
     }
 
@@ -76,7 +76,7 @@ public class ArticleDetail {
         return copyright;
     }
 
-    public void setCopyright(String copyright) {
+    void setCopyright(String copyright) {
         this.copyright = copyright;
     }
 }

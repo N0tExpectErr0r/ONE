@@ -23,14 +23,14 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;
     private View mItemView;
 
-    public CommonViewHolder(View itemView) {
+    CommonViewHolder(View itemView) {
         super(itemView);
         mItemView = itemView;
         mViews = new SparseArray<>();
     }
 
     //通过viewId获取View
-    public <T extends View> T getView(int viewId) {
+    private <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
             //如果这个控件没有放入过，放入。

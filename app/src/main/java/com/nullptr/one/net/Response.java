@@ -30,7 +30,4 @@ public class Response {
         return result;
     }
 
-    public Exception getException() {
-        return exception;
-    }
 }

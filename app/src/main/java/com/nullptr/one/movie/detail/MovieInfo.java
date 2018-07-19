@@ -19,27 +19,27 @@ public class MovieInfo {
     @SerializedName("officialstory")
     private String story;
 
-    public String getMovieId() {
+    String getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    void setMovieId(String movieId) {
         this.movieId = movieId;
     }
 
-    public String getMovieTitle() {
+    String getMovieTitle() {
         return movieTitle;
     }
 
-    public void setMovieTitle(String movieTitle) {
+    void setMovieTitle(String movieTitle) {
         this.movieTitle = movieTitle;
     }
 
-    public String getCoverURL() {
+    String getCoverURL() {
         return coverURL;
     }
 
-    public void setCoverURL(String coverURL) {
+    void setCoverURL(String coverURL) {
         this.coverURL = coverURL;
     }
 
@@ -51,11 +51,11 @@ public class MovieInfo {
         this.info = info;
     }
 
-    public String getStory() {
+    String getStory() {
         return story;
     }
 
-    public void setStory(String story) {
+    void setStory(String story) {
         this.story = story;
     }
 }

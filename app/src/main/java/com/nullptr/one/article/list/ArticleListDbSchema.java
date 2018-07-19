@@ -18,7 +18,7 @@ public class ArticleListDbSchema {
             public static final String TITLE = "title";
             public static final String FORWARD = "forward";
             public static final String IMG_URL = "img_url";
-            public static final String LIKE_COUNT = "like_count";
+            static final String LIKE_COUNT = "like_count";
             public static final String DATE = "date";
             public static final String AUTHOR_NAME = "author_name";
             public static final String AUTHOR_DESC = "author_desc";

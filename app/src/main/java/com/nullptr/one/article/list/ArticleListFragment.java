@@ -49,13 +49,6 @@ public class ArticleListFragment extends Fragment implements ArticleListView,
     @Override
     public void onStart() {
         super.onStart();
-        /**
-         * 初始化View结束后再发送请求等各种操作
-         * 这样做的原因是因为之前用别人的华为P10测试的时候发现SwipeRefreshLayout没有进度条显示
-         * 原因是由于SwipeRefreshLayout没有加载完就对它进行了showLoading操作
-         * 参考了这篇文章https://blog.csdn.net/wang8651971/article/details/50820965
-         * 刚才测试了一下，问题已解决
-         */
 
         //初始化SwipeRefreshLayout
         mSrlSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

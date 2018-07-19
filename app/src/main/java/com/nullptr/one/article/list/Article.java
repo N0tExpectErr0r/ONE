@@ -58,7 +58,7 @@ public class Article {
         return imageURL;
     }
 
-    public void setImageUrl(String imageURL) {
+    void setImageUrl(String imageURL) {
         this.imageURL = imageURL;
     }
 
@@ -66,7 +66,7 @@ public class Article {
         return likeCount;
     }
 
-    public void setLikeCount(int likeCount) {
+    void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
 

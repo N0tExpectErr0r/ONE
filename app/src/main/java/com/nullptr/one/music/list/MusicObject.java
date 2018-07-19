@@ -17,7 +17,4 @@ public class MusicObject {
         return musicList;
     }
 
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
-    }
 }

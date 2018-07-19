@@ -21,7 +21,7 @@ public class MovieInfoPresenterImpl implements MovieInfoPresenter, OnMovieInfoLi
     private MovieInfoModel mMovieInfoModel;
     private Handler mHandler;
 
-    public MovieInfoPresenterImpl(MovieDetailView movieDetailView) {
+    MovieInfoPresenterImpl(MovieDetailView movieDetailView) {
         mMovieDetailView = movieDetailView;
         mMovieInfoModel = new MovieInfoModelImpl();
         mHandler = new Handler(Looper.getMainLooper());

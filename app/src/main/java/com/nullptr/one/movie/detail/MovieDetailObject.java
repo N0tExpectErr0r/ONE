@@ -16,8 +16,4 @@ public class MovieDetailObject {
         return movieDetailList;
     }
 
-    public void setMovieDetail(MovieDetailList movieDetail) {
-        this.movieDetailList = movieDetail;
-    }
-
 }
