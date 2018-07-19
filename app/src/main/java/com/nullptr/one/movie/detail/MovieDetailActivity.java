@@ -7,10 +7,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +25,7 @@ import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailPresenter;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieDetailView;
 import com.nullptr.one.movie.detail.IMovieDetail.MovieInfoPresenter;
 import com.nullptr.one.util.BitmapCache;
-import com.nullptr.one.util.HtmlPraser;
-import com.nullptr.one.util.ImageLoader;
+import com.nullptr.one.util.HtmlUtil;
 
 public class MovieDetailActivity extends BaseActivity implements MovieDetailView {
 
@@ -37,7 +38,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
     private TextView mTvInfo;
     private TextView mTvStory;
     private TextView mTvAuthorName;
-    private TextView mTvContent;
+    private WebView mWvContent;
     private FloatingActionButton mFabComment;
 
     public static void actionStart(Context context, String itemId) {
@@ -67,7 +68,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
         mTvInfo = findViewById(R.id.movie_detail_tv_info);
         mTvStory = findViewById(R.id.movie_detail_tv_story);
         mTvAuthorName = findViewById(R.id.movie_detail_tv_author_name);
-        mTvContent = findViewById(R.id.movie_detail_tv_content);
+        mWvContent = findViewById(R.id.movie_detail_wv_content);
+        mWvContent.getSettings().setSupportZoom(false);
         mFabComment = findViewById(R.id.movie_detail_fab_comment);
 
         mSrlSwipeRefreshLayout = findViewById(R.id.movie_detail_srl_swipe_refresh);
@@ -122,7 +124,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailView
     @Override
     public void setMovieDetail(final MovieDetail musicDetail) {
         mTvAuthorName.setText("文/" + musicDetail.getAuthor().getName());
-        HtmlPraser.getInstance().setHtml(mTvContent, musicDetail.getContent());
+        mWvContent.loadDataWithBaseURL(null,HtmlUtil.getNewContent(musicDetail.getContent()),
+                "text/html","UTF-8", null);
     }
 
     @Override

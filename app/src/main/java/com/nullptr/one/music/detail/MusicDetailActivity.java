@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import com.nullptr.one.comment.CommentActivity;
 import com.nullptr.one.music.detail.IMusicDetail.MusicDetailPresenter;
 import com.nullptr.one.music.detail.IMusicDetail.MusicDetailView;
 import com.nullptr.one.util.BitmapCache;
-import com.nullptr.one.util.HtmlPraser;
+import com.nullptr.one.util.HtmlUtil;
 
 /**
  * @AUTHOR nullptr
@@ -38,7 +39,7 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
     private ImageView mIvImage;
     private TextView mTvTitle;
     private TextView mTvSummary;
-    private TextView mTvContent;
+    private WebView mWvContent;
     private TextView mTvAuthorName;
     private TextView mTvDate;
     private TextView mTvMusicName;
@@ -68,7 +69,8 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
         mIvImage = findViewById(R.id.music_detail_iv_music_image);
         mTvTitle = findViewById(R.id.music_detail_tv_music_title);
         mTvSummary = findViewById(R.id.music_detail_tv_music_summary);
-        mTvContent = findViewById(R.id.music_detail_tv_music_story);
+        mWvContent = findViewById(R.id.music_detail_wv_story);
+        mWvContent.getSettings().setSupportZoom(false);
         mTvAuthorName = findViewById(R.id.music_detail_tv_music_author);
         mTvDate = findViewById(R.id.music_detail_tv_music_date);
         mTvMusicName = findViewById(R.id.music_detail_tv_music_name);
@@ -146,7 +148,8 @@ public class MusicDetailActivity extends BaseActivity implements MusicDetailView
 
         loader.get(music.getCoverURL(), listener, mIvImage.getWidth(), mIvImage.getHeight());
 
-        HtmlPraser.getInstance().setHtml(mTvContent, music.getStory());
+        mWvContent.loadDataWithBaseURL(null, HtmlUtil.getNewContent(music.getStory()),
+                "text/html", "UTF-8", null);
     }
 
     @Override

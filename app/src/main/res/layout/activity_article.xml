@@ -43,7 +43,8 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layerType="software">
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,14 +95,11 @@
                         android:layout_marginTop="10dp"
                         android:background="@color/colorPrimaryDark"/>
 
-                    <TextView
-                        android:id="@+id/article_detail_tv_content"
+                    <WebView
+                        android:id="@+id/article_detail_wv_content"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="正在加载文章详细内容"
-                        android:textColor="#212121"
-                        android:textSize="18sp"/>
+                        android:layout_marginTop="10dp"/>
 
                     <TextView
                         android:id="@+id/article_detail_tv_copyright"

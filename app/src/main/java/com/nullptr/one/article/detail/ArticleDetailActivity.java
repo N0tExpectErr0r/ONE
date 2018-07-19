@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.nullptr.one.R;
@@ -18,7 +19,7 @@ import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailPresenter;
 import com.nullptr.one.article.detail.IArticleDetail.ArticleDetailView;
 import com.nullptr.one.base.BaseActivity;
 import com.nullptr.one.comment.CommentActivity;
-import com.nullptr.one.util.HtmlPraser;
+import com.nullptr.one.util.HtmlUtil;
 
 /**
  * @AUTHOR nullptr
@@ -31,7 +32,8 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
     private TextView mTvTitle;
     private TextView mTvAuthorName;
     private TextView mTvAuthorDesc;
-    private TextView mTvContent;
+    private WebView mWvContent;
+    // private TextView mTvContent;
     private TextView mTvCopyright;
     private TextView mTvDate;
     private SwipeRefreshLayout mSrlSwipeRefreshLayout;
@@ -59,7 +61,10 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
         mTvTitle = findViewById(R.id.article_detail_tv_title);
         mTvAuthorName = findViewById(R.id.article_detail_tv_author_name);
         mTvAuthorDesc = findViewById(R.id.article_detail_tv_author_desc);
-        mTvContent = findViewById(R.id.article_detail_tv_content);
+
+        mWvContent = findViewById(R.id.article_detail_wv_content);
+        mWvContent.getSettings().setSupportZoom(false);//禁止缩放
+
         mTvCopyright = findViewById(R.id.article_detail_tv_copyright);
         mTvDate = findViewById(R.id.article_detail_tv_date);
         mSrlSwipeRefreshLayout = findViewById(R.id.article_detail_srl_swipe_refresh);
@@ -124,7 +129,8 @@ public class ArticleDetailActivity extends BaseActivity implements ArticleDetail
 
         mTvTitle.setText(article.getTitle());
         mTvDate.setText(article.getDate());
-        HtmlPraser.getInstance().setHtml(mTvContent, article.getContent());
+        mWvContent.loadDataWithBaseURL(null,HtmlUtil.getNewContent(article.getContent())
+                ,"text/html", "UTF-8",null);
     }
 
     @Override
